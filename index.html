@@ -1,0 +1,2914 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>PLAYGAME3D - Cổng Game Arcade 3D Trực Tuyến</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #050814;
+      color: #f8fafc;
+      overflow-x: hidden;
+      user-select: none;
+    }
+    .font-arcade { font-family: 'Orbitron', sans-serif; }
+    .grid-bg {
+      background-image:
+        linear-gradient(to right, rgba(56, 189, 248, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(56, 189, 248, 0.06) 1px, transparent 1px);
+      background-size: 36px 36px;
+    }
+    .neon-cyan { box-shadow: 0 0 24px rgba(34, 211, 238, 0.25), inset 0 0 12px rgba(34, 211, 238, 0.12); }
+    .neon-amber { box-shadow: 0 0 24px rgba(245, 158, 11, 0.25), inset 0 0 12px rgba(245, 158, 11, 0.12); }
+    .neon-pink { box-shadow: 0 0 24px rgba(232, 121, 249, 0.25), inset 0 0 12px rgba(232, 121, 249, 0.12); }
+    #game-canvas-mount canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+      outline: none;
+    }
+    @keyframes floatBadge {
+      0% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -48px) scale(1.18); }
+    }
+    .floating-badge {
+      position: absolute;
+      pointer-events: none;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95);
+      animation: floatBadge 0.85s ease-out forwards;
+      z-index: 25;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body class="min-h-screen grid-bg flex flex-col">
+
+  <!-- HEADER / NAVBAR -->
+  <header class="sticky top-0 z-40 border-b border-cyan-500/25 bg-slate-950/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div id="brand-logo" class="flex items-center gap-3 cursor-pointer">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 via-blue-600 to-fuchsia-600 flex items-center justify-center shadow-lg shadow-cyan-500/30">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div>
+          <h1 class="font-arcade text-xl sm:text-2xl font-black tracking-wider bg-gradient-to-r from-cyan-300 via-sky-400 to-fuchsia-400 bg-clip-text text-transparent">
+            PLAYGAME3D
+          </h1>
+          <p class="text-[11px] text-slate-400 tracking-widest uppercase" data-i18n="subtitle">Cổng Game Arcade 3D Trực Tuyến</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button id="btn-lang" type="button" class="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900 hover:border-cyan-400 text-xs font-bold tracking-wider text-cyan-300 transition cursor-pointer">
+          VI / EN
+        </button>
+        <button id="btn-fullscreen" type="button" class="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900 hover:border-fuchsia-400 text-xs font-bold text-slate-200 transition flex items-center gap-1.5 cursor-pointer">
+          <svg class="w-4 h-4 text-fuchsia-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+          </svg>
+          <span class="hidden sm:inline" data-i18n="fullscreen">Toàn màn hình</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HOME PORTAL VIEW -->
+  <main id="portal-home" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
+    <!-- HERO BANNER -->
+    <div class="mb-8 rounded-2xl border border-cyan-500/30 bg-gradient-to-r from-slate-900/95 via-indigo-950/75 to-slate-900/95 p-6 sm:p-8 neon-cyan">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+        <div>
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-400/30 mb-3">
+            THREE.JS WEBGL ENGINE • 60 FPS • PLAY INSTANTLY
+          </span>
+          <h2 class="font-arcade text-2xl sm:text-4xl font-black text-white mb-2" data-i18n="heroTitle">
+            ARCADE CỔ ĐIỂN TÁI SINH 3D
+          </h2>
+          <p class="text-slate-300 text-sm sm:text-base max-w-2xl" data-i18n="heroDesc">
+            Chơi ngay các tựa game hành động & arcade 3D tốc độ cao trực tiếp trên trình duyệt với đồ họa ánh sáng thời gian thực, âm thanh tổng hợp Web Audio và bảng lưu điểm cao.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button type="button" data-launch="subway" class="launch-btn px-5 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 hover:from-amber-300 hover:to-rose-400 text-slate-950 font-arcade font-black text-xs sm:text-sm tracking-wider shadow-lg shadow-amber-500/30 transition transform hover:-translate-y-0.5 cursor-pointer">
+            ▶ CHẠY ĐƯỜNG RAY 3D
+          </button>
+          <button type="button" data-launch="galaga" class="launch-btn px-5 py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-600 hover:from-cyan-300 hover:to-blue-500 text-slate-950 font-arcade font-black text-xs sm:text-sm tracking-wider shadow-lg shadow-cyan-500/30 transition transform hover:-translate-y-0.5 cursor-pointer">
+            ▶ BẮN RUỒI 3D
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME CARDS GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- CARD 1: SUBWAY RUNNER 3D -->
+      <div class="group rounded-2xl border border-amber-500/40 bg-slate-900/95 overflow-hidden hover:border-amber-400 transition duration-300 flex flex-col neon-amber">
+        <div class="relative h-52 bg-gradient-to-br from-amber-950 via-slate-900 to-sky-950 flex items-center justify-center overflow-hidden p-6">
+          <div class="absolute inset-0 opacity-30 grid-bg"></div>
+          <svg class="w-40 h-40 drop-shadow-[0_0_18px_rgba(251,191,36,0.7)] group-hover:scale-110 transition duration-500" viewBox="0 0 160 160" fill="none">
+            <line x1="46" y1="142" x2="65" y2="52" stroke="#64748b" stroke-width="3"/>
+            <line x1="114" y1="142" x2="95" y2="52" stroke="#64748b" stroke-width="3"/>
+            <line x1="80" y1="142" x2="80" y2="52" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6 6"/>
+            <rect x="52" y="32" width="56" height="54" rx="10" fill="#0284c7" stroke="#38bdf8" stroke-width="2.5"/>
+            <rect x="60" y="42" width="40" height="20" rx="4" fill="#0f172a"/>
+            <circle cx="64" cy="74" r="4" fill="#fef08a"/>
+            <circle cx="96" cy="74" r="4" fill="#fef08a"/>
+            <circle cx="80" cy="108" r="8" fill="#fbbf24" stroke="#fef08a" stroke-width="2"/>
+            <circle cx="80" cy="126" r="7" fill="#f59e0b"/>
+          </svg>
+          <span class="absolute top-4 left-4 px-2.5 py-1 rounded-md bg-amber-500 text-slate-950 font-arcade text-[11px] font-black">
+            HOT • RUNNER 3D
+          </span>
+          <span class="absolute top-4 right-4 px-2.5 py-1 rounded-md bg-slate-950/85 border border-amber-400/50 text-amber-300 font-arcade text-xs font-bold">
+            HI: <span id="card-hi-subway">0</span>
+          </span>
+        </div>
+
+        <div class="p-6 flex-1 flex flex-col justify-between">
+          <div>
+            <h3 class="font-arcade text-xl font-extrabold text-white mb-2" data-i18n="gSubTitle">
+              Chạy Trên Đường Ray Tàu Hỏa 3D
+            </h3>
+            <p class="text-slate-300 text-sm leading-relaxed mb-4" data-i18n="gSubDesc">
+              Lướt qua 3 làn đường ray tốc độ cao, nhảy qua rào chắn, trượt gầm biển báo, leo dốc lên nóc tàu điện, né tàu lao ngược chiều và ăn Nam châm, Jetpack, Giày siêu bật!
+            </p>
+            <div class="flex flex-wrap gap-2 mb-5 text-[11px] font-semibold">
+              <span class="px-2.5 py-1 rounded bg-slate-800 text-amber-300">3 Làn Ray</span>
+              <span class="px-2.5 py-1 rounded bg-slate-800 text-sky-300">Leo Nóc Tàu & Jetpack</span>
+              <span class="px-2.5 py-1 rounded bg-slate-800 text-emerald-300">Vuốt & Phím Tắt</span>
+            </div>
+          </div>
+          <button type="button" data-launch="subway" class="launch-btn w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 hover:from-amber-300 hover:to-rose-400 text-slate-950 font-arcade font-black text-sm tracking-wider shadow-lg shadow-amber-500/25 transition cursor-pointer">
+            ▶ MỞ GAME ĐƯỜNG RAY 3D
+          </button>
+        </div>
+      </div>
+
+      <!-- CARD 2: GALAGA 3D -->
+      <div class="group rounded-2xl border border-cyan-500/35 bg-slate-900/95 overflow-hidden hover:border-cyan-400 transition duration-300 flex flex-col neon-cyan">
+        <div class="relative h-52 bg-gradient-to-br from-indigo-950 via-slate-900 to-cyan-950 flex items-center justify-center overflow-hidden p-6">
+          <div class="absolute inset-0 opacity-30 grid-bg"></div>
+          <svg class="w-40 h-40 drop-shadow-[0_0_18px_rgba(34,211,238,0.65)] group-hover:scale-110 transition duration-500" viewBox="0 0 160 160" fill="none">
+            <circle cx="80" cy="80" r="64" stroke="#22d3ee" stroke-opacity="0.25" stroke-width="2" stroke-dasharray="6 6"/>
+            <path d="M52 38 L80 24 L108 38 L98 56 L62 56 Z" fill="#f43f5e" fill-opacity="0.88"/>
+            <path d="M32 34 L56 42 L48 54 L26 46 Z" fill="#fb7185"/>
+            <path d="M128 34 L104 42 L112 54 L134 46 Z" fill="#fb7185"/>
+            <rect x="74" y="64" width="4" height="24" rx="2" fill="#38bdf8"/>
+            <rect x="82" y="64" width="4" height="24" rx="2" fill="#38bdf8"/>
+            <path d="M80 92 L92 126 L80 120 L68 126 Z" fill="#f8fafc"/>
+            <path d="M68 112 L46 130 L68 126 Z" fill="#06b6d4"/>
+            <path d="M92 112 L114 130 L92 126 Z" fill="#06b6d4"/>
+            <circle cx="80" cy="112" r="4" fill="#38bdf8"/>
+          </svg>
+          <span class="absolute top-4 left-4 px-2.5 py-1 rounded-md bg-rose-500 text-white font-arcade text-[11px] font-bold">
+            BOSS EDITION 3D
+          </span>
+          <span class="absolute top-4 right-4 px-2.5 py-1 rounded-md bg-slate-950/85 border border-cyan-400/50 text-cyan-300 font-arcade text-xs font-bold">
+            HI: <span id="card-hi-galaga">0</span>
+          </span>
+        </div>
+
+        <div class="p-6 flex-1 flex flex-col justify-between">
+          <div>
+            <h3 class="font-arcade text-xl font-extrabold text-white mb-2" data-i18n="gGalTitle">
+              Bắn Ruồi 3D: Đại Chiến Trùm
+            </h3>
+            <p class="text-slate-300 text-sm leading-relaxed mb-4" data-i18n="gGalDesc">
+              Chiến đấu qua đội quân Ong Thợ, Bướm Chiến bổ nhào và Ruồi Chúa. Thu thập [W] Đạn 3 tia, [R] Siêu thanh, [S] Khiên, [D] Phi thuyền đôi và hạ 3 Trùm Cuối tiến hóa theo màn!
+            </p>
+            <div class="flex flex-wrap gap-2 mb-5 text-[11px] font-semibold">
+              <span class="px-2.5 py-1 rounded bg-slate-800 text-cyan-300">3 Chủng Ruồi</span>
+              <span class="px-2.5 py-1 rounded bg-slate-800 text-amber-300">Phi Thuyền Đôi [D]</span>
+              <span class="px-2.5 py-1 rounded bg-slate-800 text-rose-300">3 Trùm Cuối</span>
+            </div>
+          </div>
+          <button type="button" data-launch="galaga" class="launch-btn w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-600 hover:from-cyan-300 hover:to-blue-500 text-slate-950 font-arcade font-black text-sm tracking-wider shadow-lg shadow-cyan-500/25 transition cursor-pointer">
+            ▶ MỞ GAME BẮN RUỒI 3D
+          </button>
+        </div>
+      </div>
+
+      <!-- CARD 3: NEON SNAKE 3D -->
+      <div class="group rounded-2xl border border-fuchsia-500/35 bg-slate-900/95 overflow-hidden hover:border-fuchsia-400 transition duration-300 flex flex-col neon-pink">
+        <div class="relative h-52 bg-gradient-to-br from-fuchsia-950 via-slate-900 to-purple-950 flex items-center justify-center overflow-hidden p-6">
+          <div class="absolute inset-0 opacity-30 grid-bg"></div>
+          <svg class="w-40 h-40 drop-shadow-[0_0_18px_rgba(232,121,249,0.6)] group-hover:scale-110 transition duration-500" viewBox="0 0 160 160" fill="none">
+            <rect x="28" y="96" width="22" height="22" rx="5" fill="#10b981"/>
+            <rect x="52" y="96" width="22" height="22" rx="5" fill="#34d399"/>
+            <rect x="76" y="96" width="22" height="22" rx="5" fill="#34d399"/>
+            <rect x="76" y="72" width="22" height="22" rx="5" fill="#6ee7b7"/>
+            <rect x="76" y="48" width="24" height="24" rx="6" fill="#a7f3d0"/>
+            <circle cx="83" cy="56" r="2.5" fill="#064e3b"/>
+            <circle cx="93" cy="56" r="2.5" fill="#064e3b"/>
+            <circle cx="122" cy="60" r="10" fill="#f43f5e"/>
+            <circle cx="122" cy="60" r="15" stroke="#fb7185" stroke-opacity="0.4" stroke-width="2"/>
+          </svg>
+          <span class="absolute top-4 left-4 px-2.5 py-1 rounded-md bg-emerald-400 text-slate-950 font-arcade text-[11px] font-bold">
+            NEON ARENA 3D
+          </span>
+          <span class="absolute top-4 right-4 px-2.5 py-1 rounded-md bg-slate-950/85 border border-fuchsia-400/50 text-fuchsia-300 font-arcade text-xs font-bold">
+            HI: <span id="card-hi-snake">0</span>
+          </span>
+        </div>
+
+        <div class="p-6 flex-1 flex flex-col justify-between">
+          <div>
+            <h3 class="font-arcade text-xl font-extrabold text-white mb-2" data-i18n="gSnkTitle">
+              Rắn Săn Mồi 3D (Neon Snake)
+            </h3>
+            <p class="text-slate-300 text-sm leading-relaxed mb-4" data-i18n="gSnkDesc">
+              Uốn lượn mượt mà trên đấu trường lưới Neon 3D với đổ bóng thời gian thực, mồi năng lượng & mồi vàng thưởng điểm, 3 góc nhìn camera (C) và nút điều hướng cảm ứng.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-5 text-[11px] font-semibold">
+              <span class="px-2.5 py-1 rounded bg-slate-800 text-emerald-300">Chuyển Động Nội Suy</span>
+              <span class="px-2.5 py-1 rounded bg-slate-800 text-amber-300">Mồi Vàng Thưởng</span>
+              <span class="px-2.5 py-1 rounded bg-slate-800 text-fuchsia-300">3 Camera (C)</span>
+            </div>
+          </div>
+          <button type="button" data-launch="snake" class="launch-btn w-full py-3.5 rounded-xl bg-gradient-to-r from-fuchsia-500 to-purple-600 hover:from-fuchsia-400 hover:to-purple-500 text-white font-arcade font-black text-sm tracking-wider shadow-lg shadow-fuchsia-500/25 transition cursor-pointer">
+            ▶ MỞ GAME RẮN SĂN MỒI 3D
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ACTIVE GAME ARENA VIEWPORT -->
+  <section id="portal-game-view" class="hidden flex-1 flex flex-col bg-slate-950 relative">
+    <!-- TOP GAME CONTROL BAR -->
+    <div class="h-14 px-3 sm:px-6 border-b border-slate-800 bg-slate-900/95 flex items-center justify-between z-30">
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <button id="btn-back-home" type="button" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1.5 transition cursor-pointer shrink-0">
+          ← <span data-i18n="backHome">Trang chủ</span>
+        </button>
+        <h2 id="active-game-title" class="font-arcade text-xs sm:text-base font-extrabold text-cyan-300 truncate">
+          CHẠY TRÊN ĐƯỜNG RAY TÀU HỎA 3D
+        </h2>
+      </div>
+
+      <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+        <button id="btn-pause-toggle" type="button" class="px-2.5 py-1.5 rounded-lg bg-amber-500/20 border border-amber-400/50 hover:bg-amber-500/35 text-amber-200 text-xs font-bold transition cursor-pointer">
+          ⏸ <span class="hidden sm:inline" data-i18n="pause">Tạm dừng (P)</span>
+        </button>
+        <button id="btn-cam-toggle" type="button" class="px-2.5 py-1.5 rounded-lg bg-indigo-600/30 border border-indigo-400/50 hover:bg-indigo-600/50 text-indigo-200 text-xs font-bold transition cursor-pointer">
+          🎥 <span class="hidden sm:inline">Camera</span> (C)
+        </button>
+        <button id="btn-mute" type="button" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition cursor-pointer">
+          🔊
+        </button>
+      </div>
+    </div>
+
+    <!-- 3D STAGE CONTAINER -->
+    <div id="game-stage" class="relative flex-1 w-full min-h-[520px] h-[calc(100vh-7.5rem)] overflow-hidden bg-[#040713]">
+      <!-- WEBGL CANVAS MOUNT -->
+      <div id="game-canvas-mount" class="absolute inset-0 w-full h-full z-0"></div>
+
+      <!-- HUD OVERLAY (POINTER-EVENTS-NONE SO IT NEVER BLOCKS CLICKS) -->
+      <div id="game-hud" class="pointer-events-none absolute top-3 left-3 right-3 flex flex-wrap items-start justify-between gap-2 z-20">
+        <div class="flex items-center gap-2 sm:gap-3 bg-slate-950/85 backdrop-blur-md border border-cyan-500/30 px-3.5 py-2 rounded-xl">
+          <div>
+            <div class="text-[10px] text-slate-400 uppercase font-bold" data-i18n="scoreLabel">ĐIỂM / SCORE</div>
+            <div id="hud-score" class="font-arcade text-lg sm:text-xl font-black text-cyan-300">0</div>
+          </div>
+          <div class="h-7 w-px bg-slate-800"></div>
+          <div>
+            <div class="text-[10px] text-slate-400 uppercase font-bold" data-i18n="highLabel">KỶ LỤC</div>
+            <div id="hud-high" class="font-arcade text-sm sm:text-base font-bold text-amber-300">0</div>
+          </div>
+          <div class="h-7 w-px bg-slate-800"></div>
+          <div>
+            <div class="text-[10px] text-slate-400 uppercase font-bold">LVL</div>
+            <div id="hud-level" class="font-arcade text-sm sm:text-base font-bold text-fuchsia-400">1</div>
+          </div>
+        </div>
+
+        <div class="flex flex-col items-end gap-1.5">
+          <div class="bg-slate-950/85 backdrop-blur-md border border-slate-700/80 px-3.5 py-2 rounded-xl flex items-center gap-3">
+            <span id="hud-lives" class="text-sm font-bold text-amber-300 tracking-wider">🪙 0</span>
+            <span id="hud-cam-label" class="text-[11px] font-arcade text-indigo-300 bg-indigo-950/80 px-2 py-0.5 rounded border border-indigo-500/30">CAM: CHASE</span>
+          </div>
+          <div id="hud-powerups" class="flex flex-wrap justify-end gap-1.5"></div>
+        </div>
+      </div>
+
+      <!-- BOSS HEALTH BAR (GALAGA ONLY) -->
+      <div id="boss-hp-container" class="hidden pointer-events-none absolute top-20 left-1/2 -translate-x-1/2 w-[90%] max-w-md z-20">
+        <div class="bg-slate-950/90 border border-rose-500/60 rounded-xl p-2.5 shadow-lg">
+          <div class="flex justify-between items-center text-xs font-arcade font-bold text-rose-300 mb-1">
+            <span id="boss-name-label">BOSS</span>
+            <span id="boss-hp-text">100%</span>
+          </div>
+          <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
+            <div id="boss-hp-bar" class="h-full bg-gradient-to-r from-rose-600 via-orange-500 to-amber-400 transition-all duration-100" style="width: 100%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLOATING TEXT FX LAYER -->
+      <div id="floating-fx-layer" class="pointer-events-none absolute inset-0 overflow-hidden z-25"></div>
+
+      <!-- ON-SCREEN TOUCH CONTROLS: SUBWAY RUNNER -->
+      <div id="subway-touch-controls" class="hidden pointer-events-none absolute bottom-4 left-4 right-4 z-30 flex items-end justify-between">
+        <div class="flex gap-2.5 pointer-events-auto">
+          <button id="sub-btn-left" type="button" class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-slate-900/90 border-2 border-amber-400/60 active:bg-amber-400 active:text-slate-950 text-amber-300 font-black text-xl shadow-lg cursor-pointer">◀</button>
+          <button id="sub-btn-right" type="button" class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-slate-900/90 border-2 border-amber-400/60 active:bg-amber-400 active:text-slate-950 text-amber-300 font-black text-xl shadow-lg cursor-pointer">▶</button>
+        </div>
+        <div class="flex gap-2.5 pointer-events-auto">
+          <button id="sub-btn-slide" type="button" class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-slate-900/90 border-2 border-sky-400/60 active:bg-sky-400 active:text-slate-950 text-sky-300 font-black text-xs shadow-lg cursor-pointer">TRƯỢT<br>▼</button>
+          <button id="sub-btn-jump" type="button" class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-slate-900/90 border-2 border-emerald-400/60 active:bg-emerald-400 active:text-slate-950 text-emerald-300 font-black text-xs shadow-lg cursor-pointer">NHẢY<br>▲</button>
+        </div>
+      </div>
+
+      <!-- ON-SCREEN TOUCH CONTROLS: SNAKE D-PAD -->
+      <div id="snake-touch-controls" class="hidden absolute bottom-5 right-5 z-30 grid grid-cols-3 gap-1.5 w-36 h-36">
+        <div></div>
+        <button id="snk-btn-up" type="button" class="rounded-xl bg-slate-900/90 border-2 border-fuchsia-400/60 active:bg-fuchsia-500 text-white font-bold text-lg flex items-center justify-center cursor-pointer">▲</button>
+        <div></div>
+        <button id="snk-btn-left" type="button" class="rounded-xl bg-slate-900/90 border-2 border-fuchsia-400/60 active:bg-fuchsia-500 text-white font-bold text-lg flex items-center justify-center cursor-pointer">◀</button>
+        <div class="rounded-xl bg-slate-950/70 border border-slate-700 flex items-center justify-center text-[10px] text-slate-400 font-arcade">3D</div>
+        <button id="snk-btn-right" type="button" class="rounded-xl bg-slate-900/90 border-2 border-fuchsia-400/60 active:bg-fuchsia-500 text-white font-bold text-lg flex items-center justify-center cursor-pointer">▶</button>
+        <div></div>
+        <button id="snk-btn-down" type="button" class="rounded-xl bg-slate-900/90 border-2 border-fuchsia-400/60 active:bg-fuchsia-500 text-white font-bold text-lg flex items-center justify-center cursor-pointer">▼</button>
+        <div></div>
+      </div>
+
+      <!-- START / PAUSE / GAME OVER MODAL OVERLAY -->
+      <div id="game-overlay" class="absolute inset-0 z-40 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 pointer-events-auto">
+        <div class="max-w-md w-full rounded-2xl border border-cyan-500/45 bg-slate-900/95 p-6 sm:p-8 text-center shadow-2xl">
+          <div id="overlay-badge" class="inline-block px-3 py-1 rounded-full bg-cyan-500/15 border border-cyan-400/40 text-cyan-300 font-arcade text-xs font-bold mb-3">
+            SẴN SÀNG XUẤT KÍCH
+          </div>
+          <h3 id="overlay-title" class="font-arcade text-xl sm:text-2xl font-black text-white mb-2">
+            CHẠY TRÊN ĐƯỜNG RAY TÀU HỎA 3D
+          </h3>
+          <p id="overlay-desc" class="text-slate-300 text-sm mb-5 leading-relaxed">
+            Phím Trái/Phải (A/D) đổi làn ray, Lên (W/Space) nhảy, Xuống (S) trượt gầm, P tạm dừng. Vuốt màn hình hoặc dùng nút cảm ứng bên dưới!
+          </p>
+          <div id="overlay-score-box" class="hidden mb-5 p-3.5 rounded-xl bg-slate-950 border border-slate-800">
+            <div class="text-xs text-slate-400 uppercase font-bold" data-i18n="finalScoreLabel">ĐIỂM ĐẠT ĐƯỢC</div>
+            <div id="overlay-score-val" class="font-arcade text-3xl font-black text-amber-400 mt-1">0</div>
+          </div>
+          <div class="flex flex-col gap-2.5">
+            <button id="btn-start-game" type="button" class="w-full py-4 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-500 to-blue-600 hover:from-cyan-300 hover:to-blue-500 text-slate-950 font-arcade font-black text-base tracking-wider shadow-lg shadow-cyan-500/35 transition transform active:scale-95 cursor-pointer">
+              BẮT ĐẦU CHƠI / START
+            </button>
+            <button id="btn-overlay-home" type="button" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs tracking-wider transition cursor-pointer">
+              ← <span data-i18n="backHome">Quay về Trang chủ</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    /* ==========================================================================
+       1. SYNTHESIZED WEB AUDIO SOUND ENGINE (ZERO EXTERNAL FILES)
+       ========================================================================== */
+    const SoundFX = {
+      ctx: null,
+      muted: false,
+
+      init() {
+        try {
+          if (!this.ctx) {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtx) this.ctx = new AudioCtx();
+          }
+          if (this.ctx && this.ctx.state === 'suspended') {
+            this.ctx.resume().catch(() => {});
+          }
+        } catch (e) {}
+      },
+
+      toggleMute() {
+        this.muted = !this.muted;
+        const btn = document.getElementById('btn-mute');
+        if (btn) btn.textContent = this.muted ? '🔇' : '🔊';
+      },
+
+      tone(f1, f2, dur, type = 'sine', vol = 0.12) {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+        try {
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(f1, now);
+          if (f2) osc.frequency.exponentialRampToValueAtTime(Math.max(20, f2), now + dur);
+          gain.gain.setValueAtTime(vol, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + dur);
+        } catch (e) {}
+      },
+
+      step() { this.tone(140, 85, 0.045, 'triangle', 0.045); },
+      jump() { this.tone(250, 580, 0.14, 'sine', 0.12); },
+      slide() { this.tone(320, 130, 0.15, 'triangle', 0.11); },
+      coin() { this.tone(980, 1380, 0.08, 'sine', 0.11); },
+      powerup() {
+        this.tone(520, 780, 0.11, 'sine', 0.14);
+        setTimeout(() => this.tone(780, 1220, 0.15, 'sine', 0.14), 85);
+      },
+      trainHorn() {
+        this.tone(185, 175, 0.25, 'sawtooth', 0.08);
+        setTimeout(() => this.tone(233, 220, 0.3, 'sawtooth', 0.08), 110);
+      },
+      shoot() { this.tone(860, 260, 0.08, 'square', 0.06); },
+      hit() { this.tone(240, 95, 0.08, 'triangle', 0.1); },
+      explosion() { this.tone(155, 30, 0.34, 'sawtooth', 0.18); },
+      bossWarn() {
+        this.tone(190, 135, 0.24, 'sawtooth', 0.15);
+        setTimeout(() => this.tone(190, 115, 0.28, 'sawtooth', 0.15), 260);
+      },
+      eat() { this.tone(440, 880, 0.1, 'sine', 0.13); },
+      goldEat() {
+        this.tone(660, 990, 0.1, 'sine', 0.14);
+        setTimeout(() => this.tone(990, 1480, 0.14, 'sine', 0.14), 80);
+      }
+    };
+
+    /* ==========================================================================
+       2. I18N & PORTAL NAVIGATION CONTROLLER
+       ========================================================================== */
+    const I18N = {
+      vi: {
+        subtitle: 'Cổng Game Arcade 3D Trực Tuyến',
+        fullscreen: 'Toàn màn hình',
+        heroTitle: 'ARCADE CỔ ĐIỂN TÁI SINH 3D',
+        heroDesc: 'Chơi ngay các tựa game hành động & arcade 3D tốc độ cao trực tiếp trên trình duyệt với đồ họa ánh sáng thời gian thực, âm thanh tổng hợp Web Audio và bảng lưu điểm cao.',
+        gSubTitle: 'Chạy Trên Đường Ray Tàu Hỏa 3D',
+        gSubDesc: 'Lướt qua 3 làn đường ray tốc độ cao, nhảy qua rào chắn, trượt gầm biển báo, leo dốc lên nóc tàu điện, né tàu lao ngược chiều và ăn Nam châm, Jetpack, Giày siêu bật!',
+        gGalTitle: 'Bắn Ruồi 3D: Đại Chiến Trùm',
+        gGalDesc: 'Chiến đấu qua đội quân Ong Thợ, Bướm Chiến bổ nhào và Ruồi Chúa. Thu thập [W] Đạn 3 tia, [R] Siêu thanh, [S] Khiên, [D] Phi thuyền đôi và hạ 3 Trùm Cuối tiến hóa theo màn!',
+        gSnkTitle: 'Rắn Săn Mồi 3D (Neon Snake)',
+        gSnkDesc: 'Uốn lượn mượt mà trên đấu trường lưới Neon 3D với đổ bóng thời gian thực, mồi năng lượng & mồi vàng thưởng điểm, 3 góc nhìn camera (C) và nút điều hướng cảm ứng.',
+        backHome: 'Trang chủ',
+        pause: 'Tạm dừng (P)',
+        scoreLabel: 'ĐIỂM / SCORE',
+        highLabel: 'KỶ LỤC',
+        finalScoreLabel: 'ĐIỂM ĐẠT ĐƯỢC'
+      },
+      en: {
+        subtitle: 'Online 3D Arcade Game Portal',
+        fullscreen: 'Fullscreen',
+        heroTitle: 'CLASSIC ARCADE REBORN IN 3D',
+        heroDesc: 'Play high-speed 3D arcade and action games right in your browser with real-time WebGL lighting, synthesized Web Audio FX, and persistent high scores.',
+        gSubTitle: 'Subway Runner 3D',
+        gSubDesc: 'Dash across 3 high-speed railway tracks, leap barriers, slide under overhead signs, climb ramps onto train roofs, dodge oncoming trains, and collect Magnet, Jetpack & Super Sneakers!',
+        gGalTitle: 'Space Galaga 3D: Boss Battle',
+        gGalDesc: 'Battle Worker Bees, dive-bombing Fighter Butterflies, and Boss Flies. Grab [W] Triple Spread, [R] Rapid Fire, [S] Shield, [D] Dual Fighter, and defeat 3 evolving Bosses!',
+        gSnkTitle: 'Neon Snake 3D',
+        gSnkDesc: 'Glide smoothly across a glowing 3D Neon grid with real-time shadows, energy orbs & bonus golden apples, 3 camera views (C), and touch D-Pad controls.',
+        backHome: 'Home',
+        pause: 'Pause (P)',
+        scoreLabel: 'SCORE',
+        highLabel: 'BEST',
+        finalScoreLabel: 'FINAL SCORE'
+      }
+    };
+
+    const Portal = {
+      lang: 'vi',
+      activeGameId: null,
+      activeEngine: null,
+      overlayMode: 'start', // 'start' | 'pause' | 'gameover'
+      highScores: {
+        subway: parseInt(localStorage.getItem('pg3d_hi_subway') || '0', 10),
+        galaga: parseInt(localStorage.getItem('pg3d_hi_galaga') || '0', 10),
+        snake: parseInt(localStorage.getItem('pg3d_hi_snake') || '0', 10)
+      },
+
+      init() {
+        this.refreshHighScores();
+
+        // Direct, rock-solid DOM bindings
+        document.getElementById('brand-logo').addEventListener('click', () => this.goHome());
+        document.getElementById('btn-back-home').addEventListener('click', () => this.goHome());
+        document.getElementById('btn-overlay-home').addEventListener('click', () => this.goHome());
+        document.getElementById('btn-lang').addEventListener('click', () => this.toggleLang());
+        document.getElementById('btn-fullscreen').addEventListener('click', () => this.toggleFullscreen());
+        document.getElementById('btn-mute').addEventListener('click', () => SoundFX.toggleMute());
+        document.getElementById('btn-cam-toggle').addEventListener('click', () => this.switchCamera());
+        document.getElementById('btn-pause-toggle').addEventListener('click', () => this.togglePause());
+
+        document.querySelectorAll('.launch-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const gameId = e.currentTarget.getAttribute('data-launch');
+            if (gameId) this.openGame(gameId);
+          });
+        });
+
+        const startBtn = document.getElementById('btn-start-game');
+        startBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.handleOverlayPrimaryAction();
+        });
+
+        window.addEventListener('keydown', (e) => {
+          if (!this.activeGameId) return;
+          if (e.code === 'KeyC') this.switchCamera();
+          if (e.code === 'KeyP') this.togglePause();
+        });
+      },
+
+      refreshHighScores() {
+        document.getElementById('card-hi-subway').textContent = this.highScores.subway;
+        document.getElementById('card-hi-galaga').textContent = this.highScores.galaga;
+        document.getElementById('card-hi-snake').textContent = this.highScores.snake;
+        if (this.activeGameId) {
+          document.getElementById('hud-high').textContent = this.highScores[this.activeGameId] || 0;
+        }
+      },
+
+      saveHighScore(gameId, score) {
+        const clean = Math.floor(score);
+        if (clean > (this.highScores[gameId] || 0)) {
+          this.highScores[gameId] = clean;
+          try {
+            localStorage.setItem('pg3d_hi_' + gameId, String(clean));
+          } catch (e) {}
+          this.refreshHighScores();
+        }
+      },
+
+      toggleLang() {
+        this.lang = this.lang === 'vi' ? 'en' : 'vi';
+        const dict = I18N[this.lang];
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const k = el.getAttribute('data-i18n');
+          if (dict[k]) el.textContent = dict[k];
+        });
+      },
+
+      toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          document.exitFullscreen().catch(() => {});
+        }
+      },
+
+      cleanupActiveEngine() {
+        if (this.activeEngine && typeof this.activeEngine.destroy === 'function') {
+          try {
+            this.activeEngine.destroy();
+          } catch (err) {
+            console.error('Cleanup error:', err);
+          }
+        }
+        this.activeEngine = null;
+        document.getElementById('game-canvas-mount').innerHTML = '';
+        document.getElementById('floating-fx-layer').innerHTML = '';
+        document.getElementById('boss-hp-container').classList.add('hidden');
+        document.getElementById('subway-touch-controls').classList.add('hidden');
+        document.getElementById('snake-touch-controls').classList.add('hidden');
+        document.getElementById('hud-powerups').innerHTML = '';
+      },
+
+      goHome() {
+        this.cleanupActiveEngine();
+        this.activeGameId = null;
+        document.getElementById('portal-game-view').classList.add('hidden');
+        document.getElementById('portal-home').classList.remove('hidden');
+        this.refreshHighScores();
+      },
+
+      openGame(gameId) {
+        SoundFX.init();
+        this.cleanupActiveEngine();
+        this.activeGameId = gameId;
+        this.overlayMode = 'start';
+
+        document.getElementById('portal-home').classList.add('hidden');
+        document.getElementById('portal-game-view').classList.remove('hidden');
+
+        // Configure Start Overlay
+        const overlay = document.getElementById('game-overlay');
+        overlay.classList.remove('hidden');
+        document.getElementById('overlay-score-box').classList.add('hidden');
+        document.getElementById('overlay-badge').textContent =
+          this.lang === 'vi' ? 'SẴN SÀNG XUẤT KÍCH' : 'READY TO LAUNCH';
+        document.getElementById('btn-start-game').textContent = 'BẮT ĐẦU CHƠI / START';
+
+        document.getElementById('hud-score').textContent = '0';
+        document.getElementById('hud-level').textContent = '1';
+        document.getElementById('hud-high').textContent = this.highScores[gameId] || 0;
+
+        const mountEl = document.getElementById('game-canvas-mount');
+
+        if (gameId === 'subway') {
+          document.getElementById('active-game-title').textContent =
+            this.lang === 'vi' ? 'CHẠY TRÊN ĐƯỜNG RAY TÀU HỎA 3D' : 'SUBWAY RUNNER 3D';
+          document.getElementById('overlay-title').textContent =
+            this.lang === 'vi' ? 'CHẠY TRÊN ĐƯỜNG RAY TÀU HỎA 3D' : 'SUBWAY RUNNER 3D';
+          document.getElementById('overlay-desc').textContent =
+            this.lang === 'vi'
+              ? 'Phím Trái/Phải (A/D) đổi làn ray, Lên (W/Space) nhảy qua rào, Xuống (S) trượt gầm biển báo, P tạm dừng. Vuốt màn hình hoặc dùng nút bấm cảm ứng!'
+              : 'Left/Right (A/D) switch tracks, Up (W/Space) jump barriers, Down (S) slide under signs, P pause. Swipe or tap on-screen controls!';
+          document.getElementById('hud-lives').textContent = '🪙 0';
+          document.getElementById('subway-touch-controls').classList.remove('hidden');
+
+          this.activeEngine = SubwayRunnerGame;
+          SubwayRunnerGame.mount(mountEl);
+        } else if (gameId === 'galaga') {
+          document.getElementById('active-game-title').textContent =
+            this.lang === 'vi' ? 'BẮN RUỒI 3D: ĐẠI CHIẾN TRÙM' : 'SPACE GALAGA 3D: BOSS EDITION';
+          document.getElementById('overlay-title').textContent =
+            this.lang === 'vi' ? 'BẮN RUỒI 3D: ĐẠI CHIẾN TRÙM' : 'SPACE GALAGA 3D';
+          document.getElementById('overlay-desc').textContent =
+            this.lang === 'vi'
+              ? 'Dùng Mũi tên / WASD hoặc kéo chuột/ngón tay điều khiển phi thuyền. Tàu tự động bắn! Thu thập [W], [R], [S], [D] và đánh bại 3 Trùm Cuối.'
+              : 'Use Arrow Keys / WASD or drag mouse/touch to fly. Auto-fire engaged! Collect [W], [R], [S], [D] power-ups and defeat 3 Bosses.';
+          document.getElementById('hud-lives').textContent = '❤️❤️❤️';
+
+          this.activeEngine = Galaga3DGame;
+          Galaga3DGame.mount(mountEl);
+        } else if (gameId === 'snake') {
+          document.getElementById('active-game-title').textContent =
+            this.lang === 'vi' ? 'RẮN SĂN MỒI 3D (NEON SNAKE)' : 'NEON SNAKE 3D';
+          document.getElementById('overlay-title').textContent =
+            this.lang === 'vi' ? 'RẮN SĂN MỒI 3D' : 'NEON SNAKE 3D';
+          document.getElementById('overlay-desc').textContent =
+            this.lang === 'vi'
+              ? 'Dùng Mũi tên / WASD, vuốt màn hình hoặc D-Pad góc phải điều khiển Rắn Neon. Ăn mồi vàng để nhận điểm thưởng lớn! Bấm C đổi góc nhìn.'
+              : 'Use Arrow Keys / WASD, swipe, or D-Pad to steer the Neon Snake. Eat golden apples for bonus points! Press C to switch camera.';
+          document.getElementById('hud-lives').textContent = '🐍 NEON';
+          document.getElementById('snake-touch-controls').classList.remove('hidden');
+
+          this.activeEngine = NeonSnake3DGame;
+          NeonSnake3DGame.mount(mountEl);
+        }
+      },
+
+      handleOverlayPrimaryAction() {
+        SoundFX.init();
+        if (!this.activeEngine) return;
+        const overlay = document.getElementById('game-overlay');
+
+        if (this.overlayMode === 'pause') {
+          overlay.classList.add('hidden');
+          if (typeof this.activeEngine.setPaused === 'function') {
+            this.activeEngine.setPaused(false);
+          }
+          this.overlayMode = 'playing';
+        } else {
+          overlay.classList.add('hidden');
+          this.overlayMode = 'playing';
+          if (typeof this.activeEngine.start === 'function') {
+            this.activeEngine.start();
+          }
+        }
+      },
+
+      togglePause() {
+        if (!this.activeEngine || !this.activeEngine.running) return;
+        const overlay = document.getElementById('game-overlay');
+
+        if (this.overlayMode === 'playing') {
+          this.overlayMode = 'pause';
+          if (typeof this.activeEngine.setPaused === 'function') {
+            this.activeEngine.setPaused(true);
+          }
+          document.getElementById('overlay-badge').textContent = 'PAUSED';
+          document.getElementById('overlay-title').textContent =
+            this.lang === 'vi' ? 'ĐANG TẠM DỪNG' : 'GAME PAUSED';
+          document.getElementById('overlay-desc').textContent =
+            this.lang === 'vi' ? 'Bấm Tiếp tục hoặc phím P để quay lại trận đấu.' : 'Click Resume or press P to continue playing.';
+          document.getElementById('overlay-score-box').classList.add('hidden');
+          document.getElementById('btn-start-game').textContent =
+            this.lang === 'vi' ? '▶ TIẾP TỤC CHƠI / RESUME' : '▶ RESUME GAME';
+          overlay.classList.remove('hidden');
+        } else if (this.overlayMode === 'pause') {
+          this.handleOverlayPrimaryAction();
+        }
+      },
+
+      showGameOver(finalScore) {
+        this.overlayMode = 'gameover';
+        const cleanScore = Math.floor(finalScore);
+        if (this.activeGameId) {
+          this.saveHighScore(this.activeGameId, cleanScore);
+        }
+        document.getElementById('overlay-badge').textContent = 'GAME OVER';
+        document.getElementById('overlay-title').textContent =
+          this.lang === 'vi' ? 'KẾT THÚC LƯỢT CHƠI!' : 'GAME OVER!';
+        document.getElementById('overlay-desc').textContent =
+          this.lang === 'vi' ? 'Sẵn sàng phá kỷ lục mới ở lượt tiếp theo chưa?' : 'Ready to beat your high score on the next run?';
+        document.getElementById('overlay-score-val').textContent = cleanScore;
+        document.getElementById('overlay-score-box').classList.remove('hidden');
+        document.getElementById('btn-start-game').textContent =
+          this.lang === 'vi' ? '↻ CHƠI LẠI / PLAY AGAIN' : '↻ PLAY AGAIN';
+        document.getElementById('game-overlay').classList.remove('hidden');
+      },
+
+      switchCamera() {
+        if (this.activeEngine && typeof this.activeEngine.toggleCamera === 'function') {
+          this.activeEngine.toggleCamera();
+        }
+      },
+
+      spawnFloatingText(worldPos, camera, text, color = '#38bdf8') {
+        const layer = document.getElementById('floating-fx-layer');
+        if (!layer || !camera) return;
+        const v = worldPos.clone().project(camera);
+        const x = (v.x * 0.5 + 0.5) * layer.clientWidth;
+        const y = (-v.y * 0.5 + 0.5) * layer.clientHeight;
+        if (x < 0 || x > layer.clientWidth || y < 0 || y > layer.clientHeight) return;
+
+        const el = document.createElement('div');
+        el.className = 'floating-badge text-xs sm:text-sm';
+        el.style.left = x + 'px';
+        el.style.top = y + 'px';
+        el.style.color = color;
+        el.textContent = text;
+        layer.appendChild(el);
+        setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 850);
+      }
+    };
+
+    /* ==========================================================================
+       3. GAME 1: CHẠY TRÊN ĐƯỜNG RAY TÀU HỎA 3D (SUBWAY RUNNER 3D)
+       ========================================================================== */
+    const SubwayRunnerGame = {
+      scene: null,
+      camera: null,
+      renderer: null,
+      container: null,
+      animId: null,
+      running: false,
+      paused: false,
+      camMode: 0, // 0: Chase, 1: High Action
+
+      laneWidth: 3.2,
+      currentLane: 0, // -1, 0, 1
+      playerX: 0,
+      playerY: 0,
+      vy: 0,
+      gravity: -46,
+      jumpVelocity: 17.5,
+
+      isSliding: false,
+      slideTimer: 0,
+      squashY: 1,
+      runPhase: 0,
+      stepSoundTimer: 0,
+      shakeTimer: 0,
+
+      speed: 22,
+      distance: 0,
+      coins: 0,
+      score: 0,
+      level: 1,
+      spawnCursorZ: -36,
+
+      powers: {
+        magnet: 0,
+        jetpack: 0,
+        sneakers: 0,
+        multiplier: 0
+      },
+
+      playerGroup: null,
+      shadowDisc: null,
+      armL: null,
+      armR: null,
+      legL: null,
+      legR: null,
+      jetpackMesh: null,
+      magnetAura: null,
+
+      trackChunks: [],
+      obstacles: [],
+      coinItems: [],
+      powerItems: [],
+      particles: [],
+
+      boundKeyDown: null,
+      boundResize: null,
+      touchStartX: 0,
+      touchStartY: 0,
+
+      mount(container) {
+        this.container = container;
+        const rect = container.getBoundingClientRect();
+        const w = Math.max(320, Math.floor(rect.width) || window.innerWidth);
+        const h = Math.max(460, Math.floor(rect.height) || 560);
+
+        this.scene = new THREE.Scene();
+        this.scene.background = new THREE.Color(0x070d1f);
+        this.scene.fog = new THREE.FogExp2(0x070d1f, 0.011);
+
+        this.camera = new THREE.PerspectiveCamera(58, w / h, 0.1, 180);
+        this.camera.position.set(0, 6.2, 10.5);
+        this.camera.lookAt(0, 2.2, -14);
+
+        this.renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+        this.renderer.setSize(w, h);
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        this.renderer.shadowMap.enabled = true;
+        container.innerHTML = '';
+        container.appendChild(this.renderer.domElement);
+
+        // Lighting
+        const hemiLight = new THREE.HemisphereLight(0x93c5fd, 0x1e1b4b, 1.1);
+        this.scene.add(hemiLight);
+
+        const dirLight = new THREE.DirectionalLight(0xfffbeb, 1.35);
+        dirLight.position.set(16, 30, 18);
+        dirLight.castShadow = true;
+        this.scene.add(dirLight);
+
+        const neonGlow = new THREE.PointLight(0x38bdf8, 1.4, 65);
+        neonGlow.position.set(0, 10, -14);
+        this.scene.add(neonGlow);
+
+        this.buildEnvironment();
+        this.buildRunner();
+        this.resetState();
+        this.bindInputs();
+
+        document.getElementById('hud-cam-label').textContent = 'CAM: CHASE';
+        this.renderer.render(this.scene, this.camera);
+
+        this.lastTime = performance.now();
+        const tick = (now) => {
+          this.animId = requestAnimationFrame(tick);
+          this.update(now);
+        };
+        this.animId = requestAnimationFrame(tick);
+      },
+
+      buildEnvironment() {
+        this.trackChunks = [];
+        const chunkLen = 20;
+        const numChunks = 8;
+
+        const gravelMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.9 });
+        const sleeperMat = new THREE.MeshStandardMaterial({ color: 0x451a03, roughness: 0.85 });
+        const railMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.75, roughness: 0.25 });
+        const wallMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.7 });
+        const archMat = new THREE.MeshStandardMaterial({ color: 0x0ea5e9, emissive: 0x0284c7, emissiveIntensity: 0.35 });
+
+        const bColors = [0x0f172a, 0x1e1b4b, 0x172554, 0x1e293b];
+        const wColors = [0x38bdf8, 0xfbbf24, 0xf43f5e, 0x34d399];
+
+        for (let i = 0; i < numChunks; i++) {
+          const chunk = new THREE.Group();
+          chunk.position.z = -i * chunkLen;
+
+          const bed = new THREE.Mesh(new THREE.BoxGeometry(13.8, 0.5, chunkLen), gravelMat);
+          bed.position.y = -0.25;
+          bed.receiveShadow = true;
+          chunk.add(bed);
+
+          [-6.7, 6.7].forEach(wx => {
+            const curb = new THREE.Mesh(new THREE.BoxGeometry(0.8, 1.4, chunkLen), wallMat);
+            curb.position.set(wx, 0.45, 0);
+            chunk.add(curb);
+          });
+
+          // 3 Railway lanes at x = -3.2, 0, +3.2
+          [-this.laneWidth, 0, this.laneWidth].forEach(lx => {
+            for (let sz = -chunkLen / 2 + 1; sz < chunkLen / 2; sz += 2) {
+              const sleeper = new THREE.Mesh(new THREE.BoxGeometry(2.15, 0.12, 0.45), sleeperMat);
+              sleeper.position.set(lx, 0.05, sz);
+              chunk.add(sleeper);
+            }
+            [-0.68, 0.68].forEach(rx => {
+              const rail = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.16, chunkLen), railMat);
+              rail.position.set(lx + rx, 0.16, 0);
+              chunk.add(rail);
+            });
+          });
+
+          // Overhead electric poles & gantry arch
+          const poleL = new THREE.Mesh(new THREE.BoxGeometry(0.32, 7.8, 0.32), wallMat);
+          poleL.position.set(-6.4, 3.9, 0);
+          const poleR = poleL.clone();
+          poleR.position.x = 6.4;
+          const beam = new THREE.Mesh(new THREE.BoxGeometry(13.2, 0.28, 0.28), archMat);
+          beam.position.set(0, 7.7, 0);
+          chunk.add(poleL, poleR, beam);
+
+          // Station platforms & city buildings on both sides
+          [-1, 1].forEach(side => {
+            const bh = 10 + ((i * 7 + (side > 0 ? 3 : 0)) % 14);
+            const bw = 5.6;
+            const bd = chunkLen - 1.4;
+            const bMat = new THREE.MeshStandardMaterial({
+              color: bColors[(i + (side > 0 ? 1 : 0)) % bColors.length],
+              roughness: 0.75
+            });
+            const building = new THREE.Mesh(new THREE.BoxGeometry(bw, bh, bd), bMat);
+            building.position.set(side * 10.8, bh / 2 - 0.5, 0);
+            chunk.add(building);
+
+            const winMat = new THREE.MeshBasicMaterial({
+              color: wColors[(i + (side > 0 ? 2 : 0)) % wColors.length]
+            });
+            for (let wy = 2.5; wy < bh - 1.5; wy += 2.6) {
+              const winStrip = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.55, bd * 0.65), winMat);
+              winStrip.position.set(side * 7.95, wy, 0);
+              chunk.add(winStrip);
+            }
+          });
+
+          this.scene.add(chunk);
+          this.trackChunks.push(chunk);
+        }
+      },
+
+      buildRunner() {
+        this.playerGroup = new THREE.Group();
+
+        // Ground shadow disc
+        const shGeo = new THREE.CircleGeometry(0.85, 20);
+        shGeo.rotateX(-Math.PI / 2);
+        const shMat = new THREE.MeshBasicMaterial({ color: 0x020617, transparent: true, opacity: 0.55 });
+        this.shadowDisc = new THREE.Mesh(shGeo, shMat);
+        this.shadowDisc.position.y = 0.08;
+        this.scene.add(this.shadowDisc);
+
+        // Torso
+        const torso = new THREE.Mesh(
+          new THREE.BoxGeometry(0.85, 1.05, 0.5),
+          new THREE.MeshStandardMaterial({ color: 0xf43f5e, roughness: 0.4 })
+        );
+        torso.position.y = 1.35;
+        torso.castShadow = true;
+        this.playerGroup.add(torso);
+
+        // Head + Cap + Headphones
+        const headGroup = new THREE.Group();
+        headGroup.position.set(0, 2.2, 0);
+
+        const headBox = new THREE.Mesh(
+          new THREE.BoxGeometry(0.66, 0.66, 0.66),
+          new THREE.MeshStandardMaterial({ color: 0xfde68a, roughness: 0.5 })
+        );
+        headBox.castShadow = true;
+        headGroup.add(headBox);
+
+        const capMat = new THREE.MeshStandardMaterial({ color: 0x0284c7 });
+        const capTop = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.24, 0.72), capMat);
+        capTop.position.y = 0.36;
+        const capVisor = new THREE.Mesh(new THREE.BoxGeometry(0.68, 0.1, 0.38), capMat);
+        capVisor.position.set(0, 0.28, 0.42);
+        headGroup.add(capTop, capVisor);
+
+        const phoneMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+        const earL = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.14, 10), phoneMat);
+        earL.rotation.z = Math.PI / 2;
+        earL.position.set(-0.38, 0, 0);
+        const earR = earL.clone();
+        earR.position.x = 0.38;
+        headGroup.add(earL, earR);
+
+        this.playerGroup.add(headGroup);
+
+        // Articulated Arms
+        const armGeo = new THREE.BoxGeometry(0.26, 0.85, 0.26);
+        armGeo.translate(0, -0.35, 0);
+        const armMat = new THREE.MeshStandardMaterial({ color: 0xfb7185 });
+
+        this.armL = new THREE.Mesh(armGeo, armMat);
+        this.armL.position.set(-0.6, 1.8, 0);
+        this.armR = new THREE.Mesh(armGeo, armMat);
+        this.armR.position.set(0.6, 1.8, 0);
+        this.playerGroup.add(this.armL, this.armR);
+
+        // Articulated Legs + Golden Sneakers
+        const legGeo = new THREE.BoxGeometry(0.3, 0.88, 0.32);
+        legGeo.translate(0, -0.4, 0);
+        const legMat = new THREE.MeshStandardMaterial({ color: 0x1e293b });
+
+        this.legL = new THREE.Mesh(legGeo, legMat);
+        this.legL.position.set(-0.24, 0.88, 0);
+        this.legR = new THREE.Mesh(legGeo, legMat);
+        this.legR.position.set(0.24, 0.88, 0);
+
+        const shoeMat = new THREE.MeshStandardMaterial({ color: 0xfacc15, emissive: 0xca8a04, emissiveIntensity: 0.3 });
+        const shoeGeo = new THREE.BoxGeometry(0.34, 0.2, 0.52);
+        const shoeL = new THREE.Mesh(shoeGeo, shoeMat);
+        shoeL.position.set(0, -0.82, -0.08);
+        const shoeR = shoeL.clone();
+        this.legL.add(shoeL);
+        this.legR.add(shoeR);
+
+        this.playerGroup.add(this.legL, this.legR);
+
+        // Jetpack Thrusters
+        this.jetpackMesh = new THREE.Group();
+        const tankGeo = new THREE.CylinderGeometry(0.16, 0.16, 0.85, 10);
+        const tankMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.7, roughness: 0.2 });
+        const tL = new THREE.Mesh(tankGeo, tankMat);
+        tL.position.set(-0.2, 1.4, 0.36);
+        const tR = tL.clone();
+        tR.position.x = 0.2;
+        this.jetpackMesh.add(tL, tR);
+        this.jetpackMesh.visible = false;
+        this.playerGroup.add(this.jetpackMesh);
+
+        // Magnet Ring
+        const magGeo = new THREE.RingGeometry(1.1, 1.38, 24);
+        magGeo.rotateX(-Math.PI / 2);
+        const magMat = new THREE.MeshBasicMaterial({ color: 0xf43f5e, side: THREE.DoubleSide, transparent: true, opacity: 0.7 });
+        this.magnetAura = new THREE.Mesh(magGeo, magMat);
+        this.magnetAura.position.y = 0.16;
+        this.magnetAura.visible = false;
+        this.playerGroup.add(this.magnetAura);
+
+        this.scene.add(this.playerGroup);
+      },
+
+      resetState() {
+        [...this.obstacles, ...this.coinItems, ...this.powerItems, ...this.particles].forEach(it => {
+          if (it.mesh) this.scene.remove(it.mesh);
+        });
+        this.obstacles = [];
+        this.coinItems = [];
+        this.powerItems = [];
+        this.particles = [];
+
+        this.currentLane = 0;
+        this.playerX = 0;
+        this.playerY = 0;
+        this.vy = 0;
+        this.isSliding = false;
+        this.slideTimer = 0;
+        this.squashY = 1;
+        this.shakeTimer = 0;
+
+        this.speed = 22;
+        this.distance = 0;
+        this.coins = 0;
+        this.score = 0;
+        this.level = 1;
+        this.spawnCursorZ = -34;
+
+        this.powers = { magnet: 0, jetpack: 0, sneakers: 0, multiplier: 0 };
+        if (this.jetpackMesh) this.jetpackMesh.visible = false;
+        if (this.magnetAura) this.magnetAura.visible = false;
+
+        if (this.playerGroup) {
+          this.playerGroup.position.set(0, 0, 0);
+          this.playerGroup.scale.set(1, 1, 1);
+          this.playerGroup.rotation.set(0, 0, 0);
+        }
+        if (this.shadowDisc) {
+          this.shadowDisc.position.set(0, 0.08, 0);
+        }
+
+        for (let i = 0; i < this.trackChunks.length; i++) {
+          this.trackChunks[i].position.z = -i * 20;
+        }
+
+        for (let w = 0; w < 6; w++) {
+          this.spawnRowPattern();
+        }
+        this.updateHUD();
+      },
+
+      start() {
+        this.resetState();
+        this.paused = false;
+        this.running = true;
+      },
+
+      setPaused(val) {
+        this.paused = !!val;
+      },
+
+      createTrainMesh(isMoving, hasRamp) {
+        const g = new THREE.Group();
+        const len = 13.5;
+        const height = 3.1;
+        const width = 2.5;
+
+        const bodyColor = isMoving ? 0xe11d48 : 0x0284c7;
+        const stripeColor = isMoving ? 0xfacc15 : 0x38bdf8;
+
+        const body = new THREE.Mesh(
+          new THREE.BoxGeometry(width, height, len),
+          new THREE.MeshStandardMaterial({ color: bodyColor, roughness: 0.35, metalness: 0.3 })
+        );
+        body.position.y = height / 2 + 0.15;
+        body.castShadow = true;
+        body.receiveShadow = true;
+        g.add(body);
+
+        const roof = new THREE.Mesh(
+          new THREE.BoxGeometry(width * 0.88, 0.18, len * 0.96),
+          new THREE.MeshStandardMaterial({ color: 0x334155 })
+        );
+        roof.position.y = height + 0.22;
+        g.add(roof);
+
+        const stripe = new THREE.Mesh(
+          new THREE.BoxGeometry(width + 0.08, 0.28, len + 0.05),
+          new THREE.MeshBasicMaterial({ color: stripeColor })
+        );
+        stripe.position.y = 1.3;
+        g.add(stripe);
+
+        const glass = new THREE.Mesh(
+          new THREE.BoxGeometry(width * 0.78, 1.0, 0.12),
+          new THREE.MeshBasicMaterial({ color: 0x0f172a })
+        );
+        glass.position.set(0, 2.25, len / 2 + 0.02);
+        g.add(glass);
+
+        const lightGeo = new THREE.SphereGeometry(0.24, 8, 8);
+        const lightMat = new THREE.MeshBasicMaterial({ color: isMoving ? 0xfef08a : 0x7dd3fc });
+        const l1 = new THREE.Mesh(lightGeo, lightMat);
+        l1.position.set(-0.75, 0.85, len / 2 + 0.05);
+        const l2 = l1.clone();
+        l2.position.x = 0.75;
+        g.add(l1, l2);
+
+        if (hasRamp) {
+          const rampLen = 4.6;
+          const ramp = new THREE.Mesh(
+            new THREE.BoxGeometry(width * 0.94, 0.25, rampLen),
+            new THREE.MeshStandardMaterial({ color: 0xf59e0b, emissive: 0xd97706, emissiveIntensity: 0.38 })
+          );
+          ramp.position.set(0, height / 2 + 0.05, len / 2 + rampLen * 0.44);
+          ramp.rotation.x = Math.atan2(height, rampLen);
+          g.add(ramp);
+        }
+
+        return g;
+      },
+
+      createBarrierMesh(type) {
+        const g = new THREE.Group();
+        const postMat = new THREE.MeshStandardMaterial({ color: 0x64748b, metalness: 0.6 });
+        const warnMat = new THREE.MeshStandardMaterial({
+          color: type === 'low' ? 0xf97316 : 0x38bdf8,
+          emissive: type === 'low' ? 0xc2410c : 0x0284c7,
+          emissiveIntensity: 0.45
+        });
+
+        if (type === 'low') {
+          const postL = new THREE.Mesh(new THREE.BoxGeometry(0.22, 1.25, 0.22), postMat);
+          postL.position.set(-1.18, 0.62, 0);
+          const postR = postL.clone();
+          postR.position.x = 1.18;
+          const board = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.58, 0.24), warnMat);
+          board.position.set(0, 0.92, 0);
+          g.add(postL, postR, board);
+        } else {
+          const postL = new THREE.Mesh(new THREE.BoxGeometry(0.24, 3.4, 0.24), postMat);
+          postL.position.set(-1.22, 1.7, 0);
+          const postR = postL.clone();
+          postR.position.x = 1.22;
+          const sign = new THREE.Mesh(new THREE.BoxGeometry(2.7, 1.55, 0.28), warnMat);
+          sign.position.set(0, 2.45, 0);
+          g.add(postL, postR, sign);
+        }
+        return g;
+      },
+
+      spawnCoinLine(lane, startZ, count, yBase = 1.0, arc = false) {
+        const geo = new THREE.CylinderGeometry(0.42, 0.42, 0.14, 14);
+        geo.rotateX(Math.PI / 2);
+        const mat = new THREE.MeshStandardMaterial({
+          color: 0xfacc15,
+          emissive: 0xeab308,
+          emissiveIntensity: 0.45,
+          metalness: 0.7,
+          roughness: 0.2
+        });
+
+        for (let i = 0; i < count; i++) {
+          const mesh = new THREE.Mesh(geo, mat);
+          const t = count > 1 ? i / (count - 1) : 0.5;
+          const yOff = arc ? Math.sin(t * Math.PI) * 2.4 : 0;
+          mesh.position.set(lane * this.laneWidth, yBase + yOff, startZ - i * 2.3);
+          this.scene.add(mesh);
+          this.coinItems.push({ mesh });
+        }
+      },
+
+      spawnPowerupItem(lane, z, y = 1.1) {
+        const types = ['magnet', 'jetpack', 'sneakers', 'multiplier'];
+        const type = types[Math.floor(Math.random() * types.length)];
+        const colors = {
+          magnet: 0xf43f5e,
+          jetpack: 0xf59e0b,
+          sneakers: 0x10b981,
+          multiplier: 0xa855f7
+        };
+        const mesh = new THREE.Mesh(
+          new THREE.OctahedronGeometry(0.62, 0),
+          new THREE.MeshStandardMaterial({
+            color: colors[type],
+            emissive: colors[type],
+            emissiveIntensity: 0.65
+          })
+        );
+        mesh.position.set(lane * this.laneWidth, y, z);
+        this.scene.add(mesh);
+        this.powerItems.push({ type, mesh });
+      },
+
+      spawnRowPattern() {
+        const z = this.spawnCursorZ;
+        const lanes = [-1, 0, 1];
+        for (let i = lanes.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [lanes[i], lanes[j]] = [lanes[j], lanes[i]];
+        }
+
+        const openLane = lanes[0];
+        const hazard1 = lanes[1];
+        const hazard2 = lanes[2];
+
+        // Hazard 1: Train (Stationary, Ramp, or Oncoming Moving)
+        const hasRamp = Math.random() < 0.42;
+        const isMoving = !hasRamp && Math.random() < 0.52;
+        const trainMesh = this.createTrainMesh(isMoving, hasRamp);
+        trainMesh.position.set(hazard1 * this.laneWidth, 0, z - 6);
+        this.scene.add(trainMesh);
+
+        this.obstacles.push({
+          kind: 'train',
+          mesh: trainMesh,
+          lane: hazard1,
+          z: z - 6,
+          halfLen: 6.75,
+          topY: 3.35,
+          hasRamp,
+          rampLen: 4.6,
+          speedZ: isMoving ? 14 + this.level * 1.4 : 0,
+          honked: false
+        });
+
+        if (hasRamp) {
+          this.spawnCoinLine(hazard1, z - 1.5, 5, 4.1, false);
+        }
+
+        // Hazard 2: Low or High Barrier
+        const bType = Math.random() < 0.5 ? 'low' : 'high';
+        const bMesh = this.createBarrierMesh(bType);
+        bMesh.position.set(hazard2 * this.laneWidth, 0, z - 4);
+        this.scene.add(bMesh);
+        this.obstacles.push({
+          kind: bType === 'low' ? 'barrier_low' : 'barrier_high',
+          mesh: bMesh,
+          lane: hazard2,
+          z: z - 4,
+          halfLen: 0.55
+        });
+
+        if (bType === 'low') {
+          this.spawnCoinLine(hazard2, z - 1.5, 4, 1.35, true);
+        }
+
+        // Open lane: Coins or Power-up
+        if (Math.random() < 0.32) {
+          this.spawnPowerupItem(openLane, z - 5, 1.1);
+        } else {
+          this.spawnCoinLine(openLane, z - 2, 5, 1.0, false);
+        }
+
+        this.spawnCursorZ -= 24;
+      },
+
+      moveLane(delta) {
+        if (!this.running || this.paused) return;
+        const next = Math.max(-1, Math.min(1, this.currentLane + delta));
+        if (next !== this.currentLane) {
+          this.currentLane = next;
+          SoundFX.tone(360, 480, 0.06, 'sine', 0.07);
+        }
+      },
+
+      jump() {
+        if (!this.running || this.paused || this.powers.jetpack > 0) return;
+        const onSurface = this.vy === 0 && (this.playerY <= 0.06 || Math.abs(this.playerY - 3.35) < 0.25);
+        if (onSurface) {
+          this.isSliding = false;
+          this.slideTimer = 0;
+          const mult = this.powers.sneakers > 0 ? 1.42 : 1.0;
+          this.vy = this.jumpVelocity * mult;
+          this.squashY = 1.32;
+          SoundFX.jump();
+        }
+      },
+
+      slide() {
+        if (!this.running || this.paused || this.powers.jetpack > 0) return;
+        this.isSliding = true;
+        this.slideTimer = 0.65;
+        if (this.playerY > 0.1) {
+          this.vy = -34;
+        }
+        SoundFX.slide();
+      },
+
+      toggleCamera() {
+        this.camMode = (this.camMode + 1) % 2;
+        document.getElementById('hud-cam-label').textContent =
+          this.camMode === 0 ? 'CAM: CHASE' : 'CAM: HIGH VIEW';
+      },
+
+      activatePowerup(type) {
+        SoundFX.powerup();
+        const names = {
+          magnet: 'NAM CHÂM HÚT XU!',
+          jetpack: 'TÊN LỬA JETPACK!',
+          sneakers: 'GIÀY SIÊU BẬT!',
+          multiplier: 'NHÂN ĐÔI ĐIỂM 2X!'
+        };
+        const colors = {
+          magnet: '#fb7185',
+          jetpack: '#fbbf24',
+          sneakers: '#34d399',
+          multiplier: '#c084fc'
+        };
+        Portal.spawnFloatingText(
+          new THREE.Vector3(this.playerX, this.playerY + 2.8, 0),
+          this.camera,
+          names[type],
+          colors[type]
+        );
+
+        if (type === 'magnet') this.powers.magnet = 11;
+        if (type === 'sneakers') this.powers.sneakers = 12;
+        if (type === 'multiplier') this.powers.multiplier = 12;
+        if (type === 'jetpack') {
+          this.powers.jetpack = 7.5;
+          this.isSliding = false;
+          this.vy = 0;
+          for (let i = 0; i < 18; i++) {
+            const lane = Math.floor(i / 6) - 1;
+            this.spawnCoinLine(lane, -16 - i * 3.5, 1, 9.2, false);
+          }
+        }
+        this.updateHUD();
+      },
+
+      spawnBurst(pos, color = 0xfacc15, count = 10) {
+        const geo = new THREE.BoxGeometry(0.22, 0.22, 0.22);
+        const mat = new THREE.MeshBasicMaterial({ color });
+        for (let i = 0; i < count; i++) {
+          const m = new THREE.Mesh(geo, mat);
+          m.position.copy(pos);
+          this.scene.add(m);
+          this.particles.push({
+            mesh: m,
+            vx: (Math.random() - 0.5) * 10,
+            vy: Math.random() * 8 + 2,
+            vz: (Math.random() - 0.5) * 10,
+            life: 0.42
+          });
+        }
+      },
+
+      triggerCrash() {
+        SoundFX.explosion();
+        this.shakeTimer = 0.45;
+        this.spawnBurst(new THREE.Vector3(this.playerX, this.playerY + 1.2, 0), 0xf43f5e, 28);
+        this.running = false;
+        Portal.showGameOver(this.score);
+      },
+
+      updateHUD() {
+        document.getElementById('hud-score').textContent = Math.floor(this.score);
+        document.getElementById('hud-level').textContent = this.level;
+        document.getElementById('hud-lives').textContent = '🪙 ' + this.coins;
+
+        const pDiv = document.getElementById('hud-powerups');
+        const list = [];
+        if (this.powers.magnet > 0) list.push(`<span class="px-2 py-0.5 rounded bg-rose-500/20 border border-rose-400 text-rose-300 text-[11px] font-bold">🧲 ${Math.ceil(this.powers.magnet)}s</span>`);
+        if (this.powers.jetpack > 0) list.push(`<span class="px-2 py-0.5 rounded bg-amber-500/20 border border-amber-400 text-amber-300 text-[11px] font-bold">🚀 ${Math.ceil(this.powers.jetpack)}s</span>`);
+        if (this.powers.sneakers > 0) list.push(`<span class="px-2 py-0.5 rounded bg-emerald-500/20 border border-emerald-400 text-emerald-300 text-[11px] font-bold">👟 ${Math.ceil(this.powers.sneakers)}s</span>`);
+        if (this.powers.multiplier > 0) list.push(`<span class="px-2 py-0.5 rounded bg-purple-500/20 border border-purple-400 text-purple-300 text-[11px] font-bold">2X ${Math.ceil(this.powers.multiplier)}s</span>`);
+        pDiv.innerHTML = list.join('');
+      },
+
+      update(now) {
+        const dt = Math.min(0.05, (now - this.lastTime) / 1000);
+        this.lastTime = now;
+
+        for (let i = this.particles.length - 1; i >= 0; i--) {
+          const p = this.particles[i];
+          p.life -= dt;
+          p.mesh.position.x += p.vx * dt;
+          p.mesh.position.y += p.vy * dt;
+          p.mesh.position.z += p.vz * dt;
+          p.mesh.scale.setScalar(Math.max(0.01, p.life * 2));
+          if (p.life <= 0) {
+            this.scene.remove(p.mesh);
+            this.particles.splice(i, 1);
+          }
+        }
+
+        if (!this.running || this.paused) {
+          this.renderer.render(this.scene, this.camera);
+          return;
+        }
+
+        this.speed = Math.min(44, 22 + this.distance * 0.008);
+        this.level = Math.floor(this.distance / 350) + 1;
+        const mult = this.powers.multiplier > 0 ? 2 : 1;
+        const stepDist = this.speed * dt;
+        this.distance += stepDist;
+        this.score += stepDist * 2.5 * mult;
+
+        let hudDirty = false;
+        Object.keys(this.powers).forEach(k => {
+          if (this.powers[k] > 0) {
+            this.powers[k] = Math.max(0, this.powers[k] - dt);
+            hudDirty = true;
+          }
+        });
+        this.jetpackMesh.visible = this.powers.jetpack > 0;
+        this.magnetAura.visible = this.powers.magnet > 0;
+        if (this.magnetAura.visible) this.magnetAura.rotation.z += dt * 4;
+
+        // Scroll railway chunks
+        const totalTrackLen = this.trackChunks.length * 20;
+        for (let i = 0; i < this.trackChunks.length; i++) {
+          const ch = this.trackChunks[i];
+          ch.position.z += stepDist;
+          if (ch.position.z > 20) ch.position.z -= totalTrackLen;
+        }
+
+        this.spawnCursorZ += stepDist;
+        while (this.spawnCursorZ > -145) {
+          this.spawnRowPattern();
+        }
+
+        // Smooth lane interpolation
+        const targetX = this.currentLane * this.laneWidth;
+        const prevX = this.playerX;
+        this.playerX += (targetX - this.playerX) * Math.min(1, dt * 15);
+        const lateralVel = (this.playerX - prevX) / Math.max(0.001, dt);
+
+        // Support surface (Ground = 0, Train Roof = 3.35)
+        let supportY = 0;
+        for (let i = 0; i < this.obstacles.length; i++) {
+          const ob = this.obstacles[i];
+          if (ob.kind === 'train' && Math.abs(this.playerX - ob.lane * this.laneWidth) < 1.15) {
+            const frontZ = ob.z + ob.halfLen;
+            const backZ = ob.z - ob.halfLen;
+            if (ob.hasRamp && 0 <= frontZ + ob.rampLen && 0 >= frontZ) {
+              const ratio = 1 - Math.max(0, Math.min(1, 0 - frontZ) / ob.rampLen);
+              supportY = Math.max(supportY, ratio * ob.topY);
+            }
+            if (0 <= frontZ + 0.3 && 0 >= backZ - 0.3 && this.playerY >= ob.topY - 0.65) {
+              supportY = Math.max(supportY, ob.topY);
+            }
+          }
+        }
+
+        // Vertical jump / gravity / jetpack
+        if (this.powers.jetpack > 0) {
+          this.playerY += (9.0 - this.playerY) * Math.min(1, dt * 7);
+          this.vy = 0;
+          if (Math.random() < 0.6) {
+            this.spawnBurst(new THREE.Vector3(this.playerX, this.playerY + 0.8, 0.5), 0xf97316, 1);
+          }
+        } else {
+          if (this.playerY > supportY || this.vy > 0) {
+            this.vy += this.gravity * dt;
+            this.playerY += this.vy * dt;
+            if (this.playerY <= supportY && this.vy <= 0) {
+              this.playerY = supportY;
+              this.vy = 0;
+              this.squashY = 0.76;
+            }
+          } else {
+            this.playerY = supportY;
+            this.vy = 0;
+          }
+        }
+
+        if (this.isSliding) {
+          this.slideTimer -= dt;
+          if (this.slideTimer <= 0) this.isSliding = false;
+        }
+
+        // Limb & squash animations
+        this.squashY += (1 - this.squashY) * Math.min(1, dt * 14);
+        const targetScaleY = this.isSliding ? 0.48 : this.squashY;
+        const targetScaleXZ = this.isSliding ? 1.22 : (2 - this.squashY) * 0.5 + 0.5;
+        this.playerGroup.scale.set(targetScaleXZ, targetScaleY, targetScaleXZ);
+        this.playerGroup.position.set(this.playerX, this.playerY, 0);
+        this.playerGroup.rotation.z = -lateralVel * 0.022;
+
+        // Ground shadow disc follows player X and scales with height
+        if (this.shadowDisc) {
+          this.shadowDisc.position.set(this.playerX, supportY + 0.08, 0);
+          const shScale = Math.max(0.35, 1 - (this.playerY - supportY) * 0.08);
+          this.shadowDisc.scale.set(shScale, shScale, shScale);
+        }
+
+        if (this.powers.jetpack > 0) {
+          this.playerGroup.rotation.x = -0.55;
+          this.armL.rotation.x = -2.6;
+          this.armR.rotation.x = -2.6;
+          this.legL.rotation.x = 0.2;
+          this.legR.rotation.x = -0.2;
+        } else {
+          this.playerGroup.rotation.x = this.isSliding ? -0.35 : 0.12;
+          this.runPhase += dt * this.speed * 0.65;
+          const isGrounded = this.playerY <= supportY + 0.08 && !this.isSliding;
+          if (isGrounded) {
+            this.stepSoundTimer -= dt;
+            if (this.stepSoundTimer <= 0) {
+              this.stepSoundTimer = 0.24;
+              SoundFX.step();
+            }
+          }
+          const swing = !isGrounded ? 0.65 : Math.sin(this.runPhase) * 0.95;
+          this.armL.rotation.x = swing;
+          this.armR.rotation.x = -swing;
+          this.legL.rotation.x = -swing;
+          this.legR.rotation.x = swing;
+        }
+
+        // Obstacles & Collisions
+        for (let i = this.obstacles.length - 1; i >= 0; i--) {
+          const ob = this.obstacles[i];
+          ob.z += stepDist + (ob.speedZ || 0) * dt;
+          ob.mesh.position.z = ob.z;
+
+          if (ob.speedZ > 0 && !ob.honked && ob.z > -38 && ob.z < -26) {
+            ob.honked = true;
+            SoundFX.trainHorn();
+          }
+
+          const sameLane = Math.abs(this.playerX - ob.lane * this.laneWidth) < 1.05;
+          if (sameLane && this.powers.jetpack <= 0) {
+            if (ob.kind === 'train') {
+              const frontZ = ob.z + ob.halfLen;
+              const backZ = ob.z - ob.halfLen;
+              if (0 <= frontZ - 0.25 && 0 >= backZ + 0.25 && this.playerY < ob.topY - 0.68) {
+                this.triggerCrash();
+                return;
+              }
+            } else if (ob.kind === 'barrier_low') {
+              if (Math.abs(ob.z) < 0.65 && this.playerY < 1.15) {
+                this.triggerCrash();
+                return;
+              }
+            } else if (ob.kind === 'barrier_high') {
+              if (Math.abs(ob.z) < 0.65 && !this.isSliding && this.playerY < 1.8) {
+                this.triggerCrash();
+                return;
+              }
+            }
+          }
+
+          if (ob.z > 24) {
+            this.scene.remove(ob.mesh);
+            this.obstacles.splice(i, 1);
+          }
+        }
+
+        // Coins & Magnet
+        for (let i = this.coinItems.length - 1; i >= 0; i--) {
+          const c = this.coinItems[i];
+          c.mesh.position.z += stepDist;
+          c.mesh.rotation.y += dt * 4.5;
+
+          if (this.powers.magnet > 0 && c.mesh.position.z > -22 && c.mesh.position.z < 4) {
+            c.mesh.position.x += (this.playerX - c.mesh.position.x) * Math.min(1, dt * 11);
+            c.mesh.position.y += ((this.playerY + 1.1) - c.mesh.position.y) * Math.min(1, dt * 11);
+            c.mesh.position.z += (0 - c.mesh.position.z) * Math.min(1, dt * 11);
+          }
+
+          if (Math.abs(c.mesh.position.x - this.playerX) < 1.25 &&
+              Math.abs(c.mesh.position.y - (this.playerY + 1.1)) < 1.45 &&
+              Math.abs(c.mesh.position.z) < 1.35) {
+            SoundFX.coin();
+            this.coins++;
+            this.score += 25 * mult;
+            this.spawnBurst(c.mesh.position, 0xfacc15, 6);
+            this.scene.remove(c.mesh);
+            this.coinItems.splice(i, 1);
+            hudDirty = true;
+            continue;
+          }
+
+          if (c.mesh.position.z > 14) {
+            this.scene.remove(c.mesh);
+            this.coinItems.splice(i, 1);
+          }
+        }
+
+        // Powerups
+        for (let i = this.powerItems.length - 1; i >= 0; i--) {
+          const p = this.powerItems[i];
+          p.mesh.position.z += stepDist;
+          p.mesh.rotation.y += dt * 3.5;
+
+          if (Math.abs(p.mesh.position.x - this.playerX) < 1.35 &&
+              Math.abs(p.mesh.position.y - (this.playerY + 1.1)) < 1.55 &&
+              Math.abs(p.mesh.position.z) < 1.45) {
+            this.activatePowerup(p.type);
+            this.scene.remove(p.mesh);
+            this.powerItems.splice(i, 1);
+            continue;
+          }
+
+          if (p.mesh.position.z > 14) {
+            this.scene.remove(p.mesh);
+            this.powerItems.splice(i, 1);
+          }
+        }
+
+        // Dynamic Camera
+        const targetFov = this.powers.jetpack > 0 ? 68 : (58 + (this.speed - 22) * 0.35);
+        this.camera.fov += (targetFov - this.camera.fov) * Math.min(1, dt * 6);
+        this.camera.updateProjectionMatrix();
+
+        const baseCamY = this.camMode === 0 ? (6.0 + this.playerY * 0.65) : (10.5 + this.playerY * 0.5);
+        const baseCamZ = this.camMode === 0 ? 10.2 : 13.0;
+        let shakeX = 0, shakeY = 0;
+        if (this.shakeTimer > 0) {
+          this.shakeTimer -= dt;
+          shakeX = (Math.random() - 0.5) * 0.6;
+          shakeY = (Math.random() - 0.5) * 0.6;
+        }
+
+        this.camera.position.x += (this.playerX * 0.58 - this.camera.position.x) * Math.min(1, dt * 9) + shakeX;
+        this.camera.position.y += (baseCamY - this.camera.position.y) * Math.min(1, dt * 8) + shakeY;
+        this.camera.position.z = baseCamZ;
+        this.camera.lookAt(this.playerX * 0.35, 2.0 + this.playerY * 0.5, -14);
+
+        if (hudDirty || Math.floor(now / 120) !== Math.floor((now - dt * 1000) / 120)) {
+          this.updateHUD();
+        }
+
+        this.renderer.render(this.scene, this.camera);
+      },
+
+      bindInputs() {
+        this.boundKeyDown = (e) => {
+          if (e.code === 'ArrowLeft' || e.code === 'KeyA') this.moveLane(-1);
+          if (e.code === 'ArrowRight' || e.code === 'KeyD') this.moveLane(1);
+          if (e.code === 'ArrowUp' || e.code === 'KeyW' || e.code === 'Space') {
+            if (this.running && !this.paused) e.preventDefault();
+            this.jump();
+          }
+          if (e.code === 'ArrowDown' || e.code === 'KeyS') {
+            if (this.running && !this.paused) e.preventDefault();
+            this.slide();
+          }
+        };
+        window.addEventListener('keydown', this.boundKeyDown);
+
+        // On-screen touch buttons
+        document.getElementById('sub-btn-left').onclick = () => this.moveLane(-1);
+        document.getElementById('sub-btn-right').onclick = () => this.moveLane(1);
+        document.getElementById('sub-btn-jump').onclick = () => this.jump();
+        document.getElementById('sub-btn-slide').onclick = () => this.slide();
+
+        // Touch swipe on canvas
+        const dom = this.renderer.domElement;
+        dom.addEventListener('touchstart', (e) => {
+          this.touchStartX = e.touches[0].clientX;
+          this.touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        dom.addEventListener('touchend', (e) => {
+          const dx = e.changedTouches[0].clientX - this.touchStartX;
+          const dy = e.changedTouches[0].clientY - this.touchStartY;
+          if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 22) {
+            this.moveLane(dx > 0 ? 1 : -1);
+          } else if (Math.abs(dy) > 22) {
+            if (dy < 0) this.jump();
+            else this.slide();
+          }
+        });
+
+        this.boundResize = () => {
+          if (!this.container || !this.renderer || !this.camera) return;
+          const rect = this.container.getBoundingClientRect();
+          const w = Math.max(320, Math.floor(rect.width));
+          const h = Math.max(460, Math.floor(rect.height));
+          this.camera.aspect = w / h;
+          this.camera.updateProjectionMatrix();
+          this.renderer.setSize(w, h);
+        };
+        window.addEventListener('resize', this.boundResize);
+      },
+
+      destroy() {
+        this.running = false;
+        if (this.animId) cancelAnimationFrame(this.animId);
+        window.removeEventListener('keydown', this.boundKeyDown);
+        window.removeEventListener('resize', this.boundResize);
+        if (this.renderer) this.renderer.dispose();
+      }
+    };
+
+    /* ==========================================================================
+       4. GAME 2: BẮN RUỒI 3D: ĐẠI CHIẾN TRÙM (SPACE GALAGA 3D)
+       ========================================================================== */
+    const Galaga3DGame = {
+      scene: null,
+      camera: null,
+      renderer: null,
+      container: null,
+      animId: null,
+      running: false,
+      paused: false,
+      camMode: 0, // 0: Isometric, 1: Cockpit Chase
+
+      score: 0,
+      level: 1,
+      lives: 3,
+      elapsed: 0,
+      invulnTimer: 0,
+      fireCooldown: 0,
+
+      playerGroup: null,
+      shipLeft: null,
+      shipRight: null,
+      shieldMesh: null,
+      playerX: 0,
+      targetX: 0,
+      playerZ: 12,
+
+      powerupsState: { W: 0, R: 0, S: false, D: 0 },
+
+      starField: null,
+      bullets: [],
+      enemyBullets: [],
+      enemies: [],
+      powerupDrops: [],
+      particles: [],
+      boss: null,
+      bossLaserWarn: null,
+      bossLaserBeam: null,
+
+      keys: {},
+      pointerActive: false,
+      boundKeyDown: null,
+      boundKeyUp: null,
+      boundResize: null,
+      boundPointerUp: null,
+
+      mount(container) {
+        this.container = container;
+        const rect = container.getBoundingClientRect();
+        const w = Math.max(320, Math.floor(rect.width) || window.innerWidth);
+        const h = Math.max(460, Math.floor(rect.height) || 560);
+
+        this.scene = new THREE.Scene();
+        this.scene.background = new THREE.Color(0x03050c);
+        this.scene.fog = new THREE.FogExp2(0x03050c, 0.012);
+
+        this.camera = new THREE.PerspectiveCamera(54, w / h, 0.1, 200);
+        this.applyCameraMode();
+
+        this.renderer = new THREE.WebGLRenderer({ antialias: true });
+        this.renderer.setSize(w, h);
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        container.innerHTML = '';
+        container.appendChild(this.renderer.domElement);
+
+        this.scene.add(new THREE.AmbientLight(0x64748b, 0.9));
+        const dir = new THREE.DirectionalLight(0xffffff, 1.3);
+        dir.position.set(10, 22, 14);
+        this.scene.add(dir);
+
+        // Starfield
+        const starGeo = new THREE.BufferGeometry();
+        const verts = [];
+        for (let i = 0; i < 420; i++) {
+          verts.push((Math.random() - 0.5) * 90, (Math.random() - 0.5) * 40 - 8, (Math.random() - 0.5) * 100);
+        }
+        starGeo.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
+        this.starField = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xbae6fd, size: 0.25 }));
+        this.scene.add(this.starField);
+
+        this.buildPlayerShips();
+        this.resetState();
+        this.bindInputs();
+
+        document.getElementById('hud-cam-label').textContent = 'CAM: ISOMETRIC';
+        this.renderer.render(this.scene, this.camera);
+
+        this.lastTime = performance.now();
+        const tick = (now) => {
+          this.animId = requestAnimationFrame(tick);
+          this.update(now);
+        };
+        this.animId = requestAnimationFrame(tick);
+      },
+
+      createStarfighterMesh(accentColor = 0x06b6d4) {
+        const g = new THREE.Group();
+        const hull = new THREE.Mesh(
+          new THREE.ConeGeometry(0.65, 2.4, 6),
+          new THREE.MeshStandardMaterial({ color: 0xf8fafc, metalness: 0.5, roughness: 0.25 })
+        );
+        hull.rotation.x = -Math.PI / 2;
+        g.add(hull);
+
+        const wings = new THREE.Mesh(
+          new THREE.BoxGeometry(2.6, 0.14, 0.85),
+          new THREE.MeshStandardMaterial({ color: accentColor, emissive: accentColor, emissiveIntensity: 0.35 })
+        );
+        wings.position.z = 0.4;
+        g.add(wings);
+
+        const cockpit = new THREE.Mesh(
+          new THREE.SphereGeometry(0.32, 10, 10),
+          new THREE.MeshBasicMaterial({ color: 0x38bdf8 })
+        );
+        cockpit.position.set(0, 0.22, -0.1);
+        g.add(cockpit);
+        return g;
+      },
+
+      buildPlayerShips() {
+        this.playerGroup = new THREE.Group();
+        this.playerGroup.position.set(0, 0, this.playerZ);
+
+        this.shipLeft = this.createStarfighterMesh(0x06b6d4);
+        this.shipRight = this.createStarfighterMesh(0xf59e0b);
+        this.shipRight.visible = false;
+        this.playerGroup.add(this.shipLeft, this.shipRight);
+
+        this.shieldMesh = new THREE.Mesh(
+          new THREE.SphereGeometry(1.75, 18, 18),
+          new THREE.MeshBasicMaterial({ color: 0x22d3ee, wireframe: true, transparent: true, opacity: 0.45 })
+        );
+        this.shieldMesh.visible = false;
+        this.playerGroup.add(this.shieldMesh);
+
+        this.scene.add(this.playerGroup);
+      },
+
+      createFlyEnemyMesh(type) {
+        const g = new THREE.Group();
+        const bodyColors = { bee: 0xfacc15, butterfly: 0xf43f5e, bossfly: 0xa855f7 };
+        const wingColors = { bee: 0x38bdf8, butterfly: 0xfb7185, bossfly: 0x34d399 };
+
+        const body = new THREE.Mesh(
+          new THREE.SphereGeometry(type === 'bossfly' ? 0.85 : 0.62, 12, 12),
+          new THREE.MeshStandardMaterial({
+            color: bodyColors[type],
+            emissive: bodyColors[type],
+            emissiveIntensity: 0.35
+          })
+        );
+        body.scale.set(1, 0.8, 1.35);
+        g.add(body);
+
+        const wingGeo = new THREE.BoxGeometry(type === 'bossfly' ? 1.4 : 1.05, 0.08, 0.65);
+        const wingMat = new THREE.MeshBasicMaterial({ color: wingColors[type] });
+
+        const wingL = new THREE.Mesh(wingGeo, wingMat);
+        wingL.position.set(-0.75, 0.15, 0);
+        const wingR = new THREE.Mesh(wingGeo, wingMat);
+        wingR.position.set(0.75, 0.15, 0);
+        g.add(wingL, wingR);
+
+        g.userData.wingL = wingL;
+        g.userData.wingR = wingR;
+        return g;
+      },
+
+      resetState() {
+        [...this.bullets, ...this.enemyBullets, ...this.enemies, ...this.powerupDrops, ...this.particles].forEach(it => {
+          if (it.mesh) this.scene.remove(it.mesh);
+        });
+        if (this.boss) {
+          this.scene.remove(this.boss.mesh);
+          this.boss = null;
+        }
+        if (this.bossLaserWarn) { this.scene.remove(this.bossLaserWarn); this.bossLaserWarn = null; }
+        if (this.bossLaserBeam) { this.scene.remove(this.bossLaserBeam); this.bossLaserBeam = null; }
+
+        this.bullets = [];
+        this.enemyBullets = [];
+        this.enemies = [];
+        this.powerupDrops = [];
+        this.particles = [];
+
+        this.score = 0;
+        this.level = 1;
+        this.lives = 3;
+        this.playerX = 0;
+        this.targetX = 0;
+        this.invulnTimer = 0;
+        this.powerupsState = { W: 0, R: 0, S: false, D: 0 };
+        this.updateShipConfig();
+
+        document.getElementById('boss-hp-container').classList.add('hidden');
+        this.spawnWave(1);
+        this.updateHUD();
+      },
+
+      start() {
+        this.resetState();
+        this.paused = false;
+        this.running = true;
+      },
+
+      setPaused(val) {
+        this.paused = !!val;
+      },
+
+      spawnWave(lvl) {
+        const rows = [
+          { type: 'bossfly', z: -11.5, count: 4, hp: 3 + Math.floor(lvl / 2) },
+          { type: 'butterfly', z: -8.5, count: 6, hp: 2 },
+          { type: 'bee', z: -5.5, count: 8, hp: 1 }
+        ];
+        rows.forEach(r => {
+          const spacing = 2.4;
+          const startX = -((r.count - 1) * spacing) / 2;
+          for (let i = 0; i < r.count; i++) {
+            const mesh = this.createFlyEnemyMesh(r.type);
+            const hx = startX + i * spacing;
+            mesh.position.set(hx, 0, r.z - 14);
+            this.scene.add(mesh);
+            this.enemies.push({
+              type: r.type,
+              mesh,
+              hp: r.hp,
+              homeX: hx,
+              homeZ: r.z,
+              state: 'formation',
+              diveT: 0,
+              diveCurve: null,
+              phase: i * 0.7
+            });
+          }
+        });
+      },
+
+      spawnBoss(lvl) {
+        SoundFX.bossWarn();
+        const bossType = ((lvl - 1) % 3) + 1;
+        const bossGroup = new THREE.Group();
+        let name = 'BOSS 1: CRIMSON SCORPION';
+        const maxHp = 60 + lvl * 20;
+
+        if (bossType === 1) {
+          name = 'BOSS 1: CRIMSON SCORPION';
+          const body = new THREE.Mesh(
+            new THREE.DodecahedronGeometry(2.3, 1),
+            new THREE.MeshStandardMaterial({ color: 0xe11d48, emissive: 0x9f1239, emissiveIntensity: 0.4, metalness: 0.6 })
+          );
+          body.scale.set(1.5, 0.7, 1.2);
+          bossGroup.add(body);
+          const clawGeo = new THREE.BoxGeometry(1.3, 0.6, 2.2);
+          const clawMat = new THREE.MeshStandardMaterial({ color: 0xfb7185, metalness: 0.7 });
+          const cL = new THREE.Mesh(clawGeo, clawMat);
+          cL.position.set(-3.1, 0, 1.4);
+          const cR = cL.clone();
+          cR.position.x = 3.1;
+          bossGroup.add(cL, cR);
+        } else if (bossType === 2) {
+          name = 'BOSS 2: CYBER HORNET CARRIER';
+          const hull = new THREE.Mesh(
+            new THREE.CylinderGeometry(1.4, 2.8, 4.4, 8),
+            new THREE.MeshStandardMaterial({ color: 0xf59e0b, emissive: 0xb45309, emissiveIntensity: 0.35, metalness: 0.65 })
+          );
+          hull.rotation.x = Math.PI / 2;
+          const wings = new THREE.Mesh(
+            new THREE.BoxGeometry(8.5, 0.25, 1.8),
+            new THREE.MeshStandardMaterial({ color: 0x38bdf8, emissive: 0x0284c7, emissiveIntensity: 0.4 })
+          );
+          bossGroup.add(hull, wings);
+        } else {
+          name = 'BOSS 3: OMEGA MECHA DRAGON';
+          const core = new THREE.Mesh(
+            new THREE.OctahedronGeometry(2.6, 1),
+            new THREE.MeshStandardMaterial({ color: 0x9333ea, emissive: 0x6b21a8, emissiveIntensity: 0.5, metalness: 0.8 })
+          );
+          core.scale.set(1.6, 0.8, 1.3);
+          const wings = new THREE.Mesh(
+            new THREE.BoxGeometry(9.6, 0.2, 2.2),
+            new THREE.MeshStandardMaterial({ color: 0xf43f5e, emissive: 0xe11d48, emissiveIntensity: 0.45 })
+          );
+          bossGroup.add(core, wings);
+        }
+
+        bossGroup.position.set(0, 0, -18);
+        this.scene.add(bossGroup);
+
+        this.boss = {
+          type: bossType,
+          name,
+          mesh: bossGroup,
+          hp: maxHp,
+          maxHp,
+          x: 0,
+          z: -10,
+          dir: 1,
+          attackTimer: 1.8,
+          dashTimer: 0,
+          laserState: 'idle',
+          laserTimer: 0
+        };
+
+        document.getElementById('boss-hp-container').classList.remove('hidden');
+        document.getElementById('boss-name-label').textContent = name;
+        this.updateBossBar();
+      },
+
+      updateBossBar() {
+        if (!this.boss) return;
+        const pct = Math.max(0, Math.round((this.boss.hp / this.boss.maxHp) * 100));
+        document.getElementById('boss-hp-bar').style.width = pct + '%';
+        document.getElementById('boss-hp-text').textContent = pct + '%';
+      },
+
+      spawnPowerupDrop(pos) {
+        if (Math.random() > 0.28) return;
+        const types = ['W', 'R', 'S', 'D'];
+        const type = types[Math.floor(Math.random() * types.length)];
+        const colors = { W: 0x38bdf8, R: 0xfacc15, S: 0x22d3ee, D: 0xf43f5e };
+        const mesh = new THREE.Mesh(
+          new THREE.OctahedronGeometry(0.65, 0),
+          new THREE.MeshStandardMaterial({ color: colors[type], emissive: colors[type], emissiveIntensity: 0.65 })
+        );
+        mesh.position.copy(pos);
+        this.scene.add(mesh);
+        this.powerupDrops.push({ type, mesh });
+      },
+
+      applyPowerup(type) {
+        SoundFX.powerup();
+        const labels = {
+          W: '[W] ĐẠN 3 TIA!',
+          R: '[R] BẮN SIÊU THANH!',
+          S: '[S] KHIÊN NĂNG LƯỢNG!',
+          D: '[D] PHI THUYỀN ĐÔI!'
+        };
+        Portal.spawnFloatingText(this.playerGroup.position, this.camera, labels[type], '#facc15');
+        if (type === 'W') this.powerupsState.W = 12;
+        if (type === 'R') this.powerupsState.R = 12;
+        if (type === 'S') this.powerupsState.S = true;
+        if (type === 'D') this.powerupsState.D = 15;
+        this.updateShipConfig();
+        this.updateHUD();
+      },
+
+      updateShipConfig() {
+        if (!this.shipLeft || !this.shipRight) return;
+        const dual = this.powerupsState.D > 0;
+        this.shipRight.visible = dual;
+        this.shipLeft.position.x = dual ? -1.15 : 0;
+        this.shipRight.position.x = 1.15;
+        this.shieldMesh.visible = this.powerupsState.S;
+      },
+
+      fireWeapons() {
+        SoundFX.shoot();
+        const origins = this.powerupsState.D > 0
+          ? [new THREE.Vector3(this.playerX - 1.15, 0, this.playerZ - 1.2), new THREE.Vector3(this.playerX + 1.15, 0, this.playerZ - 1.2)]
+          : [new THREE.Vector3(this.playerX, 0, this.playerZ - 1.2)];
+
+        const isSpread = this.powerupsState.W > 0;
+        const geo = new THREE.CylinderGeometry(0.11, 0.11, 1.3, 6);
+        geo.rotateX(Math.PI / 2);
+        const mat = new THREE.MeshBasicMaterial({ color: isSpread ? 0xfacc15 : 0x38bdf8 });
+
+        origins.forEach(org => {
+          const angles = isSpread ? [-0.22, 0, 0.22] : [0];
+          angles.forEach(ang => {
+            const mesh = new THREE.Mesh(geo, mat);
+            mesh.position.copy(org);
+            mesh.rotation.y = -ang;
+            this.scene.add(mesh);
+            this.bullets.push({ mesh, vx: Math.sin(ang) * 34, vz: -Math.cos(ang) * 38 });
+          });
+        });
+      },
+
+      spawnEnemyBullet(pos, vx, vz, color = 0xf43f5e) {
+        const mesh = new THREE.Mesh(
+          new THREE.SphereGeometry(0.28, 8, 8),
+          new THREE.MeshBasicMaterial({ color })
+        );
+        mesh.position.copy(pos);
+        this.scene.add(mesh);
+        this.enemyBullets.push({ mesh, vx, vz });
+      },
+
+      spawnExplosion(pos, color = 0xf97316, count = 14) {
+        const geo = new THREE.BoxGeometry(0.28, 0.28, 0.28);
+        const mat = new THREE.MeshBasicMaterial({ color });
+        for (let i = 0; i < count; i++) {
+          const m = new THREE.Mesh(geo, mat);
+          m.position.copy(pos);
+          this.scene.add(m);
+          this.particles.push({
+            mesh: m,
+            vx: (Math.random() - 0.5) * 14,
+            vy: (Math.random() - 0.2) * 10,
+            vz: (Math.random() - 0.5) * 14,
+            life: 0.45 + Math.random() * 0.2
+          });
+        }
+      },
+
+      damagePlayer() {
+        if (this.invulnTimer > 0) return;
+        if (this.powerupsState.S) {
+          this.powerupsState.S = false;
+          this.invulnTimer = 1.2;
+          this.updateShipConfig();
+          this.updateHUD();
+          SoundFX.hit();
+          Portal.spawnFloatingText(this.playerGroup.position, this.camera, 'SHIELD BLOCK!', '#22d3ee');
+          return;
+        }
+        if (this.powerupsState.D > 0) {
+          this.powerupsState.D = 0;
+          this.invulnTimer = 1.5;
+          this.updateShipConfig();
+          this.updateHUD();
+          SoundFX.explosion();
+          this.spawnExplosion(this.playerGroup.position, 0xf59e0b, 18);
+          Portal.spawnFloatingText(this.playerGroup.position, this.camera, 'MẤT TÀU PHỤ!', '#fb7185');
+          return;
+        }
+        SoundFX.explosion();
+        this.spawnExplosion(this.playerGroup.position, 0xf43f5e, 26);
+        this.lives--;
+        this.invulnTimer = 2.2;
+        this.updateHUD();
+        if (this.lives <= 0) {
+          this.running = false;
+          Portal.showGameOver(this.score);
+        }
+      },
+
+      toggleCamera() {
+        this.camMode = (this.camMode + 1) % 2;
+        this.applyCameraMode();
+        document.getElementById('hud-cam-label').textContent =
+          this.camMode === 0 ? 'CAM: ISOMETRIC' : 'CAM: COCKPIT';
+      },
+
+      applyCameraMode() {
+        if (!this.camera) return;
+        if (this.camMode === 0) {
+          this.camera.position.set(0, 21, 24);
+          this.camera.lookAt(0, 0, -1);
+        } else {
+          this.camera.position.set(this.playerX * 0.72, 5.2, 19.5);
+          this.camera.lookAt(this.playerX * 0.4, 0, -8);
+        }
+      },
+
+      updateHUD() {
+        document.getElementById('hud-score').textContent = this.score;
+        document.getElementById('hud-level').textContent = this.level;
+        document.getElementById('hud-lives').textContent = '❤️'.repeat(Math.max(0, this.lives));
+
+        const pDiv = document.getElementById('hud-powerups');
+        const badges = [];
+        if (this.powerupsState.W > 0) badges.push(`<span class="px-2 py-0.5 rounded bg-sky-500/20 border border-sky-400 text-sky-300 text-[11px] font-bold">[W] ${Math.ceil(this.powerupsState.W)}s</span>`);
+        if (this.powerupsState.R > 0) badges.push(`<span class="px-2 py-0.5 rounded bg-amber-500/20 border border-amber-400 text-amber-300 text-[11px] font-bold">[R] ${Math.ceil(this.powerupsState.R)}s</span>`);
+        if (this.powerupsState.S) badges.push(`<span class="px-2 py-0.5 rounded bg-cyan-500/20 border border-cyan-400 text-cyan-300 text-[11px] font-bold">[S] SHIELD</span>`);
+        if (this.powerupsState.D > 0) badges.push(`<span class="px-2 py-0.5 rounded bg-rose-500/20 border border-rose-400 text-rose-300 text-[11px] font-bold">[D] DUAL ${Math.ceil(this.powerupsState.D)}s</span>`);
+        pDiv.innerHTML = badges.join('');
+      },
+
+      update(now) {
+        const dt = Math.min(0.05, (now - this.lastTime) / 1000);
+        this.lastTime = now;
+        this.elapsed += dt;
+
+        if (this.starField) {
+          this.starField.position.z += dt * 7;
+          if (this.starField.position.z > 20) this.starField.position.z = 0;
+        }
+
+        if (!this.running || this.paused) {
+          this.renderer.render(this.scene, this.camera);
+          return;
+        }
+
+        let hudDirty = false;
+        if (this.powerupsState.W > 0) { this.powerupsState.W = Math.max(0, this.powerupsState.W - dt); hudDirty = true; }
+        if (this.powerupsState.R > 0) { this.powerupsState.R = Math.max(0, this.powerupsState.R - dt); hudDirty = true; }
+        if (this.powerupsState.D > 0) {
+          this.powerupsState.D = Math.max(0, this.powerupsState.D - dt);
+          if (this.powerupsState.D === 0) this.updateShipConfig();
+          hudDirty = true;
+        }
+        if (hudDirty && Math.floor(this.elapsed * 4) !== Math.floor((this.elapsed - dt) * 4)) {
+          this.updateHUD();
+        }
+
+        const speed = 18;
+        if (this.keys['ArrowLeft'] || this.keys['KeyA']) this.targetX -= speed * dt;
+        if (this.keys['ArrowRight'] || this.keys['KeyD']) this.targetX += speed * dt;
+        this.targetX = Math.max(-11.5, Math.min(11.5, this.targetX));
+
+        const prevX = this.playerX;
+        this.playerX += (this.targetX - this.playerX) * Math.min(1, dt * 15);
+        this.playerGroup.position.x = this.playerX;
+        this.playerGroup.rotation.z = -(this.playerX - prevX) * 1.4;
+
+        if (this.invulnTimer > 0) {
+          this.invulnTimer -= dt;
+          this.playerGroup.visible = Math.floor(this.invulnTimer * 16) % 2 === 0;
+        } else {
+          this.playerGroup.visible = true;
+        }
+
+        if (this.shieldMesh.visible) this.shieldMesh.rotation.y += dt * 2.5;
+        if (this.camMode === 1) {
+          this.camera.position.x += (this.playerX * 0.72 - this.camera.position.x) * dt * 8;
+          this.camera.lookAt(this.playerX * 0.4, 0, -8);
+        }
+
+        this.fireCooldown -= dt;
+        const rate = this.powerupsState.R > 0 ? 0.13 : 0.26;
+        if (this.fireCooldown <= 0) {
+          this.fireCooldown = rate;
+          this.fireWeapons();
+        }
+
+        for (let i = this.bullets.length - 1; i >= 0; i--) {
+          const b = this.bullets[i];
+          b.mesh.position.x += b.vx * dt;
+          b.mesh.position.z += b.vz * dt;
+          if (b.mesh.position.z < -26) {
+            this.scene.remove(b.mesh);
+            this.bullets.splice(i, 1);
+          }
+        }
+
+        const swayX = Math.sin(this.elapsed * 1.8) * 2.2;
+        for (let i = this.enemies.length - 1; i >= 0; i--) {
+          const e = this.enemies[i];
+          const flap = Math.sin(this.elapsed * 18 + e.phase) * 0.55;
+          if (e.mesh.userData.wingL) e.mesh.userData.wingL.rotation.z = flap;
+          if (e.mesh.userData.wingR) e.mesh.userData.wingR.rotation.z = -flap;
+
+          if (e.state === 'formation') {
+            e.mesh.position.x += ((e.homeX + swayX) - e.mesh.position.x) * Math.min(1, dt * 5);
+            e.mesh.position.z += (e.homeZ - e.mesh.position.z) * Math.min(1, dt * 5);
+
+            if ((e.type === 'butterfly' || e.type === 'bossfly') && Math.random() < dt * (0.14 + this.level * 0.03)) {
+              e.state = 'diving';
+              e.diveT = 0;
+              const p0 = e.mesh.position.clone();
+              const p1 = new THREE.Vector3(p0.x + (Math.random() > 0.5 ? 7 : -7), 0, p0.z + 8);
+              const p2 = new THREE.Vector3(this.playerX, 0, this.playerZ - 3);
+              const p3 = new THREE.Vector3(this.playerX * 0.8, 0, this.playerZ + 6);
+              e.diveCurve = new THREE.CubicBezierCurve3(p0, p1, p2, p3);
+              this.spawnEnemyBullet(e.mesh.position, (this.playerX - e.mesh.position.x) * 0.6, 14);
+            }
+          } else {
+            e.diveT += dt * (0.42 + this.level * 0.04);
+            if (e.diveT >= 1) {
+              e.state = 'formation';
+              e.mesh.position.set(e.homeX + swayX, 0, -22);
+            } else {
+              e.mesh.position.copy(e.diveCurve.getPoint(e.diveT));
+            }
+          }
+
+          let destroyed = false;
+          for (let j = this.bullets.length - 1; j >= 0; j--) {
+            const b = this.bullets[j];
+            if (b.mesh.position.distanceTo(e.mesh.position) < 1.15) {
+              this.scene.remove(b.mesh);
+              this.bullets.splice(j, 1);
+              e.hp--;
+              if (e.hp <= 0) {
+                SoundFX.explosion();
+                const pts = e.type === 'bossfly' ? 300 : (e.type === 'butterfly' ? 150 : 100);
+                this.score += pts;
+                Portal.spawnFloatingText(e.mesh.position, this.camera, '+' + pts, '#38bdf8');
+                this.spawnExplosion(e.mesh.position, e.type === 'bossfly' ? 0xa855f7 : 0xfacc15, 14);
+                this.spawnPowerupDrop(e.mesh.position);
+                this.scene.remove(e.mesh);
+                this.enemies.splice(i, 1);
+                this.updateHUD();
+                destroyed = true;
+              } else {
+                SoundFX.hit();
+              }
+              break;
+            }
+          }
+          if (destroyed) continue;
+
+          if (e.mesh.position.distanceTo(this.playerGroup.position) < 1.55) {
+            this.spawnExplosion(e.mesh.position, 0xf43f5e, 12);
+            this.scene.remove(e.mesh);
+            this.enemies.splice(i, 1);
+            this.damagePlayer();
+          }
+        }
+
+        if (this.enemies.length === 0 && !this.boss) {
+          this.spawnBoss(this.level);
+        }
+
+        if (this.boss) {
+          const b = this.boss;
+          b.mesh.position.z += (b.z - b.mesh.position.z) * Math.min(1, dt * 3);
+          if (b.dashTimer > 0) {
+            b.dashTimer -= dt;
+            b.mesh.position.z = b.z + Math.sin((1 - b.dashTimer) * Math.PI) * 9;
+          } else {
+            b.x += b.dir * (4.5 + this.level * 0.5) * dt;
+            if (b.x > 8.5) b.dir = -1;
+            if (b.x < -8.5) b.dir = 1;
+            b.mesh.position.x = b.x;
+          }
+
+          b.attackTimer -= dt;
+          if (b.attackTimer <= 0) {
+            if (b.type === 1) {
+              b.attackTimer = 2.1;
+              for (let a = -2; a <= 2; a++) this.spawnEnemyBullet(b.mesh.position, a * 3.8, 13, 0xfb7185);
+              if (Math.random() < 0.45) b.dashTimer = 1.0;
+            } else if (b.type === 2) {
+              b.attackTimer = 2.5;
+              for (let k = 0; k < 10; k++) {
+                const ang = (k / 10) * Math.PI * 2 + this.elapsed;
+                this.spawnEnemyBullet(b.mesh.position, Math.cos(ang) * 9, Math.sin(ang) * 9 + 5, 0xfacc15);
+              }
+            } else {
+              b.attackTimer = 3.2;
+              b.laserState = 'warn';
+              b.laserTimer = 0.85;
+              for (let r = -3; r <= 3; r += 2) {
+                this.spawnEnemyBullet(new THREE.Vector3(b.mesh.position.x + r * 1.5, 0, b.mesh.position.z + 1), 0, 15, 0xc084fc);
+              }
+            }
+          }
+
+          if (b.type === 3 && b.laserState !== 'idle') {
+            b.laserTimer -= dt;
+            if (b.laserState === 'warn') {
+              if (!this.bossLaserWarn) {
+                const wGeo = new THREE.PlaneGeometry(0.6, 30);
+                wGeo.rotateX(-Math.PI / 2);
+                this.bossLaserWarn = new THREE.Mesh(wGeo, new THREE.MeshBasicMaterial({ color: 0xef4444, transparent: true, opacity: 0.45, side: THREE.DoubleSide }));
+                this.scene.add(this.bossLaserWarn);
+              }
+              this.bossLaserWarn.position.set(b.mesh.position.x, 0.05, b.mesh.position.z + 15);
+              if (b.laserTimer <= 0) {
+                this.scene.remove(this.bossLaserWarn);
+                this.bossLaserWarn = null;
+                b.laserState = 'fire';
+                b.laserTimer = 0.75;
+                SoundFX.bossWarn();
+              }
+            } else if (b.laserState === 'fire') {
+              if (!this.bossLaserBeam) {
+                const lGeo = new THREE.CylinderGeometry(0.55, 0.55, 30, 10);
+                lGeo.rotateX(Math.PI / 2);
+                this.bossLaserBeam = new THREE.Mesh(lGeo, new THREE.MeshBasicMaterial({ color: 0xf43f5e }));
+                this.scene.add(this.bossLaserBeam);
+              }
+              this.bossLaserBeam.position.set(b.mesh.position.x, 0.2, b.mesh.position.z + 15);
+              if (Math.abs(this.playerX - b.mesh.position.x) < 1.25) this.damagePlayer();
+              if (b.laserTimer <= 0) {
+                this.scene.remove(this.bossLaserBeam);
+                this.bossLaserBeam = null;
+                b.laserState = 'idle';
+              }
+            }
+          }
+
+          for (let j = this.bullets.length - 1; j >= 0; j--) {
+            const bul = this.bullets[j];
+            if (Math.abs(bul.mesh.position.x - b.mesh.position.x) < 3.4 &&
+                Math.abs(bul.mesh.position.z - b.mesh.position.z) < 2.2) {
+              this.scene.remove(bul.mesh);
+              this.bullets.splice(j, 1);
+              b.hp--;
+              this.updateBossBar();
+              SoundFX.hit();
+              if (b.hp <= 0) {
+                SoundFX.explosion();
+                this.spawnExplosion(b.mesh.position, 0xf43f5e, 36);
+                this.score += 1500 * this.level;
+                Portal.spawnFloatingText(b.mesh.position, this.camera, 'BOSS DEFEATED! +' + (1500 * this.level), '#facc15');
+                this.scene.remove(b.mesh);
+                if (this.bossLaserWarn) { this.scene.remove(this.bossLaserWarn); this.bossLaserWarn = null; }
+                if (this.bossLaserBeam) { this.scene.remove(this.bossLaserBeam); this.bossLaserBeam = null; }
+                this.boss = null;
+                document.getElementById('boss-hp-container').classList.add('hidden');
+                this.level++;
+                this.updateHUD();
+                Portal.saveHighScore('galaga', this.score);
+                setTimeout(() => { if (this.running) this.spawnWave(this.level); }, 1000);
+                break;
+              }
+            }
+          }
+        }
+
+        for (let i = this.enemyBullets.length - 1; i >= 0; i--) {
+          const eb = this.enemyBullets[i];
+          eb.mesh.position.x += eb.vx * dt;
+          eb.mesh.position.z += eb.vz * dt;
+          if (eb.mesh.position.distanceTo(this.playerGroup.position) < 1.1) {
+            this.scene.remove(eb.mesh);
+            this.enemyBullets.splice(i, 1);
+            this.damagePlayer();
+            continue;
+          }
+          if (eb.mesh.position.z > 22 || Math.abs(eb.mesh.position.x) > 22) {
+            this.scene.remove(eb.mesh);
+            this.enemyBullets.splice(i, 1);
+          }
+        }
+
+        for (let i = this.powerupDrops.length - 1; i >= 0; i--) {
+          const p = this.powerupDrops[i];
+          p.mesh.position.z += 7.5 * dt;
+          p.mesh.rotation.y += 3.5 * dt;
+          if (p.mesh.position.distanceTo(this.playerGroup.position) < 1.75) {
+            this.applyPowerup(p.type);
+            this.scene.remove(p.mesh);
+            this.powerupDrops.splice(i, 1);
+            continue;
+          }
+          if (p.mesh.position.z > 20) {
+            this.scene.remove(p.mesh);
+            this.powerupDrops.splice(i, 1);
+          }
+        }
+
+        for (let i = this.particles.length - 1; i >= 0; i--) {
+          const pt = this.particles[i];
+          pt.life -= dt;
+          pt.mesh.position.x += pt.vx * dt;
+          pt.mesh.position.y += pt.vy * dt;
+          pt.mesh.position.z += pt.vz * dt;
+          pt.mesh.scale.setScalar(Math.max(0.01, pt.life * 2));
+          if (pt.life <= 0) {
+            this.scene.remove(pt.mesh);
+            this.particles.splice(i, 1);
+          }
+        }
+
+        this.renderer.render(this.scene, this.camera);
+      },
+
+      bindInputs() {
+        this.boundKeyDown = (e) => { this.keys[e.code] = true; };
+        this.boundKeyUp = (e) => { this.keys[e.code] = false; };
+        const mapX = (clientX) => {
+          const rect = this.renderer.domElement.getBoundingClientRect();
+          const norm = ((clientX - rect.left) / rect.width) * 2 - 1;
+          this.targetX = Math.max(-11.5, Math.min(11.5, norm * 13));
+        };
+        const dom = this.renderer.domElement;
+        dom.addEventListener('mousedown', (e) => { this.pointerActive = true; mapX(e.clientX); });
+        dom.addEventListener('mousemove', (e) => { if (e.buttons === 1) mapX(e.clientX); });
+        this.boundPointerUp = () => { this.pointerActive = false; };
+        dom.addEventListener('touchstart', (e) => { mapX(e.touches[0].clientX); }, { passive: true });
+        dom.addEventListener('touchmove', (e) => { mapX(e.touches[0].clientX); }, { passive: true });
+
+        this.boundResize = () => {
+          if (!this.container || !this.renderer || !this.camera) return;
+          const rect = this.container.getBoundingClientRect();
+          const w = Math.max(320, Math.floor(rect.width));
+          const h = Math.max(460, Math.floor(rect.height));
+          this.camera.aspect = w / h;
+          this.camera.updateProjectionMatrix();
+          this.renderer.setSize(w, h);
+        };
+
+        window.addEventListener('keydown', this.boundKeyDown);
+        window.addEventListener('keyup', this.boundKeyUp);
+        window.addEventListener('mouseup', this.boundPointerUp);
+        window.addEventListener('resize', this.boundResize);
+      },
+
+      destroy() {
+        this.running = false;
+        if (this.animId) cancelAnimationFrame(this.animId);
+        window.removeEventListener('keydown', this.boundKeyDown);
+        window.removeEventListener('keyup', this.boundKeyUp);
+        window.removeEventListener('mouseup', this.boundPointerUp);
+        window.removeEventListener('resize', this.boundResize);
+        if (this.renderer) this.renderer.dispose();
+      }
+    };
+
+    /* ==========================================================================
+       5. GAME 3: RẮN SĂN MỒI 3D (NEON SNAKE 3D)
+       ========================================================================== */
+    const NeonSnake3DGame = {
+      scene: null,
+      camera: null,
+      renderer: null,
+      container: null,
+      animId: null,
+      running: false,
+      paused: false,
+      camMode: 0, // 0: Isometric, 1: Top-Down, 2: Chase
+
+      gridSize: 18,
+      snake: [],
+      prevSnake: [],
+      dir: { x: 1, z: 0 },
+      nextDir: { x: 1, z: 0 },
+      food: { x: 4, z: 0 },
+      goldFood: null,
+      goldTimer: 0,
+
+      moveTimer: 0,
+      moveInterval: 0.145,
+      score: 0,
+      level: 1,
+
+      segmentMeshes: [],
+      foodMesh: null,
+      goldMesh: null,
+      particles: [],
+
+      boundKeyDown: null,
+      boundResize: null,
+      touchStartX: 0,
+      touchStartY: 0,
+
+      mount(container) {
+        this.container = container;
+        const rect = container.getBoundingClientRect();
+        const w = Math.max(320, Math.floor(rect.width) || window.innerWidth);
+        const h = Math.max(460, Math.floor(rect.height) || 560);
+
+        this.scene = new THREE.Scene();
+        this.scene.background = new THREE.Color(0x040712);
+
+        this.camera = new THREE.PerspectiveCamera(48, w / h, 0.1, 150);
+        this.renderer = new THREE.WebGLRenderer({ antialias: true });
+        this.renderer.setSize(w, h);
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        this.renderer.shadowMap.enabled = true;
+        container.innerHTML = '';
+        container.appendChild(this.renderer.domElement);
+
+        this.scene.add(new THREE.AmbientLight(0x94a3b8, 0.78));
+        const dirLight = new THREE.DirectionalLight(0xffffff, 1.25);
+        dirLight.position.set(14, 24, 16);
+        dirLight.castShadow = true;
+        this.scene.add(dirLight);
+
+        // Floor & Neon Grid
+        const floor = new THREE.Mesh(
+          new THREE.BoxGeometry(this.gridSize, 0.4, this.gridSize),
+          new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.6, metalness: 0.2 })
+        );
+        floor.position.y = -0.25;
+        floor.receiveShadow = true;
+        this.scene.add(floor);
+
+        const gridHelper = new THREE.GridHelper(this.gridSize, this.gridSize, 0xd946ef, 0x1e293b);
+        gridHelper.position.y = 0.01;
+        this.scene.add(gridHelper);
+
+        const wallMat = new THREE.MeshStandardMaterial({ color: 0xd946ef, emissive: 0xa21caf, emissiveIntensity: 0.5 });
+        const half = this.gridSize / 2 + 0.25;
+        [
+          [0, 0.3, -half, this.gridSize + 0.8, 0.6, 0.4],
+          [0, 0.3, half, this.gridSize + 0.8, 0.6, 0.4],
+          [-half, 0.3, 0, 0.4, 0.6, this.gridSize + 0.8],
+          [half, 0.3, 0, 0.4, 0.6, this.gridSize + 0.8]
+        ].forEach(([x, y, z, bw, bh, bd]) => {
+          const wall = new THREE.Mesh(new THREE.BoxGeometry(bw, bh, bd), wallMat);
+          wall.position.set(x, y, z);
+          this.scene.add(wall);
+        });
+
+        this.foodMesh = new THREE.Mesh(
+          new THREE.OctahedronGeometry(0.46, 1),
+          new THREE.MeshStandardMaterial({ color: 0xf43f5e, emissive: 0xe11d48, emissiveIntensity: 0.7 })
+        );
+        this.foodMesh.castShadow = true;
+        this.scene.add(this.foodMesh);
+
+        this.goldMesh = new THREE.Mesh(
+          new THREE.DodecahedronGeometry(0.54, 0),
+          new THREE.MeshStandardMaterial({ color: 0xfacc15, emissive: 0xeab308, emissiveIntensity: 0.8, metalness: 0.7 })
+        );
+        this.goldMesh.visible = false;
+        this.scene.add(this.goldMesh);
+
+        this.resetState();
+        this.updateCamera(1);
+        this.bindInputs();
+
+        document.getElementById('hud-cam-label').textContent = 'CAM: ISOMETRIC';
+        this.renderer.render(this.scene, this.camera);
+
+        this.lastTime = performance.now();
+        const tick = (now) => {
+          this.animId = requestAnimationFrame(tick);
+          this.update(now);
+        };
+        this.animId = requestAnimationFrame(tick);
+      },
+
+      resetState() {
+        this.snake = [{ x: 0, z: 0 }, { x: -1, z: 0 }, { x: -2, z: 0 }];
+        this.prevSnake = this.snake.map(s => ({ ...s }));
+        this.dir = { x: 1, z: 0 };
+        this.nextDir = { x: 1, z: 0 };
+        this.score = 0;
+        this.level = 1;
+        this.moveInterval = 0.145;
+        this.moveTimer = 0;
+        this.goldFood = null;
+        this.goldTimer = 0;
+        if (this.goldMesh) this.goldMesh.visible = false;
+        this.spawnFood();
+        this.syncMeshes(1);
+      },
+
+      start() {
+        this.resetState();
+        document.getElementById('hud-score').textContent = '0';
+        document.getElementById('hud-level').textContent = '1';
+        this.paused = false;
+        this.running = true;
+      },
+
+      setPaused(val) {
+        this.paused = !!val;
+      },
+
+      randomFreeCell() {
+        const half = Math.floor(this.gridSize / 2) - 1;
+        for (let tries = 0; tries < 60; tries++) {
+          const fx = Math.floor(Math.random() * (half * 2 + 1)) - half;
+          const fz = Math.floor(Math.random() * (half * 2 + 1)) - half;
+          const occupied = this.snake.some(s => s.x === fx && s.z === fz) ||
+                           (this.food && this.food.x === fx && this.food.z === fz);
+          if (!occupied) return { x: fx, z: fz };
+        }
+        return { x: 3, z: 3 };
+      },
+
+      spawnFood() {
+        this.food = this.randomFreeCell();
+        this.foodMesh.position.set(this.food.x, 0.5, this.food.z);
+
+        if (!this.goldFood && Math.random() < 0.35) {
+          this.goldFood = this.randomFreeCell();
+          this.goldTimer = 7.0;
+          this.goldMesh.position.set(this.goldFood.x, 0.55, this.goldFood.z);
+          this.goldMesh.visible = true;
+        }
+      },
+
+      setDir(dx, dz) {
+        if (dx !== 0 && this.dir.x === -dx) return;
+        if (dz !== 0 && this.dir.z === -dz) return;
+        this.nextDir = { x: dx, z: dz };
+      },
+
+      toggleCamera() {
+        this.camMode = (this.camMode + 1) % 3;
+        const names = ['CAM: ISOMETRIC', 'CAM: TOP-DOWN', 'CAM: CHASE 3D'];
+        document.getElementById('hud-cam-label').textContent = names[this.camMode];
+      },
+
+      updateCamera(alpha) {
+        const head = this.snake[0];
+        const prev = this.prevSnake[0] || head;
+        const hx = prev.x + (head.x - prev.x) * alpha;
+        const hz = prev.z + (head.z - prev.z) * alpha;
+
+        if (this.camMode === 0) {
+          this.camera.position.set(0, 18, 17);
+          this.camera.lookAt(0, 0, 1);
+        } else if (this.camMode === 1) {
+          this.camera.position.set(0, 23, 0.1);
+          this.camera.lookAt(0, 0, 0);
+        } else {
+          this.camera.position.set(hx - this.dir.x * 6, 5.5, hz - this.dir.z * 6);
+          this.camera.lookAt(hx + this.dir.x * 4, 0.5, hz + this.dir.z * 4);
+        }
+      },
+
+      syncMeshes(alpha) {
+        while (this.segmentMeshes.length < this.snake.length) {
+          const isHead = this.segmentMeshes.length === 0;
+          const mesh = new THREE.Mesh(
+            new THREE.BoxGeometry(isHead ? 0.92 : 0.84, isHead ? 0.85 : 0.72, isHead ? 0.92 : 0.84),
+            new THREE.MeshStandardMaterial({
+              color: isHead ? 0x6ee7b7 : 0x10b981,
+              emissive: isHead ? 0x059669 : 0x047857,
+              emissiveIntensity: isHead ? 0.45 : 0.2
+            })
+          );
+          mesh.castShadow = true;
+          this.scene.add(mesh);
+          this.segmentMeshes.push(mesh);
+        }
+        while (this.segmentMeshes.length > this.snake.length) {
+          this.scene.remove(this.segmentMeshes.pop());
+        }
+
+        for (let i = 0; i < this.snake.length; i++) {
+          const cur = this.snake[i];
+          const prev = this.prevSnake[i] || cur;
+          const ix = prev.x + (cur.x - prev.x) * alpha;
+          const iz = prev.z + (cur.z - prev.z) * alpha;
+          this.segmentMeshes[i].position.set(ix, 0.42, iz);
+        }
+      },
+
+      spawnBurst(x, z, color = 0xf43f5e) {
+        const geo = new THREE.BoxGeometry(0.22, 0.22, 0.22);
+        const mat = new THREE.MeshBasicMaterial({ color });
+        for (let i = 0; i < 12; i++) {
+          const m = new THREE.Mesh(geo, mat);
+          m.position.set(x, 0.5, z);
+          this.scene.add(m);
+          this.particles.push({
+            mesh: m,
+            vx: (Math.random() - 0.5) * 9,
+            vy: Math.random() * 7 + 2,
+            vz: (Math.random() - 0.5) * 9,
+            life: 0.45
+          });
+        }
+      },
+
+      stepGrid() {
+        this.prevSnake = this.snake.map(s => ({ ...s }));
+        this.dir = { ...this.nextDir };
+        const head = { x: this.snake[0].x + this.dir.x, z: this.snake[0].z + this.dir.z };
+
+        const half = Math.floor(this.gridSize / 2);
+        if (head.x < -half || head.x >= half || head.z < -half || head.z >= half ||
+            this.snake.some(s => s.x === head.x && s.z === head.z)) {
+          SoundFX.explosion();
+          this.running = false;
+          Portal.showGameOver(this.score);
+          return;
+        }
+
+        this.snake.unshift(head);
+
+        let grew = false;
+        if (head.x === this.food.x && head.z === this.food.z) {
+          SoundFX.eat();
+          this.score += 100;
+          grew = true;
+          this.spawnBurst(head.x, head.z, 0xf43f5e);
+          Portal.spawnFloatingText(new THREE.Vector3(head.x, 1, head.z), this.camera, '+100', '#34d399');
+          this.spawnFood();
+        }
+
+        if (this.goldFood && head.x === this.goldFood.x && head.z === this.goldFood.z) {
+          SoundFX.goldEat();
+          this.score += 300;
+          grew = true;
+          this.spawnBurst(head.x, head.z, 0xfacc15);
+          Portal.spawnFloatingText(new THREE.Vector3(head.x, 1.3, head.z), this.camera, 'BONUS +300!', '#facc15');
+          this.goldFood = null;
+          this.goldMesh.visible = false;
+        }
+
+        if (grew) {
+          this.level = Math.floor(this.score / 500) + 1;
+          this.moveInterval = Math.max(0.072, 0.145 - (this.level - 1) * 0.01);
+          document.getElementById('hud-score').textContent = this.score;
+          document.getElementById('hud-level').textContent = this.level;
+          Portal.saveHighScore('snake', this.score);
+        } else {
+          this.snake.pop();
+        }
+      },
+
+      update(now) {
+        const dt = Math.min(0.05, (now - this.lastTime) / 1000);
+        this.lastTime = now;
+
+        if (this.foodMesh) {
+          this.foodMesh.rotation.y += dt * 3;
+          this.foodMesh.position.y = 0.5 + Math.sin(now * 0.006) * 0.14;
+        }
+        if (this.goldMesh && this.goldFood) {
+          this.goldMesh.rotation.y -= dt * 4.5;
+          this.goldMesh.position.y = 0.58 + Math.cos(now * 0.008) * 0.16;
+          if (this.running && !this.paused) {
+            this.goldTimer -= dt;
+            if (this.goldTimer <= 0) {
+              this.goldFood = null;
+              this.goldMesh.visible = false;
+            }
+          }
+        }
+
+        for (let i = this.particles.length - 1; i >= 0; i--) {
+          const p = this.particles[i];
+          p.life -= dt;
+          p.mesh.position.x += p.vx * dt;
+          p.mesh.position.y += p.vy * dt;
+          p.mesh.position.z += p.vz * dt;
+          if (p.life <= 0) {
+            this.scene.remove(p.mesh);
+            this.particles.splice(i, 1);
+          }
+        }
+
+        if (this.running && !this.paused) {
+          this.moveTimer += dt;
+          if (this.moveTimer >= this.moveInterval) {
+            this.moveTimer %= this.moveInterval;
+            this.stepGrid();
+          }
+          const alpha = Math.min(1, this.moveTimer / this.moveInterval);
+          this.syncMeshes(alpha);
+          this.updateCamera(alpha);
+        }
+
+        this.renderer.render(this.scene, this.camera);
+      },
+
+      bindInputs() {
+        this.boundKeyDown = (e) => {
+          if (e.code === 'ArrowUp' || e.code === 'KeyW') this.setDir(0, -1);
+          if (e.code === 'ArrowDown' || e.code === 'KeyS') this.setDir(0, 1);
+          if (e.code === 'ArrowLeft' || e.code === 'KeyA') this.setDir(-1, 0);
+          if (e.code === 'ArrowRight' || e.code === 'KeyD') this.setDir(1, 0);
+        };
+        window.addEventListener('keydown', this.boundKeyDown);
+
+        document.getElementById('snk-btn-up').onclick = () => this.setDir(0, -1);
+        document.getElementById('snk-btn-down').onclick = () => this.setDir(0, 1);
+        document.getElementById('snk-btn-left').onclick = () => this.setDir(-1, 0);
+        document.getElementById('snk-btn-right').onclick = () => this.setDir(1, 0);
+
+        const dom = this.renderer.domElement;
+        dom.addEventListener('touchstart', (e) => {
+          this.touchStartX = e.touches[0].clientX;
+          this.touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        dom.addEventListener('touchend', (e) => {
+          const dx = e.changedTouches[0].clientX - this.touchStartX;
+          const dy = e.changedTouches[0].clientY - this.touchStartY;
+          if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 20) {
+            this.setDir(dx > 0 ? 1 : -1, 0);
+          } else if (Math.abs(dy) > 20) {
+            this.setDir(0, dy > 0 ? 1 : -1);
+          }
+        });
+
+        this.boundResize = () => {
+          if (!this.container || !this.renderer || !this.camera) return;
+          const rect = this.container.getBoundingClientRect();
+          const w = Math.max(320, Math.floor(rect.width));
+          const h = Math.max(460, Math.floor(rect.height));
+          this.camera.aspect = w / h;
+          this.camera.updateProjectionMatrix();
+          this.renderer.setSize(w, h);
+        };
+        window.addEventListener('resize', this.boundResize);
+      },
+
+      destroy() {
+        this.running = false;
+        if (this.animId) cancelAnimationFrame(this.animId);
+        window.removeEventListener('keydown', this.boundKeyDown);
+        window.removeEventListener('resize', this.boundResize);
+        if (this.renderer) this.renderer.dispose();
+      }
+    };
+
+    window.onload = () => {
+      Portal.init();
+    };
+  </script>
+</body>
+</html>
