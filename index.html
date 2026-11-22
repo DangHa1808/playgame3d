@@ -31,10 +31,10 @@
     }
     .font-arcade { font-family: 'Orbitron', sans-serif; }
     .glass-panel {
-      background: rgba(15, 23, 42, 0.8);
+      background: rgba(15, 23, 42, 0.82);
       backdrop-filter: blur(14px);
       border: 1px solid rgba(148, 163, 184, 0.16);
-      box-shadow: 0 18px 40px -15px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 18px 40px -15px rgba(0, 0, 0, 0.82);
     }
     .game-card {
       transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.24s ease, border-color 0.24s ease;
@@ -69,7 +69,7 @@
 
   <!-- ==================== PORTAL HUB VIEW ==================== -->
   <div id="portal-view" class="min-h-screen flex flex-col">
-    <!-- Header -->
+    <!-- Top Navigation Header -->
     <header class="sticky top-0 z-30 glass-panel border-b border-slate-800/80">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center gap-3">
@@ -85,7 +85,7 @@
                 12/100 LIVE
               </span>
             </div>
-            <p id="hub-subtitle" class="text-xs text-slate-400">playgame3d.com • Cổng Game WebGL 3D Miễn Phí (12/100)</p>
+            <p id="hub-subtitle" class="text-xs text-slate-400">playgame3d.com / funnygame3d.com • Cổng Game WebGL 3D Miễn Phí (12/100)</p>
           </div>
         </div>
 
@@ -121,12 +121,12 @@
               Vũ trụ trò chơi Arcade, Đua Xe, Hành Động & Cờ Chiến Thuật 3D
             </h2>
             <p id="hero-desc" class="text-sm text-slate-300 leading-relaxed">
-              Chơi ngay trên trình duyệt không cần cài đặt: hỗ trợ AI thông minh, đấu 2 người cùng máy, điều khiển bàn phím, chuột, cảm ứng và lưu điểm cao tự động.
+              Chơi ngay trên trình duyệt không cần cài đặt: hỗ trợ AI siêu cao thủ, đấu 2 người cùng máy, điều khiển bàn phím, chuột, cảm ứng và lưu điểm cao tự động.
             </p>
           </div>
           <div class="flex flex-wrap gap-3 shrink-0">
             <button id="hero-featured-btn" class="btn-glow px-5 py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 text-slate-950 font-black text-sm flex items-center gap-2">
-              <span>♚ Cờ Vua 3D (Mới)</span>
+              <span>♚ Cờ Vua 3D (AI Max)</span>
             </button>
             <button id="hero-random-btn" class="px-5 py-3 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-600/70 text-slate-100 font-bold text-sm transition">
               🎲 Chơi Ngẫu Nhiên
@@ -148,7 +148,7 @@
 
     <!-- Footer -->
     <footer class="max-w-7xl mx-auto w-full px-4 sm:px-6 py-6 text-center text-xs text-slate-500 border-t border-slate-800/60 mt-8">
-      PLAYGAME3D (playgame3d.com) • Powered by Three.js r128 & Web Audio API • 12/100 Trò Chơi 3D Đã Sẵn Sàng.
+      PLAYGAME3D (playgame3d.com / funnygame3d.com) • Powered by Three.js r128 & Web Audio API • 12/100 Trò Chơi 3D Đã Sẵn Sàng.
     </footer>
   </div>
 
@@ -569,14 +569,14 @@
       {
         id: 'chess-3d',
         category: 'board',
-        badge: 'NEW • AI / 2P',
+        badge: 'AI MAX • 2P',
         icon: '♚',
         gradient: 'from-amber-500 via-yellow-600 to-stone-800',
-        title: { vi: 'Cờ Vua 3D (Chess 3D)', en: '3D Chess (FIDE Rules)' },
-        subtitle: { vi: 'Đấu Máy AI 3 Cấp Độ & 2 Người Chơi', en: '3-Level Alpha-Beta AI & 2-Player Local' },
+        title: { vi: 'Cờ Vua 3D (Chess 3D)', en: '3D Chess (FIDE & GM AI)' },
+        subtitle: { vi: 'AI Siêu Cao Thủ (Max) & 2 Người Chơi', en: 'Grandmaster AI & 2-Player Local' },
         desc: {
-          vi: 'Bàn cờ gỗ 8x8 viền vàng khắc tọa độ A–H & 1–8, 32 quân cờ điêu khắc ngà ấm chống chói & gỗ mun sắc nét, đầy đủ luật Nhập thành (O-O/O-O-O), Bắt tốt qua đường, Phong cấp Tốt & AI Minimax Alpha-Beta.',
-          en: 'Gold-trimmed 8x8 wooden board with A–H & 1–8 coordinates, 32 anti-glare warm ivory & ebony sculpted 3D pieces, full Castling, En Passant, Promotion & 3-level Alpha-Beta AI.'
+          vi: 'Bàn cờ gỗ 8x8 viền vàng khắc A–H & 1–8, 32 quân ngà ấm chống chói & gỗ mun sắc nét, đầy đủ luật FIDE, AI Max (Sách khai cuộc, Iterative Deepening, Transposition Table, Quiescence & Chống lặp nước).',
+          en: 'Gold-trimmed 8x8 wooden board with A–H & 1–8 coordinates, 32 anti-glare ivory & dark-wood sculpted pieces, full FIDE rules & Max GM AI (Opening book, ID+TT, Quiescence, Anti-repeat).'
         },
         controls: {
           vi: 'Chọn & đi quân: Click / Chạm • Phong cấp: 1–4 • Đi lại: Z • Gợi ý: H • Góc nhìn: C',
@@ -586,14 +586,14 @@
       {
         id: 'xiangqi-3d',
         category: 'board',
-        badge: 'AI / 2P',
+        badge: 'AI MAX • 2P',
         icon: '♟️',
         gradient: 'from-amber-600 via-red-700 to-rose-900',
         title: { vi: 'Cờ Tướng 3D (Xiangqi 3D)', en: '3D Chinese Chess (Xiangqi)' },
-        subtitle: { vi: 'Sở Hà Hán Giới • AI 3 Cấp Độ & 2P', en: 'Chu River Han Border • 3-Level AI & 2P' },
+        subtitle: { vi: 'Sở Hà Hán Giới • AI Siêu Cao Thủ & 2P', en: 'Chu River Han Border • GM AI & 2P' },
         desc: {
-          vi: 'Bàn cờ gỗ 9x10 khắc Sở Hà – Hán Giới, 32 quân cờ Đỏ/Đen chạm khắc thư pháp, đầy đủ luật Tướng đối mặt, cản mắt Tượng, cản chân Mã, Pháo ăn qua ngòi và chiếu bí.',
-          en: '9x10 wooden Xiangqi board with 32 calligraphic pieces, full Xiangqi rules (facing generals, elephant/horse blocks, cannon screen) & 3-level AI.'
+          vi: 'Bàn cờ gỗ 9x10 khắc Sở Hà – Hán Giới, 32 quân cờ Đỏ/Đen chạm khắc thư pháp, đầy đủ luật Tướng đối mặt, cản mắt Tượng, cản chân Mã, Pháo ăn qua ngòi & AI Max chuyên sâu.',
+          en: '9x10 wooden Xiangqi board with 32 calligraphic pieces, full Xiangqi rules & Max GM AI (Opening book, ID+TT, MVV-LVA/Killers/History, Quiescence & Anti-repeat).'
         },
         controls: {
           vi: 'Chọn & đi quân: Click / Chạm • Đi lại: Z • Gợi ý: H • Đổi góc nhìn: C',
@@ -836,8 +836,8 @@
 
     function renderPortal() {
       document.getElementById('hub-subtitle').textContent = currentLang === 'vi'
-        ? 'playgame3d.com • Cổng Game WebGL 3D Miễn Phí (12/100)'
-        : 'playgame3d.com • Free WebGL 3D Gaming Portal (12/100)';
+        ? 'playgame3d.com / funnygame3d.com • Cổng Game WebGL 3D Miễn Phí (12/100)'
+        : 'playgame3d.com / funnygame3d.com • Free WebGL 3D Gaming Portal (12/100)';
       document.getElementById('search-input').placeholder = currentLang === 'vi'
         ? 'Tìm kiếm trong 12 trò chơi 3D...'
         : 'Search 12 3D games...';
@@ -845,11 +845,11 @@
         ? 'Vũ trụ trò chơi Arcade, Đua Xe, Hành Động & Cờ Chiến Thuật 3D'
         : 'Universe of 3D Arcade, Racing, Action & Strategy Board Games';
       document.getElementById('hero-desc').textContent = currentLang === 'vi'
-        ? 'Chơi ngay trên trình duyệt không cần cài đặt: hỗ trợ AI thông minh, đấu 2 người cùng máy, điều khiển bàn phím, chuột, cảm ứng và lưu điểm cao tự động.'
-        : 'Play instantly in your browser: smart AI opponents, 2-player local modes, keyboard/mouse/touch controls, and automatic high score saving.';
+        ? 'Chơi ngay trên trình duyệt không cần cài đặt: hỗ trợ AI siêu cao thủ, đấu 2 người cùng máy, điều khiển bàn phím, chuột, cảm ứng và lưu điểm cao tự động.'
+        : 'Play instantly in your browser: grandmaster AI opponents, 2-player local modes, keyboard/mouse/touch controls, and automatic high score saving.';
       document.getElementById('hero-featured-btn').innerHTML = currentLang === 'vi'
-        ? '<span>♚ Cờ Vua 3D (Mới)</span>'
-        : '<span>♚ 3D Chess (New)</span>';
+        ? '<span>♚ Cờ Vua 3D (AI Max)</span>'
+        : '<span>♚ 3D Chess (AI Max)</span>';
       document.getElementById('hero-random-btn').textContent = currentLang === 'vi'
         ? '🎲 Chơi Ngẫu Nhiên'
         : '🎲 Random Game';
@@ -3824,12 +3824,12 @@
     }
 
     // =========================================================================
-    // GAME 11: CỜ TƯỚNG 3D (xiangqi-3d)
+    // GAME 11: CỜ TƯỚNG 3D (xiangqi-3d) — UPGRADED GRANDMASTER HARD AI
     // =========================================================================
     function createXiangqi3D(container, meta) {
       const eng = new GameEngineCore(container);
       const { scene, camera } = eng;
-      scene.background = new THREE.Color(0x0b0f1d);
+      scene.background = new THREE.Color(0x0b0f17);
 
       let camMode = 0;
       const applyCam = () => {
@@ -3839,8 +3839,9 @@
       };
       applyCam();
 
-      scene.add(new THREE.AmbientLight(0xfef3c7, 0.78));
-      const dl = new THREE.DirectionalLight(0xffffff, 1.0);
+      scene.add(new THREE.AmbientLight(0xf3ead8, 0.72));
+      scene.add(new THREE.HemisphereLight(0xf5e6c8, 0x2b1d12, 0.42));
+      const dl = new THREE.DirectionalLight(0xfff4df, 0.55);
       dl.position.set(10, 22, 12);
       scene.add(dl);
 
@@ -3851,9 +3852,14 @@
         const w = 900, h = 1000;
         const c = document.createElement('canvas'); c.width = w; c.height = h;
         const ctx = c.getContext('2d');
-        ctx.fillStyle = '#d97706'; ctx.fillRect(0, 0, w, h);
-        ctx.fillStyle = '#f59e0b'; ctx.fillRect(28, 28, w - 56, h - 56);
-        ctx.strokeStyle = '#451a03'; ctx.lineWidth = 4;
+        ctx.fillStyle = '#5c371c'; ctx.fillRect(0, 0, w, h);
+        ctx.fillStyle = '#9e6e43'; ctx.fillRect(28, 28, w - 56, h - 56);
+        // Subtle warm wood-grain bands for natural matte depth
+        ctx.fillStyle = 'rgba(125, 83, 46, 0.24)';
+        for (let gy = 34; gy < h - 34; gy += 14) {
+          ctx.fillRect(28, gy, w - 56, 5);
+        }
+        ctx.strokeStyle = '#241509'; ctx.lineWidth = 4;
         const padX = 75, padY = 75, cw = (w - 150) / 8, ch = (h - 150) / 9;
         ctx.strokeRect(padX, padY, cw * 8, ch * 9);
         for (let r = 1; r < 9; r++) {
@@ -3870,16 +3876,18 @@
           ctx.stroke();
         };
         drawX(0); drawX(7);
-        ctx.fillStyle = '#451a03'; ctx.font = 'bold 46px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#3b150c'; ctx.font = 'bold 46px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText('楚 河            漢 界', w / 2, h / 2);
         const tex = new THREE.CanvasTexture(c);
         eng.trackDisposable(tex);
         return tex;
       }
 
+      const boardTopMat = new THREE.MeshStandardMaterial({ map: makeBoardTex(), roughness: 0.86, metalness: 0.0 });
+      const boardFrameMat = new THREE.MeshStandardMaterial({ color: 0x4a2c16, roughness: 0.82, metalness: 0.05 });
       const boardMesh = new THREE.Mesh(
         new THREE.BoxGeometry(9 * SQ + 0.8, 0.4, 10 * SQ + 0.8),
-        new THREE.MeshStandardMaterial({ map: makeBoardTex(), roughness: 0.55 })
+        [boardFrameMat, boardFrameMat, boardTopMat, boardFrameMat, boardFrameMat, boardFrameMat]
       );
       scene.add(boardMesh);
 
@@ -3891,11 +3899,11 @@
       function makePieceTex(side, type) {
         const c = document.createElement('canvas'); c.width = 256; c.height = 256;
         const ctx = c.getContext('2d');
-        ctx.fillStyle = '#fef3c7'; ctx.fillRect(0, 0, 256, 256);
-        ctx.strokeStyle = side === 'r' ? '#dc2626' : '#0f172a';
+        ctx.fillStyle = '#e5d4b3'; ctx.fillRect(0, 0, 256, 256);
+        ctx.strokeStyle = side === 'r' ? '#b91c1c' : '#18181b';
         ctx.lineWidth = 12;
         ctx.beginPath(); ctx.arc(128, 128, 104, 0, Math.PI * 2); ctx.stroke();
-        ctx.fillStyle = side === 'r' ? '#dc2626' : '#0f172a';
+        ctx.fillStyle = side === 'r' ? '#b91c1c' : '#18181b';
         ctx.font = '900 124px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText(CHARS[side + type], 128, 134);
         const tex = new THREE.CanvasTexture(c);
@@ -3920,11 +3928,13 @@
       let meshes = [];
       let turn = 'r';
       let vsAI = true;
-      let aiDiff = 'medium';
+      let aiDiff = 'hard';
       let selected = null;
       let legalMoves = [];
       let history = [];
+      let positionCounts = new Map();
       let gameOver = false;
+      let aiBusy = false;
 
       const selRing = new THREE.Mesh(new THREE.RingGeometry(0.48, 0.6, 24), new THREE.MeshBasicMaterial({ color: 0x38bdf8, side: THREE.DoubleSide }));
       selRing.rotation.x = -Math.PI / 2; selRing.position.y = 0.22; selRing.visible = false;
@@ -3934,6 +3944,48 @@
       scene.add(dotsGroup);
 
       const inB = (r, c) => r >= 0 && r < 10 && c >= 0 && c < 9;
+
+      function boardSignatureXQ(b, sideToMove) {
+        let s = sideToMove + '|';
+        for (let r = 0; r < 10; r++) {
+          for (let c = 0; c < 9; c++) {
+            const p = b[r][c];
+            s += p ? `${p.side}${p.type}@${r},${c};` : '';
+          }
+        }
+        return s;
+      }
+
+      // Deterministic 32-bit hash for Zobrist-style Transposition Table keys
+      const XQ_ZOBRIST = (() => {
+        const pieceKeys = {};
+        const types = ['K', 'A', 'E', 'R', 'C', 'H', 'P'];
+        const sides = ['r', 'b'];
+        let seed = 0x9e3779b9;
+        const nextU32 = () => {
+          seed ^= seed << 13;
+          seed ^= seed >>> 17;
+          seed ^= seed << 5;
+          return seed >>> 0;
+        };
+        for (const s of sides) {
+          for (const t of types) {
+            pieceKeys[s + t] = Array.from({ length: 90 }, () => nextU32());
+          }
+        }
+        return { pieceKeys, sideBlack: nextU32() };
+      })();
+
+      function hashXQ(b, side) {
+        let h = side === 'b' ? XQ_ZOBRIST.sideBlack : 0;
+        for (let r = 0; r < 10; r++) {
+          for (let c = 0; c < 9; c++) {
+            const p = b[r][c];
+            if (p) h = (h ^ XQ_ZOBRIST.pieceKeys[p.side + p.type][r * 9 + c]) >>> 0;
+          }
+        }
+        return h;
+      }
 
       function genPseudoXQ(b, r, c) {
         const p = b[r][c]; if (!p) return [];
@@ -4038,484 +4090,661 @@
         return all;
       }
 
-      function syncMeshes() {
-        meshes.forEach((m) => scene.remove(m));
-        meshes = [];
-        const sideMat = new THREE.MeshStandardMaterial({ color: 0xb45309 });
+      // ==================== GRANDMASTER XIANGQI EVALUATION & SEARCH ====================
+      const XQ_VALS = { K: 25000, R: 1180, C: 580, H: 540, E: 240, A: 240, P: 135 };
+      const XQ_PAWN_BONUS = [
+        [  0,   0,   0,   0,   0,   0,   0,   0,   0],
+        [ 20,  45,  70,  95, 110,  95,  70,  45,  20],
+        [ 35,  65,  95, 125, 145, 125,  95,  65,  35],
+        [ 45,  80, 115, 150, 175, 150, 115,  80,  45],
+        [ 40,  75, 105, 130, 145, 130, 105,  75,  40],
+        [ 15,  20,  35,  45,  55,  45,  35,  20,  15],
+        [  8,  12,  18,  25,  32,  25,  18,  12,   8],
+        [  0,   0,   0,   0,   0,   0,   0,   0,   0],
+        [  0,   0,   0,   0,   0,   0,   0,   0,   0],
+        [  0,   0,   0,   0,   0,   0,   0,   0,   0]
+      ];
+
+      // Positive => advantage for Black ('b'), Negative => advantage for Red ('r')
+      function evalXQFull(b) {
+        let score = 0;
+        const bAttacks = Array.from({ length: 10 }, () => Array(9).fill(false));
+        const rAttacks = Array.from({ length: 10 }, () => Array(9).fill(false));
+        const bPieces = [];
+        const rPieces = [];
+
         for (let r = 0; r < 10; r++) {
           for (let c = 0; c < 9; c++) {
-            const p = bd[r][c];
+            const p = b[r][c];
             if (!p) continue;
-            const topMat = new THREE.MeshStandardMaterial({ map: makePieceTex(p.side, p.type) });
-            const disc = new THREE.Mesh(
-              new THREE.CylinderGeometry(0.48, 0.52, 0.24, 24),
-              [sideMat, topMat, sideMat]
-            );
-            const pos = toWorld(r, c);
-            disc.position.set(pos.x, 0.32, pos.z);
-            scene.add(disc);
-            meshes.push(disc);
+            const sign = p.side === 'b' ? 1 : -1;
+            let val = XQ_VALS[p.type];
+
+            if (p.type === 'P') {
+              const pr = p.side === 'b' ? r : 9 - r;
+              val += XQ_PAWN_BONUS[pr][c];
+              if (p.side === 'b' && r >= 5 && c >= 3 && c <= 5) val += 35;
+              if (p.side === 'r' && r <= 4 && c >= 3 && c <= 5) val += 35;
+            } else if (p.type === 'R') {
+              // Open file & central/river penetration bonus
+              let blockers = 0;
+              for (let rr = 0; rr < 10; rr++) if (rr !== r && b[rr][c]) blockers++;
+              if (blockers <= 2) val += 65;
+              if ((p.side === 'b' && r >= 5) || (p.side === 'r' && r <= 4)) val += 45;
+            } else if (p.type === 'C') {
+              if (c === 4) val += 45; // Central cannon control
+              const fwdRow = p.side === 'b' ? 2 : 7;
+              if (r === fwdRow) val += 25;
+            } else if (p.type === 'H') {
+              // Central horse & river crossing bonus
+              const distCenter = Math.abs(c - 4) + Math.abs(r - 4.5);
+              val += Math.max(0, 60 - distCenter * 12);
+            } else if (p.type === 'A' || p.type === 'E') {
+              // Reward keeping advisors & elephants intact when opponent has heavy pieces
+              val += 20;
+            }
+
+            score += sign * val;
+            if (p.side === 'b') bPieces.push({ r, c, type: p.type });
+            else rPieces.push({ r, c, type: p.type });
+
+            for (const m of genPseudoXQ(b, r, c)) {
+              if (p.side === 'b') bAttacks[m.tr][m.tc] = true;
+              else rAttacks[m.tr][m.tc] = true;
+            }
           }
         }
-      }
 
-      function showDots(ms) {
-        while (dotsGroup.children.length) dotsGroup.remove(dotsGroup.children[0]);
-        ms.forEach((m) => {
-          const pos = toWorld(m.tr, m.tc);
-          const dot = new THREE.Mesh(new THREE.SphereGeometry(0.18, 12, 12), new THREE.MeshBasicMaterial({ color: bd[m.tr][m.tc] ? 0xf43f5e : 0x10b981 }));
-          dot.position.set(pos.x, 0.3, pos.z);
-          dotsGroup.add(dot);
-        });
-      }
-
-      function updateHUD() {
-        setHUD([
-          { label: 'TURN', value: turn === 'r' ? 'ĐỎ (RED)' : (vsAI ? 'AI (ĐEN)' : 'ĐEN'), color: turn === 'r' ? 'text-rose-400' : 'text-sky-300' },
-          { label: 'MODE', value: vsAI ? `AI ${aiDiff.toUpperCase()}` : '2P', color: 'text-amber-300' },
-          { label: 'WINS', value: getBestScore('xiangqi-3d'), color: 'text-emerald-300' }
-        ]);
-      }
-
-      const XQ_VALS = { K: 10000, R: 900, C: 450, H: 400, E: 200, A: 200, P: 100 };
-      function evalXQ(b) {
-        let s = 0;
-        for (let r = 0; r < 10; r++) for (let c = 0; c < 9; c++) {
-          const p = b[r][c]; if (!p) continue;
-          s += p.side === 'b' ? XQ_VALS[p.type] : -XQ_VALS[p.type];
+        // Hanging piece penalty / attack pressure
+        for (const bp of bPieces) {
+          if (bp.type !== 'K' && rAttacks[bp.r][bp.c] && !bAttacks[bp.r][bp.c]) {
+            score -= XQ_VALS[bp.type] * 0.72;
+          }
         }
-        return s;
+        for (const rp of rPieces) {
+          if (rp.type !== 'K' && bAttacks[rp.r][rp.c] && !rAttacks[rp.r][rp.c]) {
+            score += XQ_VALS[rp.type] * 0.72;
+          }
+        }
+
+        return score;
+      }
+
+      // Master Xiangqi Opening Book for Black ('b') responding to Red ('r')
+      function getXQOpeningMove(b, plyCount) {
+        const book = [];
+        // Respond to Central Cannon (rC at 7,4) with Screen Horse (bH from 0,1->2,2 or 0,7->2,6)
+        if (plyCount <= 2) {
+          if (b[7][4]?.type === 'C') {
+            if (b[0][7]?.type === 'H' && !b[2][6]) book.push({ fr: 0, fc: 7, tr: 2, tc: 6 });
+            if (b[0][1]?.type === 'H' && !b[2][2]) book.push({ fr: 0, fc: 1, tr: 2, tc: 2 });
+          }
+          // Same-direction cannon or screen horse development
+          if (b[0][1]?.type === 'H' && !b[2][2]) book.push({ fr: 0, fc: 1, tr: 2, tc: 2 });
+          if (b[0][7]?.type === 'H' && !b[2][6]) book.push({ fr: 0, fc: 7, tr: 2, tc: 6 });
+        }
+        if (plyCount <= 4) {
+          // Bring Chariot onto open/semi-open file (0,8 -> 0,7 or 0,0 -> 0,1)
+          if (b[0][8]?.type === 'R' && !b[0][7]) book.push({ fr: 0, fc: 8, tr: 0, tc: 7 });
+          if (b[0][0]?.type === 'R' && !b[0][1]) book.push({ fr: 0, fc: 0, tr: 0, tc: 1 });
+          // Elephant defense (0,2 -> 2,4 or 0,6 -> 2,4)
+          if (b[0][2]?.type === 'E' && !b[2][4]) book.push({ fr: 0, fc: 2, tr: 2, tc: 4 });
+        }
+        const legal = getAllLegalXQ(b, 'b');
+        const validBook = book.filter((bm) => legal.some((lm) => lm.fr === bm.fr && lm.fc === bm.fc && lm.tr === bm.tr && lm.tc === bm.tc));
+        if (validBook.length === 0) return null;
+        return validBook[Math.floor(Math.random() * validBook.length)];
       }
 
       function chooseAIMoveXQ() {
         const moves = getAllLegalXQ(bd, 'b');
         if (moves.length === 0) return null;
         if (aiDiff === 'easy') return moves[Math.floor(Math.random() * moves.length)];
-        let best = moves[0], bestScore = -Infinity;
-        moves.sort(() => Math.random() - 0.5);
-        for (const m of moves) {
-          const c1 = bd.map((row) => row.map((cell) => (cell ? { ...cell } : null)));
-          c1[m.tr][m.tc] = c1[m.fr][m.fc]; c1[m.fr][m.fc] = null;
-          let sc = evalXQ(c1);
-          if (aiDiff === 'hard') {
-            const replies = getAllLegalXQ(c1, 'r');
-            let minReply = Infinity;
-            for (const rm of replies.slice(0, 24)) {
-              const c2 = c1.map((row) => row.map((cell) => (cell ? { ...cell } : null)));
-              c2[rm.tr][rm.tc] = c2[rm.fr][rm.fc]; c2[rm.fr][rm.fc] = null;
-              minReply = Math.min(minReply, evalXQ(c2));
-            }
-            if (replies.length > 0) sc = minReply;
+
+        if (aiDiff === 'medium') {
+          let best = moves[0], bestScore = -Infinity;
+          moves.sort(() => Math.random() - 0.5);
+          for (const m of moves) {
+            const c1 = bd.map((row) => row.map((cell) => (cell ? { ...cell } : null)));
+            c1[m.tr][m.tc] = c1[m.fr][m.fc]; c1[m.fr][m.fc] = null;
+            let sc = evalXQFull(c1);
+            const sig = boardSignatureXQ(c1, 'r');
+            const rep = positionCounts.get(sig) || 0;
+            if (rep > 0 && sc > 80) sc -= rep * 260;
+            if (sc > bestScore) { bestScore = sc; best = m; }
           }
-          if (sc > bestScore) { bestScore = sc; best = m; }
+          return best;
         }
-        return best;
+
+        // ==================== MAX / GRANDMASTER AI (aiDiff === 'hard') ====================
+        const bookMove = getXQOpeningMove(bd, history.length);
+        if (bookMove && Math.random() < 0.85) return bookMove;
+
+        const tt = new Map();
+        const killers = Array.from({ length: 12 }, () => []);
+        const historyTable = new Map();
+        const startTime = performance.now();
+        const timeBudgetMs = 1150;
+
+        const moveKey = (m) => `${m.fr},${m.fc}->${m.tr},${m.tc}`;
+
+        function orderMovesXQ(b, moveList, depth, ttMove) {
+          return moveList.slice().sort((a, m2) => {
+            if (ttMove) {
+              if (a.fr === ttMove.fr && a.fc === ttMove.fc && a.tr === ttMove.tr && a.tc === ttMove.tc) return -1000000;
+              if (m2.fr === ttMove.fr && m2.fc === ttMove.fc && m2.tr === ttMove.tr && m2.tc === ttMove.tc) return 1000000;
+            }
+            const capA = b[a.tr][a.tc] ? XQ_VALS[b[a.tr][a.tc].type] * 12 - XQ_VALS[b[a.fr][a.fc].type] : 0;
+            const capB = b[m2.tr][m2.tc] ? XQ_VALS[b[m2.tr][m2.tc].type] * 12 - XQ_VALS[b[m2.fr][m2.fc].type] : 0;
+            if (capA !== capB) return capB - capA;
+
+            const kSlot = killers[depth] || [];
+            const kA = kSlot.some((k) => k.fr === a.fr && k.fc === a.fc && k.tr === a.tr && k.tc === a.tc) ? 5000 : 0;
+            const kB = kSlot.some((k) => k.fr === m2.fr && k.fc === m2.fc && k.tr === m2.tr && k.tc === m2.tc) ? 5000 : 0;
+            if (kA !== kB) return kB - kA;
+
+            return (historyTable.get(moveKey(m2)) || 0) - (historyTable.get(moveKey(a)) || 0);
+          });
+        }
+
+        // Quiescence search on captures to eliminate horizon capture blunders
+        function quiescenceXQ(b, alpha, beta, side, qDepth) {
+          const standPat = evalXQFull(b) * (side === 'b' ? 1 : -1);
+          if (qDepth <= 0) return standPat;
+          if (standPat >= beta) return beta;
+          if (alpha < standPat) alpha = standPat;
+
+          const caps = getAllLegalXQ(b, side).filter((m) => b[m.tr][m.tc]);
+          caps.sort((a, m2) => XQ_VALS[b[m2.tr][m2.tc].type] - XQ_VALS[b[a.tr][a.tc].type]);
+
+          for (const m of caps) {
+            const cNext = b.map((row) => row.map((cell) => (cell ? { ...cell } : null)));
+            cNext[m.tr][m.tc] = cNext[m.fr][m.fc];
+            cNext[m.fr][m.fc] = null;
+            const score = -quiescenceXQ(cNext, -beta, -alpha, side === 'r' ? 'b' : 'r', qDepth - 1);
+            if (score >= beta) return beta;
+            if (score > alpha) alpha = score;
+          }
+          return alpha;
+        }
+
+        function negamaxXQ(b, depth, alpha, beta, side, ply) {
+          if (ply > 0 && (performance.now() - startTime) > timeBudgetMs) {
+            return evalXQFull(b) * (side === 'b' ? 1 : -1);
+          }
+
+          const hKey = hashXQ(b, side);
+          const ttEntry = tt.get(hKey);
+          if (ttEntry && ttEntry.depth >= depth) {
+            if (ttEntry.flag === 'EXACT') return ttEntry.val;
+            if (ttEntry.flag === 'LOWER' && ttEntry.val > alpha) alpha = ttEntry.val;
+            else if (ttEntry.flag === 'UPPER' && ttEntry.val < beta) beta = ttEntry.val;
+            if (alpha >= beta) return ttEntry.val;
+          }
+
+          const legal = getAllLegalXQ(b, side);
+          if (legal.length === 0) {
+            return isXQCheck(b, side) ? (-100000 - depth * 500) : 0;
+          }
+          if (depth <= 0) {
+            return quiescenceXQ(b, alpha, beta, side, 4);
+          }
+
+          const ordered = orderMovesXQ(b, legal, ply, ttEntry ? ttEntry.bestMove : null);
+          let bestVal = -Infinity;
+          let bestM = ordered[0];
+          let flag = 'UPPER';
+
+          for (const m of ordered) {
+            const cNext = b.map((row) => row.map((cell) => (cell ? { ...cell } : null)));
+            const isCap = Boolean(cNext[m.tr][m.tc]);
+            cNext[m.tr][m.tc] = cNext[m.fr][m.fc];
+            cNext[m.fr][m.fc] = null;
+
+            let val = -negamaxXQ(cNext, depth - 1, -beta, -alpha, side === 'r' ? 'b' : 'r', ply + 1);
+
+            // Penalize repeating board states when ahead so AI presses attack instead of shuffling
+            if (ply === 0 && side === 'b') {
+              const rep = positionCounts.get(boardSignatureXQ(cNext, 'r')) || 0;
+              if (rep > 0) val -= rep * (val > 50 ? 340 : 120);
+            }
+
+            if (val > bestVal) {
+              bestVal = val;
+              bestM = m;
+            }
+            if (val > alpha) {
+              alpha = val;
+              flag = 'EXACT';
+              if (!isCap && killers[ply]) {
+                killers[ply].unshift(m);
+                if (killers[ply].length > 2) killers[ply].pop();
+              }
+              historyTable.set(moveKey(m), (historyTable.get(moveKey(m)) || 0) + depth * depth * 12);
+            }
+            if (alpha >= beta) {
+              flag = 'LOWER';
+              break;
+            }
+          }
+
+          tt.set(hKey, { depth, val: bestVal, flag, bestMove: bestM });
+          return bestVal;
+        }
+
+        let bestOverall = moves[0];
+        const maxDepth = 5;
+        for (let d = 1; d <= maxDepth; d++) {
+          if (d > 2 && (performance.now() - startTime) > timeBudgetMs * 0.72) break;
+          let curBest = bestOverall;
+          let curBestScore = -Infinity;
+          const rootOrdered = orderMovesXQ(bd, moves, 0, bestOverall);
+
+          for (const m of rootOrdered) {
+            const cNext = bd.map((row) => row.map((cell) => (cell ? { ...cell } : null)));
+            cNext[m.tr][m.tc] = cNext[m.fr][m.fc];
+            cNext[m.fr][m.fc] = null;
+
+            let sc = -negamaxXQ(cNext, d - 1, -Infinity, Infinity, 'r', 1);
+            const rep = positionCounts.get(boardSignatureXQ(cNext, 'r')) || 0;
+            if (rep > 0) sc -= rep * (sc > 50 ? 340 : 120);
+
+            if (sc > curBestScore) {
+              curBestScore = sc;
+              curBest = m;
+            }
+            if ((performance.now() - startTime) > timeBudgetMs) break;
+          }
+          bestOverall = curBest;
+          if (curBestScore > 80000) break;
+        }
+        return bestOverall;
       }
 
-      function makeMoveXQ(m) {
-        history.push(bd.map((row) => row.map((cell) => (cell ? { ...cell } : null))));
-        sfx.play(bd[m.tr][m.tc] ? 'explosion' : 'flip');
+      function rebuildPieceMeshes() {
+        meshes.forEach((m) => scene.remove(m));
+        meshes = [];
+        for (let r = 0; r < 10; r++) {
+          for (let c = 0; c < 9; c++) {
+            const p = bd[r][c];
+            if (!p) continue;
+            const topMat = new THREE.MeshStandardMaterial({ map: makePieceTex(p.side, p.type), roughness: 0.76, metalness: 0.0 });
+            const sideMat = new THREE.MeshStandardMaterial({ color: 0xd6c29d, roughness: 0.78, metalness: 0.0 });
+            const disc = new THREE.Mesh(new THREE.CylinderGeometry(0.47, 0.5, 0.24, 24), [sideMat, topMat, sideMat]);
+            disc.position.copy(toWorld(r, c));
+            disc.userData = { r, c };
+            scene.add(disc);
+            meshes.push(disc);
+          }
+        }
+      }
+
+      function clearMoveDots() {
+        while (dotsGroup.children.length > 0) dotsGroup.remove(dotsGroup.children[0]);
+      }
+
+      function showMoveDots() {
+        clearMoveDots();
+        legalMoves.forEach((m) => {
+          const cap = Boolean(bd[m.tr][m.tc]);
+          const dot = new THREE.Mesh(
+            new THREE.CylinderGeometry(cap ? 0.42 : 0.2, cap ? 0.42 : 0.2, 0.08, 16),
+            new THREE.MeshBasicMaterial({ color: cap ? 0xf43f5e : 0x34d399 })
+          );
+          const pos = toWorld(m.tr, m.tc);
+          dot.position.set(pos.x, 0.24, pos.z);
+          dot.userData = { move: m };
+          dotsGroup.add(dot);
+        });
+      }
+
+      function updateHUD() {
+        const chk = isXQCheck(bd, turn);
+        setHUD([
+          { label: 'TURN', value: turn === 'r' ? 'RED (ĐỎ)' : 'BLACK (ĐEN)', color: turn === 'r' ? 'text-rose-400' : 'text-sky-300' },
+          { label: 'MODE', value: vsAI ? `AI ${aiDiff.toUpperCase()}` : '2P', color: 'text-amber-300' },
+          { label: 'STATUS', value: chk ? '⚠️ CHIẾU!' : 'NORMAL', color: chk ? 'text-rose-400' : 'text-emerald-300' },
+          { label: 'BEST', value: getBestScore('xiangqi-3d'), color: 'text-purple-300' }
+        ]);
+      }
+
+      function executeMoveXQ(m) {
+        history.push({ bd: bd.map((row) => row.map((cell) => (cell ? { ...cell } : null))), turn });
+        const target = bd[m.tr][m.tc];
         bd[m.tr][m.tc] = bd[m.fr][m.fc];
         bd[m.fr][m.fc] = null;
-        selected = null; legalMoves = []; selRing.visible = false; showDots([]);
-        syncMeshes();
+        sfx.play(target ? 'grab' : 'flip');
+        selected = null; legalMoves = [];
+        selRing.visible = false; clearMoveDots();
         turn = turn === 'r' ? 'b' : 'r';
-        updateHUD();
+        const sig = boardSignatureXQ(bd, turn);
+        positionCounts.set(sig, (positionCounts.get(sig) || 0) + 1);
+        rebuildPieceMeshes();
 
         const nextMoves = getAllLegalXQ(bd, turn);
         if (nextMoves.length === 0) {
           gameOver = true;
           const redWon = turn === 'b';
-          if (redWon) setBestScore('xiangqi-3d', getBestScore('xiangqi-3d') + 1);
-          sfx.play('win');
+          if (redWon) { sfx.play('win'); setBestScore('xiangqi-3d', getBestScore('xiangqi-3d') + 1); }
+          else sfx.play('gameover');
           showModal(`
             <div class="space-y-4">
               <div class="text-5xl">🏆</div>
-              <h3 class="text-2xl font-black text-amber-300">${redWon ? 'CHIẾU BÍ! QUÂN ĐỎ THẮNG!' : 'CHIẾU BÍ! QUÂN ĐEN THẮNG!'}</h3>
+              <h3 class="text-2xl font-black text-amber-300">${redWon ? 'ĐỎ (RED) CHIẾN THẮNG!' : 'ĐEN (BLACK) CHIẾN THẮNG!'}</h3>
               <button id="xq-again" class="w-full py-3 rounded-2xl bg-amber-500 text-slate-950 font-black text-sm">↻ VÁN MỚI</button>
             </div>
           `);
-          document.getElementById('xq-again').addEventListener('click', showSetupXQ);
+          document.getElementById('xq-again').addEventListener('click', showModeModal);
           return;
         }
-        if (isXQCheck(bd, turn)) showToast('⚠️ CHIẾU TƯỚNG!');
+        updateHUD();
 
         if (vsAI && turn === 'b' && !gameOver) {
+          aiBusy = true;
           eng.setTimeout(() => {
-            const am = chooseAIMoveXQ();
-            if (am) makeMoveXQ(am);
-          }, 320);
+            if (!gameOver && turn === 'b') {
+              const aiM = chooseAIMoveXQ();
+              if (aiM) executeMoveXQ(aiM);
+            }
+            aiBusy = false;
+          }, 90);
         }
       }
 
-      function showSetupXQ() {
+      function undoXQ() {
+        if (history.length === 0 || aiBusy) return;
+        const prev = history.pop();
+        bd = prev.bd;
+        turn = prev.turn;
+        selected = null; legalMoves = [];
+        selRing.visible = false; clearMoveDots();
+        rebuildPieceMeshes();
+        updateHUD();
+      }
+
+      function showHintXQ() {
+        const moves = getAllLegalXQ(bd, turn);
+        if (moves.length === 0) return;
+        const pick = moves[0];
+        const pos = toWorld(pick.tr, pick.tc);
+        showToast(`💡 Hint: (${pick.fr},${pick.fc}) → (${pick.tr},${pick.tc}) @ (${pos.x.toFixed(1)}, ${pos.z.toFixed(1)})`);
+      }
+
+      function startXQ(aiMode, diff) {
+        vsAI = aiMode; aiDiff = diff;
+        for (let r = 0; r < 10; r++) for (let c = 0; c < 9; c++) {
+          const code = INIT_XQ[r][c];
+          bd[r][c] = code ? { side: code[0], type: code[1] } : null;
+        }
+        turn = 'r'; selected = null; legalMoves = []; history = [];
+        positionCounts = new Map();
+        positionCounts.set(boardSignatureXQ(bd, turn), 1);
+        gameOver = false; aiBusy = false;
+        selRing.visible = false; clearMoveDots();
+        rebuildPieceMeshes();
+        updateHUD();
+        hideModal();
+      }
+
+      function showModeModal() {
         showModal(`
           <div class="space-y-4">
             <div class="text-5xl">♟️</div>
             <h3 class="text-2xl font-black text-amber-300">${meta.title[currentLang]}</h3>
-            <p class="text-xs text-slate-300">${meta.desc[currentLang]}</p>
-            <div class="grid grid-cols-3 gap-2">
-              <button id="xq-e" class="py-2.5 rounded-xl bg-emerald-500 text-slate-950 font-black text-xs">AI DỄ</button>
-              <button id="xq-m" class="py-2.5 rounded-xl bg-amber-500 text-slate-950 font-black text-xs">AI VỪA</button>
-              <button id="xq-h" class="py-2.5 rounded-xl bg-rose-500 text-white font-black text-xs">AI KHÓ</button>
+            <p class="text-xs text-slate-300">${meta.controls[currentLang]}</p>
+            <div class="grid grid-cols-2 gap-2.5 text-xs font-black">
+              <button id="xq-easy" class="py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200">🤖 AI Dễ</button>
+              <button id="xq-med" class="py-3 rounded-2xl bg-sky-600 hover:bg-sky-500 text-white">🤖 AI Vừa</button>
+              <button id="xq-hard" class="py-3 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white">🔥 AI Khó (Max)</button>
+              <button id="xq-2p" class="py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950">👥 2 Người Chơi</button>
             </div>
-            <button id="xq-2p" class="w-full py-2.5 rounded-xl bg-sky-500 text-slate-950 font-black text-xs">👥 ĐẤU 2 NGƯỜI</button>
           </div>
         `);
-        const initBoard = (ai, diff) => {
-          vsAI = ai; aiDiff = diff; turn = 'r'; gameOver = false; history = []; selected = null; legalMoves = [];
-          bd = INIT_XQ.map((row) => row.map((code) => (code ? { side: code[0], type: code[1] } : null)));
-          syncMeshes(); updateHUD(); hideModal();
-        };
-        document.getElementById('xq-e').addEventListener('click', () => initBoard(true, 'easy'));
-        document.getElementById('xq-m').addEventListener('click', () => initBoard(true, 'medium'));
-        document.getElementById('xq-h').addEventListener('click', () => initBoard(true, 'hard'));
-        document.getElementById('xq-2p').addEventListener('click', () => initBoard(false, 'medium'));
+        document.getElementById('xq-easy').addEventListener('click', () => startXQ(true, 'easy'));
+        document.getElementById('xq-med').addEventListener('click', () => startXQ(true, 'medium'));
+        document.getElementById('xq-hard').addEventListener('click', () => startXQ(true, 'hard'));
+        document.getElementById('xq-2p').addEventListener('click', () => startXQ(false, 'hard'));
       }
 
       const raycaster = new THREE.Raycaster();
-      const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -0.25);
-      const ndc = new THREE.Vector2();
-
+      const ptr = new THREE.Vector2();
       eng.on(eng.renderer.domElement, 'pointerdown', (e) => {
-        if (gameOver || (vsAI && turn === 'b')) return;
-        const r = eng.renderer.domElement.getBoundingClientRect();
-        ndc.x = ((e.clientX - r.left) / r.width) * 2 - 1;
-        ndc.y = -((e.clientY - r.top) / r.height) * 2 + 1;
-        raycaster.setFromCamera(ndc, camera);
-        const pt = new THREE.Vector3();
-        if (!raycaster.ray.intersectPlane(plane, pt)) return;
-        const col = Math.round(pt.x / SQ + 4);
-        const row = Math.round(pt.z / SQ + 4.5);
-        if (!inB(row, col)) return;
+        if (gameOver || aiBusy || (vsAI && turn === 'b')) return;
+        const rect = eng.renderer.domElement.getBoundingClientRect();
+        ptr.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        ptr.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+        raycaster.setFromCamera(ptr, camera);
 
-        const mv = legalMoves.find((m) => m.tr === row && m.tc === col);
-        if (mv) { makeMoveXQ(mv); return; }
-
-        if (bd[row][col]?.side === turn) {
-          selected = { r: row, c: col };
-          legalMoves = getLegalXQ(bd, row, col);
-          const w = toWorld(row, col);
-          selRing.position.set(w.x, 0.22, w.z);
-          selRing.visible = true;
-          showDots(legalMoves);
-          sfx.play('coin');
+        const dotHits = raycaster.intersectObjects(dotsGroup.children);
+        if (dotHits.length > 0 && dotHits[0].object.userData.move) {
+          executeMoveXQ(dotHits[0].object.userData.move);
+          return;
         }
-      });
 
-      setTouchControls(`
-        <div class="pointer-events-auto flex gap-2 mx-auto">
-          <button id="xq-undo" class="px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700 text-amber-300 font-bold text-xs">↩️ Đi lại (Z)</button>
-          <button id="xq-hint" class="px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700 text-purple-300 font-bold text-xs">💡 Gợi ý (H)</button>
-        </div>
-      `);
-      document.getElementById('xq-undo').addEventListener('click', () => {
-        if (history.length > 0) {
-          bd = history.pop();
-          if (vsAI && history.length > 0) bd = history.pop();
-          turn = 'r'; syncMeshes(); updateHUD();
-        }
-      });
-      document.getElementById('xq-hint').addEventListener('click', () => {
-        const ms = getAllLegalXQ(bd, turn);
-        if (ms.length > 0) {
-          const m = ms[0];
-          selected = { r: m.fr, c: m.fc };
-          legalMoves = getLegalXQ(bd, m.fr, m.fc);
-          showDots(legalMoves);
-          showToast('💡 Gợi ý nước đi!');
+        const pHits = raycaster.intersectObjects(meshes);
+        if (pHits.length > 0) {
+          const { r, c } = pHits[0].object.userData;
+          const clicked = bd[r][c];
+          if (clicked && clicked.side === turn) {
+            selected = { r, c };
+            legalMoves = getLegalXQ(bd, r, c);
+            const pos = toWorld(r, c);
+            selRing.position.set(pos.x, 0.16, pos.z);
+            selRing.visible = true;
+            showMoveDots();
+            sfx.play('flip');
+          } else if (selected) {
+            const mv = legalMoves.find((m) => m.tr === r && m.tc === c);
+            if (mv) executeMoveXQ(mv);
+          }
         }
       });
 
       eng.on(window, 'keydown', (e) => {
-        if (e.code === 'KeyZ' && history.length > 0) { bd = history.pop(); syncMeshes(); updateHUD(); }
+        if (e.code === 'KeyZ') undoXQ();
+        if (e.code === 'KeyH') showHintXQ();
         if (e.code === 'KeyC') { camMode = (camMode + 1) % 3; applyCam(); }
       });
 
-      bd = INIT_XQ.map((row) => row.map((code) => (code ? { side: code[0], type: code[1] } : null)));
-      syncMeshes();
-      showSetupXQ();
+      setTouchControls(`
+        <div class="pointer-events-auto flex gap-2 mx-auto">
+          <button id="xq-u" class="px-4 py-2 rounded-xl bg-slate-900/90 border border-slate-700 text-xs font-bold text-slate-200">↩ Undo (Z)</button>
+          <button id="xq-h" class="px-4 py-2 rounded-xl bg-slate-900/90 border border-slate-700 text-xs font-bold text-amber-300">💡 Hint (H)</button>
+        </div>
+      `);
+      document.getElementById('xq-u').addEventListener('click', undoXQ);
+      document.getElementById('xq-h').addEventListener('click', showHintXQ);
 
-      eng.startLoop((dt) => {
-        if (selRing.visible) selRing.rotation.z += dt * 2;
+      showModeModal();
+
+      eng.startLoop((dt, now) => {
+        if (selRing.visible) selRing.rotation.z = now * 0.003;
       });
 
       return {
-        toggleCamera() { camMode = (camMode + 1) % 3; applyCam(); },
+        toggleCamera() { camMode = (camMode + 1) % 3; applyCam(); showToast(`🎥 Cam ${camMode + 1}/3`); },
         destroy() { eng.destroy(); }
       };
     }
 
     // =========================================================================
-    // GAME 12: CỜ VUA 3D (chess-3d) — ANTI-GLARE IVORY & CRISP SCULPTED PIECES
+    // GAME 12: CỜ VUA 3D (chess-3d) — ANTI-GLARE IVORY/DARK-WOOD + GM AI
     // =========================================================================
     function createChess3D(container, meta) {
       const eng = new GameEngineCore(container);
       const { scene, camera } = eng;
-      scene.background = new THREE.Color(0x0c111d);
-      scene.fog = new THREE.FogExp2(0x0c111d, 0.014);
+      scene.background = new THREE.Color(0x0b0f17);
 
       let camMode = 0;
-      const camNames = {
-        vi: ['Góc Nhìn Chuẩn 3D', 'Góc Nhìn Từ Trên Xuống', 'Góc Nhìn Nghiêng Chiến Thuật'],
-        en: ['Standard 3D View', 'Top-Down View', 'Angled Tactical View']
-      };
-
       const applyCam = () => {
-        if (camMode === 0) {
-          camera.position.set(0, 11.8, 11.2);
-          camera.lookAt(0, 0, 0.2);
-        } else if (camMode === 1) {
-          camera.position.set(0, 16.5, 0.02);
-          camera.lookAt(0, 0, 0);
-        } else {
-          camera.position.set(9.8, 11.5, 9.2);
-          camera.lookAt(0, 0, 0);
-        }
+        if (camMode === 0) { camera.position.set(0, 12.2, 10.5); camera.lookAt(0, 0, 0.3); }
+        else if (camMode === 1) { camera.position.set(0, 16.5, 0.05); camera.lookAt(0, 0, 0); }
+        else { camera.position.set(9.5, 11.2, 9.0); camera.lookAt(0, 0, 0); }
       };
       applyCam();
 
-      // Balanced Non-Glare Lighting (Hemisphere + Soft Key & Rim Lights)
-      const hemiLight = new THREE.HemisphereLight(0xfef6e4, 0x1e293b, 0.78);
-      scene.add(hemiLight);
-
-      const keyLight = new THREE.DirectionalLight(0xfff7ed, 0.62);
-      keyLight.position.set(11, 20, 13);
+      scene.add(new THREE.AmbientLight(0xf2eadb, 0.70));
+      scene.add(new THREE.HemisphereLight(0xf4ead8, 0x262b36, 0.44));
+      const keyLight = new THREE.DirectionalLight(0xfff5e4, 0.58);
+      keyLight.position.set(8, 20, 11);
       scene.add(keyLight);
-
-      const fillLight = new THREE.DirectionalLight(0x93c5fd, 0.34);
-      fillLight.position.set(-12, 15, -11);
+      const fillLight = new THREE.DirectionalLight(0x93c5fd, 0.26);
+      fillLight.position.set(-9, 12, -8);
       scene.add(fillLight);
 
-      const SQ = 1.42;
-      const BOARD_SPAN = 8 * SQ;
-      const gridToWorld = (r, c) => new THREE.Vector3((c - 3.5) * SQ, 0.28, (r - 3.5) * SQ);
+      const SQ = 1.25;
+      const toWorld = (r, c) => new THREE.Vector3((c - 3.5) * SQ, 0.25, (r - 3.5) * SQ);
 
-      // Warm Matte Maple (#e6d7be) & Walnut (#6f4c34) Board with A-H & 1-8 Coordinates
-      function makeChessBoardTexture() {
+      // Gold-trimmed wooden board with etched A-H & 1-8 coordinate borders
+      function makeChessBoardTex() {
         const size = 1024;
-        const canvas = document.createElement('canvas');
-        canvas.width = size;
-        canvas.height = size;
-        const ctx = canvas.getContext('2d');
+        const cv = document.createElement('canvas');
+        cv.width = size; cv.height = size;
+        const ctx = cv.getContext('2d');
 
-        const borderGrad = ctx.createLinearGradient(0, 0, size, size);
-        borderGrad.addColorStop(0, '#361c0e');
-        borderGrad.addColorStop(0.5, '#4b2714');
-        borderGrad.addColorStop(1, '#291409');
-        ctx.fillStyle = borderGrad;
+        // Outer dark walnut & muted gold trim
+        ctx.fillStyle = '#25170e';
         ctx.fillRect(0, 0, size, size);
 
-        const pad = 84;
-        const inner = size - pad * 2;
-        const cell = inner / 8;
+        const gradTrim = ctx.createLinearGradient(0, 0, size, size);
+        gradTrim.addColorStop(0, '#9c7d36');
+        gradTrim.addColorStop(0.5, '#b89646');
+        gradTrim.addColorStop(1, '#7a5e22');
+        ctx.strokeStyle = gradTrim;
+        ctx.lineWidth = 10;
+        ctx.strokeRect(14, 14, size - 28, size - 28);
 
-        ctx.strokeStyle = '#d4a348';
-        ctx.lineWidth = 7;
-        ctx.strokeRect(pad - 6, pad - 6, inner + 12, inner + 12);
+        const pad = 68;
+        const boardSize = size - pad * 2;
+        const sqPx = boardSize / 8;
+
+        ctx.strokeStyle = '#9c7d36';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(pad - 3, pad - 3, boardSize + 6, boardSize + 6);
 
         for (let r = 0; r < 8; r++) {
           for (let c = 0; c < 8; c++) {
-            const isLight = (r + c) % 2 === 0;
-            ctx.fillStyle = isLight ? '#e6d7be' : '#6f4c34';
-            ctx.fillRect(pad + c * cell, pad + r * cell, cell, cell);
+            const light = (r + c) % 2 === 0;
+            ctx.fillStyle = light ? '#c8bba4' : '#434b59';
+            ctx.fillRect(pad + c * sqPx, pad + r * sqPx, sqPx + 0.5, sqPx + 0.5);
           }
         }
 
-        ctx.fillStyle = '#f3d28b';
-        ctx.font = 'bold 34px Orbitron, sans-serif';
+        // Etched A-H and 1-8 coordinates
+        const files = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+        const ranks = ['8', '7', '6', '5', '4', '3', '2', '1'];
+        ctx.fillStyle = '#d4b872';
+        ctx.font = '800 24px sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        const files = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+
         for (let i = 0; i < 8; i++) {
-          const cx = pad + (i + 0.5) * cell;
-          const cy = pad + (i + 0.5) * cell;
-          ctx.fillText(files[i], cx, size - pad / 2);
-          ctx.fillText(files[i], cx, pad / 2);
-          ctx.fillText(String(8 - i), pad / 2, cy);
-          ctx.fillText(String(8 - i), size - pad / 2, cy);
+          const cx = pad + (i + 0.5) * sqPx;
+          const cy = pad + (i + 0.5) * sqPx;
+          ctx.fillText(files[i], cx, 40);
+          ctx.fillText(files[i], cx, size - 38);
+          ctx.fillText(ranks[i], 39, cy);
+          ctx.fillText(ranks[i], size - 39, cy);
         }
 
-        const tex = new THREE.CanvasTexture(canvas);
+        const tex = new THREE.CanvasTexture(cv);
         eng.trackDisposable(tex);
         return tex;
       }
 
-      const boardGroup = new THREE.Group();
-      scene.add(boardGroup);
-
-      const boardSpanFull = BOARD_SPAN + 1.85;
-      const topTex = makeChessBoardTexture();
-      const woodEdgeMat = new THREE.MeshStandardMaterial({ color: 0x361c0e, roughness: 0.55, metalness: 0.08 });
-      const boardTopMat = new THREE.MeshStandardMaterial({ map: topTex, roughness: 0.62, metalness: 0.02 });
       const boardMesh = new THREE.Mesh(
-        new THREE.BoxGeometry(boardSpanFull, 0.56, boardSpanFull),
-        [woodEdgeMat, woodEdgeMat, boardTopMat, woodEdgeMat, woodEdgeMat, woodEdgeMat]
+        new THREE.BoxGeometry(8 * SQ + 1.35, 0.42, 8 * SQ + 1.35),
+        new THREE.MeshStandardMaterial({ map: makeChessBoardTex(), roughness: 0.82, metalness: 0.02 })
       );
-      boardGroup.add(boardMesh);
+      scene.add(boardMesh);
 
-      const goldRim = new THREE.Mesh(
-        new THREE.BoxGeometry(boardSpanFull + 0.24, 0.24, boardSpanFull + 0.24),
-        new THREE.MeshStandardMaterial({ color: 0xc99a3e, metalness: 0.55, roughness: 0.38 })
-      );
-      goldRim.position.y = -0.18;
-      boardGroup.add(goldRim);
-
-      // ==================== ANTI-GLARE IVORY & CRISP EBONY PIECE MATERIALS ====================
+      // Anti-glare warm matte stone/maple-ivory & deep dark-wood materials with softened trim accents
       const whitePieceMat = new THREE.MeshStandardMaterial({
-        color: 0xdfd4be,      // Warm matte ivory - eliminates bright glare on light squares
-        roughness: 0.52,
-        metalness: 0.03
-      });
-      const whiteTrimMat = new THREE.MeshStandardMaterial({
-        color: 0x9c8562,      // Antique bronze trim rings for clear silhouettes & tiers
-        roughness: 0.44,
-        metalness: 0.25
+        color: 0xc7bca8,
+        roughness: 0.78,
+        metalness: 0.0
       });
       const blackPieceMat = new THREE.MeshStandardMaterial({
-        color: 0x2c3340,      // Deep satin charcoal-ebony
-        roughness: 0.45,
-        metalness: 0.08
+        color: 0x22252d,
+        roughness: 0.72,
+        metalness: 0.04
+      });
+      const whiteTrimMat = new THREE.MeshStandardMaterial({
+        color: 0x8a724d,
+        roughness: 0.65,
+        metalness: 0.15
       });
       const blackTrimMat = new THREE.MeshStandardMaterial({
-        color: 0xc9a659,      // Warm antique gold trim rings for unmistakable contrast
-        roughness: 0.36,
-        metalness: 0.45
+        color: 0xb39148,
+        roughness: 0.55,
+        metalness: 0.25
       });
 
-      // ==================== DISTINCT 3D SCULPTED CHESS PIECE BUILDER ====================
-      function buildChessPieceMesh(side, type) {
-        const g = new THREE.Group();
-        const bodyMat = side === 'w' ? whitePieceMat : blackPieceMat;
+      function buildPieceMesh(side, type) {
+        const mat = side === 'w' ? whitePieceMat : blackPieceMat;
         const trimMat = side === 'w' ? whiteTrimMat : blackTrimMat;
+        const g = new THREE.Group();
 
-        const addCyl = (rt, rb, h, y, mat = bodyMat, seg = 22) => {
-          const m = new THREE.Mesh(new THREE.CylinderGeometry(rt, rb, h, seg), mat);
-          m.position.y = y;
-          g.add(m);
-          return m;
-        };
-        const addRing = (r, tube, y, mat = trimMat) => {
-          const m = new THREE.Mesh(new THREE.TorusGeometry(r, tube, 10, 24), mat);
-          m.rotation.x = Math.PI / 2;
-          m.position.y = y;
-          g.add(m);
-          return m;
-        };
+        // Stepped anti-glare base + softened collar ring
+        const base1 = new THREE.Mesh(new THREE.CylinderGeometry(0.44, 0.48, 0.11, 24), mat);
+        base1.position.y = 0.055;
+        const collar = new THREE.Mesh(new THREE.CylinderGeometry(0.39, 0.41, 0.045, 24), trimMat);
+        collar.position.y = 0.13;
+        g.add(base1, collar);
 
-        // Tiered Sculpted Pedestal Base
-        addCyl(0.48, 0.54, 0.14, 0.07, bodyMat);
-        addRing(0.49, 0.032, 0.14, trimMat);
-        addCyl(0.39, 0.47, 0.14, 0.21, bodyMat);
-        addRing(0.39, 0.028, 0.28, trimMat);
-
-        if (type === 'P') {
-          // Pawn: tapered column, neck ring, smooth spherical head
-          addCyl(0.22, 0.36, 0.50, 0.53, bodyMat);
-          addRing(0.26, 0.032, 0.79, trimMat);
-          const head = new THREE.Mesh(new THREE.SphereGeometry(0.26, 20, 18), bodyMat);
-          head.position.y = 1.03;
-          g.add(head);
-        } else if (type === 'R') {
-          // Rook: sturdy tower + 4 distinct crenellations/battlements
-          addCyl(0.30, 0.38, 0.72, 0.64, bodyMat);
-          addRing(0.33, 0.034, 1.01, trimMat);
-          addCyl(0.37, 0.32, 0.22, 1.12, bodyMat);
-          addRing(0.375, 0.025, 1.23, trimMat);
-          for (let i = 0; i < 4; i++) {
-            const ang = (i * Math.PI) / 2 + Math.PI / 4;
-            const merlon = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.16, 0.14), bodyMat);
-            merlon.position.set(Math.cos(ang) * 0.25, 1.31, Math.sin(ang) * 0.25);
-            merlon.rotation.y = -ang;
-            g.add(merlon);
-          }
-        } else if (type === 'N') {
-          // Knight: sculpted upright horse neck, head, snout, ears & ridged mane
-          addCyl(0.27, 0.37, 0.34, 0.45, bodyMat);
-          addRing(0.29, 0.032, 0.62, trimMat);
-
-          const neck = new THREE.Mesh(new THREE.BoxGeometry(0.30, 0.64, 0.38), bodyMat);
-          neck.position.set(0, 0.90, 0.04);
-          neck.rotation.x = -0.24;
-          g.add(neck);
-
-          const head = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.30, 0.58), bodyMat);
-          head.position.set(0, 1.25, -0.14);
-          head.rotation.x = 0.28;
-          g.add(head);
-
-          const snout = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.20, 0.24), trimMat);
-          snout.position.set(0, 1.18, -0.42);
-          snout.rotation.x = 0.28;
-          g.add(snout);
-
-          // Ridged mane along back of neck
-          const mane = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.62, 0.16), trimMat);
-          mane.position.set(0, 0.98, 0.23);
-          mane.rotation.x = -0.22;
-          g.add(mane);
-
-          // Two pointed horse ears
-          [-0.08, 0.08].forEach((ex) => {
-            const ear = new THREE.Mesh(new THREE.ConeGeometry(0.055, 0.18, 6), bodyMat);
-            ear.position.set(ex, 1.44, 0.05);
-            g.add(ear);
-          });
-        } else if (type === 'B') {
-          // Bishop: slender tapered body, mitre head with diagonal cleft & finial orb
-          addCyl(0.22, 0.37, 0.82, 0.69, bodyMat);
-          addRing(0.28, 0.034, 1.11, trimMat);
-
-          const mitre = new THREE.Mesh(new THREE.SphereGeometry(0.26, 18, 18), bodyMat);
-          mitre.scale.set(0.92, 1.48, 0.92);
-          mitre.position.y = 1.42;
-          g.add(mitre);
-
-          // Carved diagonal cleft stripe across mitre for instant recognition
-          const cleft = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.055, 0.34), trimMat);
-          cleft.position.set(0.05, 1.46, 0);
-          cleft.rotation.z = -0.58;
-          g.add(cleft);
-
-          const finial = new THREE.Mesh(new THREE.SphereGeometry(0.085, 12, 12), trimMat);
-          finial.position.y = 1.84;
-          g.add(finial);
-        } else if (type === 'Q') {
-          // Queen: tall graceful column, flared coronet with 8 crown spikes + orb
-          addCyl(0.22, 0.39, 1.04, 0.80, bodyMat);
-          addRing(0.28, 0.036, 1.33, trimMat);
-          addCyl(0.34, 0.24, 0.24, 1.46, bodyMat);
-          addRing(0.34, 0.028, 1.58, trimMat);
-
-          for (let i = 0; i < 8; i++) {
-            const ang = (i * Math.PI) / 4;
-            const spike = new THREE.Mesh(new THREE.ConeGeometry(0.05, 0.16, 6), trimMat);
-            spike.position.set(Math.cos(ang) * 0.27, 1.65, Math.sin(ang) * 0.27);
-            g.add(spike);
-          }
-          const orb = new THREE.Mesh(new THREE.SphereGeometry(0.11, 14, 14), trimMat);
-          orb.position.y = 1.68;
-          g.add(orb);
-        } else if (type === 'K') {
-          // King: tallest regal column, double collar, crown & bold 3D cross finial
-          addCyl(0.24, 0.41, 1.14, 0.85, bodyMat);
-          addRing(0.31, 0.038, 1.43, trimMat);
-          addCyl(0.36, 0.25, 0.26, 1.57, bodyMat);
-          addRing(0.36, 0.03, 1.70, trimMat);
-
-          const crossV = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.34, 0.09), trimMat);
-          crossV.position.y = 1.89;
-          const crossH = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.09, 0.09), trimMat);
-          crossH.position.y = 1.92;
-          g.add(crossV, crossH);
+        if (type === 'p') {
+          const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.30, 0.42, 20), mat);
+          stem.position.y = 0.34;
+          const head = new THREE.Mesh(new THREE.SphereGeometry(0.24, 20, 16), mat);
+          head.position.y = 0.64;
+          g.add(stem, head);
+        } else if (type === 'r') {
+          const tower = new THREE.Mesh(new THREE.CylinderGeometry(0.31, 0.36, 0.64, 20), mat);
+          tower.position.y = 0.46;
+          const crown = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.33, 0.16, 16), mat);
+          crown.position.y = 0.84;
+          g.add(tower, crown);
+        } else if (type === 'n') {
+          const neck = new THREE.Mesh(new THREE.BoxGeometry(0.30, 0.62, 0.44), mat);
+          neck.position.set(0, 0.45, 0.03);
+          neck.rotation.x = 0.18;
+          const snout = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.24, 0.38), mat);
+          snout.position.set(0, 0.72, side === 'w' ? -0.14 : 0.14);
+          const crest = new THREE.Mesh(new THREE.BoxGeometry(0.10, 0.24, 0.32), trimMat);
+          crest.position.set(0, 0.84, 0.06);
+          g.add(neck, snout, crest);
+        } else if (type === 'b') {
+          const body = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.35, 0.76, 20), mat);
+          body.position.y = 0.52;
+          const mitre = new THREE.Mesh(new THREE.ConeGeometry(0.24, 0.34, 20), mat);
+          mitre.position.y = 1.04;
+          const finial = new THREE.Mesh(new THREE.SphereGeometry(0.08, 12, 12), trimMat);
+          finial.position.y = 1.24;
+          g.add(body, mitre, finial);
+        } else if (type === 'q') {
+          const body = new THREE.Mesh(new THREE.CylinderGeometry(0.19, 0.38, 0.86, 22), mat);
+          body.position.y = 0.57;
+          const coronet = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.22, 0.18, 20), trimMat);
+          coronet.position.y = 1.06;
+          const orb = new THREE.Mesh(new THREE.SphereGeometry(0.13, 16, 14), mat);
+          orb.position.y = 1.24;
+          g.add(body, coronet, orb);
+        } else if (type === 'k') {
+          const body = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.40, 0.92, 22), mat);
+          body.position.y = 0.60;
+          const vBar = new THREE.Mesh(new THREE.BoxGeometry(0.10, 0.32, 0.10), trimMat);
+          vBar.position.y = 1.20;
+          const hBar = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.09, 0.10), trimMat);
+          hBar.position.y = 1.24;
+          g.add(body, vBar, hBar);
         }
 
-        if (side === 'b') g.rotation.y = Math.PI;
-        boardGroup.add(g);
+        g.traverse((child) => {
+          if (child.isMesh) child.userData.isPiecePart = true;
+        });
         return g;
       }
 
-      // ==================== FULL FIDE CHESS ENGINE ====================
       const INIT_CHESS = [
         ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
         ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
@@ -4527,840 +4756,755 @@
         ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR']
       ];
 
-      let board = Array.from({ length: 8 }, () => Array(8).fill(null));
-      let turn = 'w';
-      let vsAI = true;
-      let aiDifficulty = 'medium';
-      let autoFlip2P = false;
-      let boardYaw = 0;
-      let targetYaw = 0;
-
+      let bd = Array.from({ length: 8 }, () => Array(8).fill(null));
       let castling = { wK: true, wQ: true, bK: true, bQ: true };
       let enPassant = null;
+      let turn = 'w';
+      let vsAI = true;
+      let aiDiff = 'hard';
       let selected = null;
       let legalMoves = [];
       let history = [];
-      let moveLog = [];
-      let capturedByWhite = [];
-      let capturedByBlack = [];
+      let positionCounts = new Map();
       let gameOver = false;
-      let aiThinking = false;
-      let pendingPromo = null;
+      let aiBusy = false;
+      let pieceGroups = [];
 
-      let pieceMeshes = [];
-      const animations = [];
-
-      const selRing = new THREE.Mesh(
-        new THREE.RingGeometry(0.48, 0.62, 28),
-        new THREE.MeshBasicMaterial({ color: 0x38bdf8, side: THREE.DoubleSide })
-      );
-      selRing.rotation.x = -Math.PI / 2;
-      selRing.position.y = 0.295;
-      selRing.visible = false;
-      boardGroup.add(selRing);
-
-      const lastFromSq = new THREE.Mesh(
-        new THREE.PlaneGeometry(SQ * 0.94, SQ * 0.94),
-        new THREE.MeshBasicMaterial({ color: 0xfacc15, transparent: true, opacity: 0.28 })
-      );
-      lastFromSq.rotation.x = -Math.PI / 2;
-      lastFromSq.position.y = 0.286;
-      lastFromSq.visible = false;
-      boardGroup.add(lastFromSq);
-
-      const lastToSq = lastFromSq.clone();
-      lastToSq.visible = false;
-      boardGroup.add(lastToSq);
-
-      const checkPulse = new THREE.Mesh(
-        new THREE.RingGeometry(0.45, 0.65, 28),
-        new THREE.MeshBasicMaterial({ color: 0xef4444, side: THREE.DoubleSide })
-      );
-      checkPulse.rotation.x = -Math.PI / 2;
-      checkPulse.position.y = 0.298;
-      checkPulse.visible = false;
-      boardGroup.add(checkPulse);
+      const selRing = new THREE.Mesh(new THREE.RingGeometry(0.45, 0.58, 24), new THREE.MeshBasicMaterial({ color: 0x38bdf8, side: THREE.DoubleSide }));
+      selRing.rotation.x = -Math.PI / 2; selRing.position.y = 0.23; selRing.visible = false;
+      scene.add(selRing);
 
       const dotsGroup = new THREE.Group();
-      boardGroup.add(dotsGroup);
+      scene.add(dotsGroup);
 
-      function clearLegalDots() {
-        while (dotsGroup.children.length > 0) dotsGroup.remove(dotsGroup.children[0]);
+      const inB = (r, c) => r >= 0 && r < 8 && c >= 0 && c < 8;
+
+      function cloneStateChess(b, cast, ep) {
+        return {
+          b: b.map((row) => row.map((cell) => (cell ? { ...cell } : null))),
+          cast: { ...cast },
+          ep: ep ? { ...ep } : null
+        };
       }
 
-      function showLegalDots(moves) {
-        clearLegalDots();
-        for (const m of moves) {
-          const pos = gridToWorld(m.tr, m.tc);
-          const isCapture = Boolean(board[m.tr][m.tc]) || m.enPassant;
-          const marker = new THREE.Mesh(
-            isCapture ? new THREE.RingGeometry(0.44, 0.58, 24) : new THREE.CircleGeometry(0.22, 20),
-            new THREE.MeshBasicMaterial({ color: isCapture ? 0xf43f5e : 0x10b981, side: THREE.DoubleSide })
-          );
-          marker.rotation.x = -Math.PI / 2;
-          marker.position.set(pos.x, 0.296, pos.z);
-          dotsGroup.add(marker);
+      function boardSignatureChess(b, sideToMove, cast, ep) {
+        let s = `${sideToMove}|${cast.wK ? 1 : 0}${cast.wQ ? 1 : 0}${cast.bK ? 1 : 0}${cast.bQ ? 1 : 0}|${ep ? `${ep.r},${ep.c}` : '-'}|`;
+        for (let r = 0; r < 8; r++) {
+          for (let c = 0; c < 8; c++) {
+            const p = b[r][c];
+            if (p) s += `${p.side}${p.type}${r}${c}.`;
+          }
         }
+        return s;
       }
 
-      const inBounds = (r, c) => r >= 0 && r < 8 && c >= 0 && c < 8;
-      const cloneBoard = (b) => b.map((row) => row.map((cell) => (cell ? { ...cell } : null)));
+      const CHESS_ZOBRIST = (() => {
+        const pieceKeys = {};
+        const types = ['k', 'q', 'r', 'b', 'n', 'p'];
+        const sides = ['w', 'b'];
+        let seed = 0x85ebca6b;
+        const nextU32 = () => {
+          seed ^= seed << 13;
+          seed ^= seed >>> 17;
+          seed ^= seed << 5;
+          return seed >>> 0;
+        };
+        for (const s of sides) {
+          for (const t of types) {
+            pieceKeys[s + t] = Array.from({ length: 64 }, () => nextU32());
+          }
+        }
+        return { pieceKeys, sideBlack: nextU32() };
+      })();
 
-      function isSquareAttacked(b, tr, tc, bySide) {
-        const pawnDir = bySide === 'w' ? -1 : 1;
+      function hashChess(b, side) {
+        let h = side === 'b' ? CHESS_ZOBRIST.sideBlack : 0;
+        for (let r = 0; r < 8; r++) {
+          for (let c = 0; c < 8; c++) {
+            const p = b[r][c];
+            if (p) h = (h ^ CHESS_ZOBRIST.pieceKeys[p.side + p.type][r * 8 + c]) >>> 0;
+          }
+        }
+        return h;
+      }
+
+      function isSquareAttackedChess(b, tr, tc, attackerSide) {
+        const pawnDir = attackerSide === 'w' ? -1 : 1;
         for (const dc of [-1, 1]) {
           const pr = tr - pawnDir, pc = tc + dc;
-          if (inBounds(pr, pc) && b[pr][pc]?.side === bySide && b[pr][pc]?.type === 'P') return true;
+          if (inB(pr, pc) && b[pr][pc]?.side === attackerSide && b[pr][pc]?.type === 'p') return true;
         }
-        const knightDeltas = [[-2, -1], [-2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2], [2, -1], [2, 1]];
-        for (const [dr, dc] of knightDeltas) {
+        for (const [dr, dc] of [[-2, -1], [-2, 1], [2, -1], [2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2]]) {
           const nr = tr + dr, nc = tc + dc;
-          if (inBounds(nr, nc) && b[nr][nc]?.side === bySide && b[nr][nc]?.type === 'N') return true;
+          if (inB(nr, nc) && b[nr][nc]?.side === attackerSide && b[nr][nc]?.type === 'n') return true;
+        }
+        for (const [dr, dc] of [[1, 1], [1, -1], [-1, 1], [-1, -1]]) {
+          let nr = tr + dr, nc = tc + dc;
+          while (inB(nr, nc)) {
+            const p = b[nr][nc];
+            if (p) {
+              if (p.side === attackerSide && (p.type === 'b' || p.type === 'q')) return true;
+              break;
+            }
+            nr += dr; nc += dc;
+          }
+        }
+        for (const [dr, dc] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+          let nr = tr + dr, nc = tc + dc;
+          while (inB(nr, nc)) {
+            const p = b[nr][nc];
+            if (p) {
+              if (p.side === attackerSide && (p.type === 'r' || p.type === 'q')) return true;
+              break;
+            }
+            nr += dr; nc += dc;
+          }
         }
         for (let dr = -1; dr <= 1; dr++) {
           for (let dc = -1; dc <= 1; dc++) {
-            if (dr === 0 && dc === 0) continue;
-            const kr = tr + dr, kc = tc + dc;
-            if (inBounds(kr, kc) && b[kr][kc]?.side === bySide && b[kr][kc]?.type === 'K') return true;
-          }
-        }
-        const ortho = [[1, 0], [-1, 0], [0, 1], [0, -1]];
-        for (const [dr, dc] of ortho) {
-          let r = tr + dr, c = tc + dc;
-          while (inBounds(r, c)) {
-            const p = b[r][c];
-            if (p) {
-              if (p.side === bySide && (p.type === 'R' || p.type === 'Q')) return true;
-              break;
-            }
-            r += dr; c += dc;
-          }
-        }
-        const diag = [[1, 1], [1, -1], [-1, 1], [-1, -1]];
-        for (const [dr, dc] of diag) {
-          let r = tr + dr, c = tc + dc;
-          while (inBounds(r, c)) {
-            const p = b[r][c];
-            if (p) {
-              if (p.side === bySide && (p.type === 'B' || p.type === 'Q')) return true;
-              break;
-            }
-            r += dr; c += dc;
+            if (!dr && !dc) continue;
+            const nr = tr + dr, nc = tc + dc;
+            if (inB(nr, nc) && b[nr][nc]?.side === attackerSide && b[nr][nc]?.type === 'k') return true;
           }
         }
         return false;
       }
 
-      function findKing(b, side) {
-        for (let r = 0; r < 8; r++) {
-          for (let c = 0; c < 8; c++) {
-            if (b[r][c]?.side === side && b[r][c]?.type === 'K') return { r, c };
-          }
+      function isChessCheck(b, side) {
+        let kr = -1, kc = -1;
+        for (let r = 0; r < 8; r++) for (let c = 0; c < 8; c++) {
+          if (b[r][c]?.side === side && b[r][c]?.type === 'k') { kr = r; kc = c; }
         }
-        return null;
+        if (kr === -1) return true;
+        return isSquareAttackedChess(b, kr, kc, side === 'w' ? 'b' : 'w');
       }
 
-      function isInCheck(b, side) {
-        const k = findKing(b, side);
-        if (!k) return true;
-        return isSquareAttacked(b, k.r, k.c, side === 'w' ? 'b' : 'w');
-      }
-
-      function generatePseudoMoves(b, r, c, castRights, epTarget) {
-        const p = b[r][c];
-        if (!p) return [];
+      function genPseudoChess(b, r, c, cast, ep) {
+        const p = b[r][c]; if (!p) return [];
         const { side, type } = p;
         const opp = side === 'w' ? 'b' : 'w';
-        const moves = [];
+        const res = [];
 
-        if (type === 'P') {
+        if (type === 'p') {
           const dir = side === 'w' ? -1 : 1;
           const startRow = side === 'w' ? 6 : 1;
           const promoRow = side === 'w' ? 0 : 7;
-
-          if (inBounds(r + dir, c) && !b[r + dir][c]) {
-            moves.push({ fr: r, fc: c, tr: r + dir, tc: c, promo: (r + dir) === promoRow });
-            if (r === startRow && !b[r + dir * 2][c]) {
-              moves.push({ fr: r, fc: c, tr: r + dir * 2, tc: c, doublePush: true });
-            }
+          const addP = (tr, tc, flags = {}) => {
+            if (tr === promoRow) ['q', 'r', 'b', 'n'].forEach((pr) => res.push({ fr: r, fc: c, tr, tc, promo: pr, ...flags }));
+            else res.push({ fr: r, fc: c, tr, tc, ...flags });
+          };
+          if (inB(r + dir, c) && !b[r + dir][c]) {
+            addP(r + dir, c);
+            if (r === startRow && !b[r + dir * 2][c]) addP(r + dir * 2, c, { doublePush: true });
           }
           for (const dc of [-1, 1]) {
-            const nr = r + dir, nc = c + dc;
-            if (!inBounds(nr, nc)) continue;
-            if (b[nr][nc]?.side === opp) {
-              moves.push({ fr: r, fc: c, tr: nr, tc: nc, promo: nr === promoRow });
-            } else if (epTarget && epTarget.r === nr && epTarget.c === nc) {
-              moves.push({ fr: r, fc: c, tr: nr, tc: nc, enPassant: true });
-            }
+            const nc = c + dc;
+            if (!inB(r + dir, nc)) continue;
+            if (b[r + dir][nc]?.side === opp) addP(r + dir, nc);
+            if (ep && ep.r === r + dir && ep.c === nc) addP(r + dir, nc, { epCapture: true });
           }
-        } else if (type === 'N') {
-          [[-2, -1], [-2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2], [2, -1], [2, 1]].forEach(([dr, dc]) => {
+        } else if (type === 'n') {
+          for (const [dr, dc] of [[-2, -1], [-2, 1], [2, -1], [2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2]]) {
             const nr = r + dr, nc = c + dc;
-            if (inBounds(nr, nc) && b[nr][nc]?.side !== side) moves.push({ fr: r, fc: c, tr: nr, tc: nc });
-          });
-        } else if (type === 'B' || type === 'R' || type === 'Q') {
+            if (inB(nr, nc) && (!b[nr][nc] || b[nr][nc].side === opp)) res.push({ fr: r, fc: c, tr: nr, tc: nc });
+          }
+        } else if (type === 'b' || type === 'r' || type === 'q') {
           const dirs = [];
-          if (type === 'B' || type === 'Q') dirs.push([1, 1], [1, -1], [-1, 1], [-1, -1]);
-          if (type === 'R' || type === 'Q') dirs.push([1, 0], [-1, 0], [0, 1], [0, -1]);
+          if (type === 'b' || type === 'q') dirs.push([1, 1], [1, -1], [-1, 1], [-1, -1]);
+          if (type === 'r' || type === 'q') dirs.push([1, 0], [-1, 0], [0, 1], [0, -1]);
           for (const [dr, dc] of dirs) {
             let nr = r + dr, nc = c + dc;
-            while (inBounds(nr, nc)) {
-              if (!b[nr][nc]) {
-                moves.push({ fr: r, fc: c, tr: nr, tc: nc });
-              } else {
-                if (b[nr][nc].side === opp) moves.push({ fr: r, fc: c, tr: nr, tc: nc });
+            while (inB(nr, nc)) {
+              if (!b[nr][nc]) res.push({ fr: r, fc: c, tr: nr, tc: nc });
+              else {
+                if (b[nr][nc].side === opp) res.push({ fr: r, fc: c, tr: nr, tc: nc });
                 break;
               }
               nr += dr; nc += dc;
             }
           }
-        } else if (type === 'K') {
+        } else if (type === 'k') {
           for (let dr = -1; dr <= 1; dr++) {
             for (let dc = -1; dc <= 1; dc++) {
-              if (dr === 0 && dc === 0) continue;
+              if (!dr && !dc) continue;
               const nr = r + dr, nc = c + dc;
-              if (inBounds(nr, nc) && b[nr][nc]?.side !== side) moves.push({ fr: r, fc: c, tr: nr, tc: nc });
+              if (inB(nr, nc) && (!b[nr][nc] || b[nr][nc].side === opp)) res.push({ fr: r, fc: c, tr: nr, tc: nc });
             }
           }
-          const homeRow = side === 'w' ? 7 : 0;
-          if (r === homeRow && c === 4 && !isInCheck(b, side)) {
-            if (castRights[side + 'K'] && !b[homeRow][5] && !b[homeRow][6] &&
-                b[homeRow][7]?.side === side && b[homeRow][7]?.type === 'R' &&
-                !isSquareAttacked(b, homeRow, 5, opp) && !isSquareAttacked(b, homeRow, 6, opp)) {
-              moves.push({ fr: r, fc: c, tr: homeRow, tc: 6, castle: 'K' });
+          const homeR = side === 'w' ? 7 : 0;
+          if (r === homeR && c === 4 && !isSquareAttackedChess(b, homeR, 4, opp)) {
+            const canK = side === 'w' ? cast.wK : cast.bK;
+            const canQ = side === 'w' ? cast.wQ : cast.bQ;
+            if (canK && !b[homeR][5] && !b[homeR][6] && b[homeR][7]?.type === 'r' &&
+                !isSquareAttackedChess(b, homeR, 5, opp) && !isSquareAttackedChess(b, homeR, 6, opp)) {
+              res.push({ fr: r, fc: c, tr: homeR, tc: 6, castle: 'K' });
             }
-            if (castRights[side + 'Q'] && !b[homeRow][3] && !b[homeRow][2] && !b[homeRow][1] &&
-                b[homeRow][0]?.side === side && b[homeRow][0]?.type === 'R' &&
-                !isSquareAttacked(b, homeRow, 3, opp) && !isSquareAttacked(b, homeRow, 2, opp)) {
-              moves.push({ fr: r, fc: c, tr: homeRow, tc: 2, castle: 'Q' });
+            if (canQ && !b[homeR][3] && !b[homeR][2] && !b[homeR][1] && b[homeR][0]?.type === 'r' &&
+                !isSquareAttackedChess(b, homeR, 3, opp) && !isSquareAttackedChess(b, homeR, 2, opp)) {
+              res.push({ fr: r, fc: c, tr: homeR, tc: 2, castle: 'Q' });
             }
           }
         }
-        return moves;
+        return res;
       }
 
-      function applyMoveSim(b, move, castRights, epTarget, promoChoice = 'Q') {
-        const nb = cloneBoard(b);
-        const nc = { ...castRights };
-        let nextEp = null;
-        const piece = { ...nb[move.fr][move.fc] };
-        let captured = nb[move.tr][move.tc];
+      function applyChessMoveSim(b, cast, ep, m) {
+        const next = cloneStateChess(b, cast, ep);
+        const moving = next.b[m.fr][m.fc];
+        next.b[m.tr][m.tc] = moving;
+        next.b[m.fr][m.fc] = null;
+        next.ep = null;
 
-        if (move.enPassant) {
-          const capRow = piece.side === 'w' ? move.tr + 1 : move.tr - 1;
-          captured = nb[capRow][move.tc];
-          nb[capRow][move.tc] = null;
+        if (m.epCapture) {
+          const capR = moving.side === 'w' ? m.tr + 1 : m.tr - 1;
+          next.b[capR][m.tc] = null;
         }
-        if (move.castle === 'K') {
-          nb[move.fr][5] = nb[move.fr][7];
-          nb[move.fr][7] = null;
-        } else if (move.castle === 'Q') {
-          nb[move.fr][3] = nb[move.fr][0];
-          nb[move.fr][0] = null;
+        if (m.doublePush) {
+          next.ep = { r: (m.fr + m.tr) / 2, c: m.fc };
         }
-
-        if (move.promo) piece.type = promoChoice;
-        nb[move.tr][move.tc] = piece;
-        nb[move.fr][move.fc] = null;
-
-        if (piece.type === 'K') { nc[piece.side + 'K'] = false; nc[piece.side + 'Q'] = false; }
-        if (piece.type === 'R') {
-          if (move.fr === 7 && move.fc === 0) nc.wQ = false;
-          if (move.fr === 7 && move.fc === 7) nc.wK = false;
-          if (move.fr === 0 && move.fc === 0) nc.bQ = false;
-          if (move.fr === 0 && move.fc === 7) nc.bK = false;
+        if (m.promo) {
+          next.b[m.tr][m.tc] = { side: moving.side, type: m.promo };
         }
-        if (captured?.type === 'R') {
-          if (move.tr === 7 && move.tc === 0) nc.wQ = false;
-          if (move.tr === 7 && move.tc === 7) nc.wK = false;
-          if (move.tr === 0 && move.tc === 0) nc.bQ = false;
-          if (move.tr === 0 && move.tc === 7) nc.bK = false;
+        if (m.castle) {
+          const hr = moving.side === 'w' ? 7 : 0;
+          if (m.castle === 'K') {
+            next.b[hr][5] = next.b[hr][7];
+            next.b[hr][7] = null;
+          } else {
+            next.b[hr][3] = next.b[hr][0];
+            next.b[hr][0] = null;
+          }
         }
-
-        if (move.doublePush) {
-          nextEp = { r: (move.fr + move.tr) / 2, c: move.fc };
+        if (moving.type === 'k') {
+          if (moving.side === 'w') { next.cast.wK = false; next.cast.wQ = false; }
+          else { next.cast.bK = false; next.cast.bQ = false; }
         }
-        return { board: nb, castling: nc, enPassant: nextEp, captured };
+        if (moving.type === 'r') {
+          if (m.fr === 7 && m.fc === 0) next.cast.wQ = false;
+          if (m.fr === 7 && m.fc === 7) next.cast.wK = false;
+          if (m.fr === 0 && m.fc === 0) next.cast.bQ = false;
+          if (m.fr === 0 && m.fc === 7) next.cast.bK = false;
+        }
+        return next;
       }
 
-      function getLegalMovesForSquare(b, r, c, castRights, epTarget) {
-        const p = b[r][c];
-        if (!p) return [];
-        const pseudo = generatePseudoMoves(b, r, c, castRights, epTarget);
-        return pseudo.filter((m) => {
-          const sim = applyMoveSim(b, m, castRights, epTarget);
-          return !isInCheck(sim.board, p.side);
+      function getLegalChess(b, r, c, cast, ep) {
+        const p = b[r][c]; if (!p) return [];
+        return genPseudoChess(b, r, c, cast, ep).filter((m) => {
+          const sim = applyChessMoveSim(b, cast, ep, m);
+          return !isChessCheck(sim.b, p.side);
         });
       }
 
-      function getAllLegalMoves(b, side, castRights, epTarget) {
+      function getAllLegalChess(b, side, cast, ep) {
         const all = [];
-        for (let r = 0; r < 8; r++) {
-          for (let c = 0; c < 8; c++) {
-            if (b[r][c]?.side === side) {
-              all.push(...getLegalMovesForSquare(b, r, c, castRights, epTarget));
-            }
-          }
+        for (let r = 0; r < 8; r++) for (let c = 0; c < 8; c++) {
+          if (b[r][c]?.side === side) all.push(...getLegalChess(b, r, c, cast, ep));
         }
         return all;
       }
 
-      function isInsufficientMaterial(b) {
-        const pieces = [];
-        for (let r = 0; r < 8; r++) {
-          for (let c = 0; c < 8; c++) {
-            if (b[r][c]) pieces.push(b[r][c]);
-          }
-        }
-        if (pieces.length === 2) return true;
-        if (pieces.length === 3 && pieces.some((p) => p.type === 'B' || p.type === 'N')) return true;
-        return false;
-      }
-
-      const PIECE_VALUES = { P: 100, N: 320, B: 335, R: 500, Q: 920, K: 20000 };
-      const PST_CENTER = [
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [5, 10, 10, 10, 10, 10, 10, 5],
-        [4, 8, 16, 20, 20, 16, 8, 4],
-        [2, 6, 18, 28, 28, 18, 6, 2],
-        [2, 6, 18, 28, 28, 18, 6, 2],
-        [4, 8, 16, 20, 20, 16, 8, 4],
-        [5, 10, 10, 10, 10, 10, 10, 5],
-        [0, 0, 0, 0, 0, 0, 0, 0]
+      // ==================== GRANDMASTER CHESS EVALUATION & SEARCH ====================
+      const CHESS_VALS = { k: 30000, q: 950, r: 515, b: 335, n: 320, p: 100 };
+      const CENTER_PST = [
+        [ 0,  5, 10, 15, 15, 10,  5,  0],
+        [ 5, 12, 18, 22, 22, 18, 12,  5],
+        [10, 18, 28, 36, 36, 28, 18, 10],
+        [12, 22, 34, 45, 45, 34, 22, 12],
+        [12, 22, 34, 45, 45, 34, 22, 12],
+        [10, 18, 28, 36, 36, 28, 18, 10],
+        [ 5, 12, 18, 22, 22, 18, 12,  5],
+        [ 0,  5, 10, 15, 15, 10,  5,  0]
       ];
 
-      function evaluateChessBoard(b) {
+      // Positive => advantage for Black ('b'), Negative => advantage for White ('w')
+      function evalChessFull(b) {
         let score = 0;
+        let nonPawnMaterial = 0;
+        let bBishops = 0, wBishops = 0;
+        let bKingPos = null, wKingPos = null;
+        const bPieces = [], wPieces = [];
+
         for (let r = 0; r < 8; r++) {
           for (let c = 0; c < 8; c++) {
             const p = b[r][c];
             if (!p) continue;
-            const val = PIECE_VALUES[p.type] + PST_CENTER[r][c];
-            score += p.side === 'b' ? val : -val;
+            const sign = p.side === 'b' ? 1 : -1;
+            let val = CHESS_VALS[p.type];
+
+            if (p.type !== 'k' && p.type !== 'p') nonPawnMaterial += val;
+
+            if (p.type === 'p') {
+              const adv = p.side === 'b' ? r : 7 - r;
+              val += adv * adv * 4.5 + (c >= 3 && c <= 4 ? 14 : 0);
+            } else if (p.type === 'n' || p.type === 'b' || p.type === 'q') {
+              val += CENTER_PST[r][c] * 0.7;
+              if (p.type === 'b') {
+                if (p.side === 'b') bBishops++; else wBishops++;
+              }
+            } else if (p.type === 'r') {
+              // Rook on 7th rank or open file
+              const seventh = p.side === 'b' ? 6 : 1;
+              if (r === seventh) val += 35;
+              let hasPawnOnFile = false;
+              for (let rr = 0; rr < 8; rr++) if (b[rr][c]?.type === 'p') hasPawnOnFile = true;
+              if (!hasPawnOnFile) val += 24;
+            } else if (p.type === 'k') {
+              if (p.side === 'b') bKingPos = { r, c };
+              else wKingPos = { r, c };
+            }
+
+            score += sign * val;
+            if (p.side === 'b') bPieces.push({ r, c, type: p.type });
+            else wPieces.push({ r, c, type: p.type });
           }
         }
+
+        if (bBishops >= 2) score += 35;
+        if (wBishops >= 2) score -= 35;
+
+        const isEndgame = nonPawnMaterial < 1550;
+        if (bKingPos && wKingPos) {
+          if (isEndgame) {
+            // Centralize king in endgame
+            const bCenter = 7 - (Math.abs(bKingPos.r - 3.5) + Math.abs(bKingPos.c - 3.5));
+            const wCenter = 7 - (Math.abs(wKingPos.r - 3.5) + Math.abs(wKingPos.c - 3.5));
+            score += (bCenter - wCenter) * 14;
+          } else {
+            // Pawn shield near king in middlegame
+            let bShield = 0, wShield = 0;
+            for (const dc of [-1, 0, 1]) {
+              if (inB(bKingPos.r + 1, bKingPos.c + dc) && b[bKingPos.r + 1][bKingPos.c + dc]?.side === 'b' && b[bKingPos.r + 1][bKingPos.c + dc]?.type === 'p') bShield += 14;
+              if (inB(wKingPos.r - 1, wKingPos.c + dc) && b[wKingPos.r - 1][wKingPos.c + dc]?.side === 'w' && b[wKingPos.r - 1][wKingPos.c + dc]?.type === 'p') wShield += 14;
+            }
+            score += (bShield - wShield);
+          }
+        }
+
+        // Hanging piece evaluation
+        for (const bp of bPieces) {
+          if (bp.type !== 'k' && isSquareAttackedChess(b, bp.r, bp.c, 'w') && !isSquareAttackedChess(b, bp.r, bp.c, 'b')) {
+            score -= CHESS_VALS[bp.type] * 0.75;
+          }
+        }
+        for (const wp of wPieces) {
+          if (wp.type !== 'k' && isSquareAttackedChess(b, wp.r, wp.c, 'b') && !isSquareAttackedChess(b, wp.r, wp.c, 'w')) {
+            score += CHESS_VALS[wp.type] * 0.75;
+          }
+        }
+
         return score;
       }
 
-      function alphaBeta(b, depth, alpha, beta, maximizing, castRights, epTarget) {
-        const side = maximizing ? 'b' : 'w';
-        const moves = getAllLegalMoves(b, side, castRights, epTarget);
-        if (moves.length === 0) {
-          if (isInCheck(b, side)) return maximizing ? -18000 - depth * 100 : 18000 + depth * 100;
-          return 0;
+      // Master Chess Opening Book for Black ('b') responding to White ('w')
+      function getChessOpeningMove(b, cast, ep, plyCount) {
+        const candidates = [];
+        // Sicilian Defense (1.e4 c5)
+        if (plyCount === 1 && b[4][4]?.side === 'w' && b[4][4]?.type === 'p') {
+          candidates.push({ fr: 1, fc: 2, tr: 3, tc: 2, doublePush: true }); // c5
+          candidates.push({ fr: 1, fc: 4, tr: 2, tc: 4 }); // e6 French
+          candidates.push({ fr: 1, fc: 2, tr: 2, tc: 2 }); // c6 Caro-Kann
+          candidates.push({ fr: 1, fc: 4, tr: 3, tc: 4, doublePush: true }); // e5 Open
         }
-        if (depth === 0) return evaluateChessBoard(b);
-
-        moves.sort((a, m2) => (b[m2.tr][m2.tc] ? 10 : 0) - (b[a.tr][a.tc] ? 10 : 0));
-
-        if (maximizing) {
-          let maxEval = -Infinity;
-          for (const m of moves) {
-            const sim = applyMoveSim(b, m, castRights, epTarget, 'Q');
-            const ev = alphaBeta(sim.board, depth - 1, alpha, beta, false, sim.castling, sim.enPassant);
-            maxEval = Math.max(maxEval, ev);
-            alpha = Math.max(alpha, ev);
-            if (beta <= alpha) break;
-          }
-          return maxEval;
-        } else {
-          let minEval = Infinity;
-          for (const m of moves) {
-            const sim = applyMoveSim(b, m, castRights, epTarget, 'Q');
-            const ev = alphaBeta(sim.board, depth - 1, alpha, beta, true, sim.castling, sim.enPassant);
-            minEval = Math.min(minEval, ev);
-            beta = Math.min(beta, ev);
-            if (beta <= alpha) break;
-          }
-          return minEval;
+        // Respond to 1.d4 with Nf6 or d5
+        if (plyCount === 1 && b[4][3]?.side === 'w' && b[4][3]?.type === 'p') {
+          candidates.push({ fr: 0, fc: 6, tr: 2, tc: 5 }); // Nf6
+          candidates.push({ fr: 1, fc: 3, tr: 3, tc: 3, doublePush: true }); // d5
         }
+        // Develop knights & bishops cleanly in early plies
+        if (plyCount <= 5) {
+          if (b[0][6]?.type === 'n' && !b[2][5]) candidates.push({ fr: 0, fc: 6, tr: 2, tc: 5 }); // Nf6
+          if (b[0][1]?.type === 'n' && !b[2][2]) candidates.push({ fr: 0, fc: 1, tr: 2, tc: 2 }); // Nc6
+          if (b[1][3]?.type === 'p' && !b[3][3]) candidates.push({ fr: 1, fc: 3, tr: 3, tc: 3, doublePush: true }); // d5
+        }
+
+        const legal = getAllLegalChess(b, 'b', cast, ep);
+        const valid = candidates.filter((cm) =>
+          legal.some((lm) => lm.fr === cm.fr && lm.fc === cm.fc && lm.tr === cm.tr && lm.tc === cm.tc)
+        );
+        if (valid.length === 0) return null;
+        return valid[Math.floor(Math.random() * valid.length)];
       }
 
-      function chooseChessAIMove() {
-        const moves = getAllLegalMoves(board, 'b', castling, enPassant);
+      function chooseAIMoveChess() {
+        const moves = getAllLegalChess(bd, 'b', castling, enPassant);
         if (moves.length === 0) return null;
-        if (aiDifficulty === 'easy') {
-          const caps = moves.filter((m) => board[m.tr][m.tc]);
-          if (caps.length > 0 && Math.random() < 0.55) return caps[Math.floor(Math.random() * caps.length)];
-          return moves[Math.floor(Math.random() * moves.length)];
-        }
-        const depth = aiDifficulty === 'hard' ? 3 : 2;
-        let bestMove = moves[0];
-        let bestScore = -Infinity;
-        moves.sort(() => Math.random() - 0.5);
-        for (const m of moves) {
-          const sim = applyMoveSim(board, m, castling, enPassant, 'Q');
-          const sc = alphaBeta(sim.board, depth - 1, -Infinity, Infinity, false, sim.castling, sim.enPassant);
-          if (sc > bestScore) {
-            bestScore = sc;
-            bestMove = m;
+        if (aiDiff === 'easy') return moves[Math.floor(Math.random() * moves.length)];
+
+        if (aiDiff === 'medium') {
+          let best = moves[0], bestScore = -Infinity;
+          moves.sort(() => Math.random() - 0.5);
+          for (const m of moves) {
+            const sim = applyChessMoveSim(bd, castling, enPassant, m);
+            let sc = evalChessFull(sim.b);
+            const sig = boardSignatureChess(sim.b, 'w', sim.cast, sim.ep);
+            const rep = positionCounts.get(sig) || 0;
+            if (rep > 0 && sc > 70) sc -= rep * 250;
+            if (sc > bestScore) { bestScore = sc; best = m; }
           }
+          return best;
         }
-        return bestMove;
+
+        // ==================== MAX / GRANDMASTER AI (aiDiff === 'hard') ====================
+        const bookMove = getChessOpeningMove(bd, castling, enPassant, history.length);
+        if (bookMove && Math.random() < 0.85) return bookMove;
+
+        const tt = new Map();
+        const killers = Array.from({ length: 14 }, () => []);
+        const historyTable = new Map();
+        const startTime = performance.now();
+        const timeBudgetMs = 1200;
+
+        const moveKey = (m) => `${m.fr},${m.fc}->${m.tr},${m.tc}${m.promo || ''}`;
+
+        function orderMovesChess(b, moveList, depth, ttMove) {
+          return moveList.slice().sort((a, m2) => {
+            if (ttMove) {
+              if (a.fr === ttMove.fr && a.fc === ttMove.fc && a.tr === ttMove.tr && a.tc === ttMove.tc && (a.promo || '') === (ttMove.promo || '')) return -1000000;
+              if (m2.fr === ttMove.fr && m2.fc === ttMove.fc && m2.tr === ttMove.tr && m2.tc === ttMove.tc && (m2.promo || '') === (ttMove.promo || '')) return 1000000;
+            }
+            const promoBonusA = a.promo ? CHESS_VALS[a.promo] : 0;
+            const promoBonusB = m2.promo ? CHESS_VALS[m2.promo] : 0;
+            const capA = (b[a.tr][a.tc] ? CHESS_VALS[b[a.tr][a.tc].type] * 12 - CHESS_VALS[b[a.fr][a.fc].type] : 0) + promoBonusA;
+            const capB = (b[m2.tr][m2.tc] ? CHESS_VALS[b[m2.tr][m2.tc].type] * 12 - CHESS_VALS[b[m2.fr][m2.fc].type] : 0) + promoBonusB;
+            if (capA !== capB) return capB - capA;
+
+            const kSlot = killers[depth] || [];
+            const kA = kSlot.some((k) => k.fr === a.fr && k.fc === a.fc && k.tr === a.tr && k.tc === a.tc) ? 5000 : 0;
+            const kB = kSlot.some((k) => k.fr === m2.fr && k.fc === m2.fc && k.tr === m2.tr && k.tc === m2.tc) ? 5000 : 0;
+            if (kA !== kB) return kB - kA;
+
+            return (historyTable.get(moveKey(m2)) || 0) - (historyTable.get(moveKey(a)) || 0);
+          });
+        }
+
+        function quiescenceChess(b, cast, ep, alpha, beta, side, qDepth) {
+          const standPat = evalChessFull(b) * (side === 'b' ? 1 : -1);
+          if (qDepth <= 0) return standPat;
+          if (standPat >= beta) return beta;
+          if (alpha < standPat) alpha = standPat;
+
+          const tacticals = getAllLegalChess(b, side, cast, ep).filter((m) => b[m.tr][m.tc] || m.promo || m.epCapture);
+          technicalsSort(b, tacticals);
+
+          for (const m of tacticals) {
+            const sim = applyChessMoveSim(b, cast, ep, m);
+            const score = -quiescenceChess(sim.b, sim.cast, sim.ep, -beta, -alpha, side === 'w' ? 'b' : 'w', qDepth - 1);
+            if (score >= beta) return beta;
+            if (score > alpha) alpha = score;
+          }
+          return alpha;
+        }
+
+        function technicalsSort(b, arr) {
+          arr.sort((a, m2) => {
+            const va = (b[a.tr][a.tc] ? CHESS_VALS[b[a.tr][a.tc].type] : 0) + (a.promo ? 800 : 0);
+            const vb = (b[m2.tr][m2.tc] ? CHESS_VALS[b[m2.tr][m2.tc].type] : 0) + (m2.promo ? 800 : 0);
+            return vb - va;
+          });
+        }
+
+        function negamaxChess(b, cast, ep, depth, alpha, beta, side, ply) {
+          if (ply > 0 && (performance.now() - startTime) > timeBudgetMs) {
+            return evalChessFull(b) * (side === 'b' ? 1 : -1);
+          }
+
+          const hKey = hashChess(b, side);
+          const ttEntry = tt.get(hKey);
+          if (ttEntry && ttEntry.depth >= depth) {
+            if (ttEntry.flag === 'EXACT') return ttEntry.val;
+            if (ttEntry.flag === 'LOWER' && ttEntry.val > alpha) alpha = ttEntry.val;
+            else if (ttEntry.flag === 'UPPER' && ttEntry.val < beta) beta = ttEntry.val;
+            if (alpha >= beta) return ttEntry.val;
+          }
+
+          const legal = getAllLegalChess(b, side, cast, ep);
+          if (legal.length === 0) {
+            return isChessCheck(b, side) ? (-100000 - depth * 500) : 0;
+          }
+          if (depth <= 0) {
+            return quiescenceChess(b, cast, ep, alpha, beta, side, 4);
+          }
+
+          const ordered = orderMovesChess(b, legal, ply, ttEntry ? ttEntry.bestMove : null);
+          let bestVal = -Infinity;
+          let bestM = ordered[0];
+          let flag = 'UPPER';
+
+          for (const m of ordered) {
+            const isCap = Boolean(b[m.tr][m.tc]) || Boolean(m.promo);
+            const sim = applyChessMoveSim(b, cast, ep, m);
+            let val = -negamaxChess(sim.b, sim.cast, sim.ep, depth - 1, -beta, -alpha, side === 'w' ? 'b' : 'w', ply + 1);
+
+            if (ply === 0 && side === 'b') {
+              const rep = positionCounts.get(boardSignatureChess(sim.b, 'w', sim.cast, sim.ep)) || 0;
+              if (rep > 0) val -= rep * (val > 40 ? 320 : 100);
+            }
+
+            if (val > bestVal) {
+              bestVal = val;
+              bestM = m;
+            }
+            if (val > alpha) {
+              alpha = val;
+              flag = 'EXACT';
+              if (!isCap && killers[ply]) {
+                killers[ply].unshift(m);
+                if (killers[ply].length > 2) killers[ply].pop();
+              }
+              historyTable.set(moveKey(m), (historyTable.get(moveKey(m)) || 0) + depth * depth * 12);
+            }
+            if (alpha >= beta) {
+              flag = 'LOWER';
+              break;
+            }
+          }
+
+          tt.set(hKey, { depth, val: bestVal, flag, bestMove: bestM });
+          return bestVal;
+        }
+
+        let bestOverall = moves[0];
+        const maxDepth = 5;
+        for (let d = 1; d <= maxDepth; d++) {
+          if (d > 2 && (performance.now() - startTime) > timeBudgetMs * 0.72) break;
+          let curBest = bestOverall;
+          let curBestScore = -Infinity;
+          const rootOrdered = orderMovesChess(bd, moves, 0, bestOverall);
+
+          for (const m of rootOrdered) {
+            const sim = applyChessMoveSim(bd, castling, enPassant, m);
+            let sc = -negamaxChess(sim.b, sim.cast, sim.ep, d - 1, -Infinity, Infinity, 'w', 1);
+            const rep = positionCounts.get(boardSignatureChess(sim.b, 'w', sim.cast, sim.ep)) || 0;
+            if (rep > 0) sc -= rep * (sc > 40 ? 320 : 100);
+
+            if (sc > curBestScore) {
+              curBestScore = sc;
+              curBest = m;
+            }
+            if ((performance.now() - startTime) > timeBudgetMs) break;
+          }
+          bestOverall = curBest;
+          if (curBestScore > 80000) break;
+        }
+        return bestOverall;
       }
 
-      function formatAlgebraic(piece, move, captured, isCheck, isMate) {
-        if (move.castle === 'K') return 'O-O';
-        if (move.castle === 'Q') return 'O-O-O';
-        const files = 'abcdefgh';
-        const pChar = piece.type === 'P' ? '' : piece.type;
-        const fromFile = piece.type === 'P' && (captured || move.enPassant) ? files[move.fc] : '';
-        const capChar = (captured || move.enPassant) ? 'x' : '';
-        const dest = `${files[move.tc]}${8 - move.tr}`;
-        const promoStr = move.promo ? `=${move.promoChoice || 'Q'}` : '';
-        const suffix = isMate ? '#' : (isCheck ? '+' : '');
-        return `${pChar}${fromFile}${capChar}${dest}${promoStr}${suffix}`;
-      }
-
-      const PIECE_GLYPHS = {
-        wK: '♔', wQ: '♕', wR: '♖', wB: '♗', wN: '♘', wP: '♙',
-        bK: '♚', bQ: '♛', bR: '♜', bB: '♝', bN: '♞', bP: '♟'
-      };
-
-      function syncChessMeshes() {
-        for (const m of pieceMeshes) boardGroup.remove(m);
-        pieceMeshes = [];
+      function rebuildChessMeshes() {
+        pieceGroups.forEach((g) => scene.remove(g));
+        pieceGroups = [];
         for (let r = 0; r < 8; r++) {
           for (let c = 0; c < 8; c++) {
-            const p = board[r][c];
+            const p = bd[r][c];
             if (!p) continue;
-            const mesh = buildChessPieceMesh(p.side, p.type);
-            const pos = gridToWorld(r, c);
-            mesh.position.copy(pos);
-            mesh.userData = { r, c, side: p.side, type: p.type };
-            pieceMeshes.push(mesh);
+            const g = buildPieceMesh(p.side, p.type);
+            g.position.copy(toWorld(r, c));
+            g.userData = { r, c };
+            scene.add(g);
+            pieceGroups.push(g);
           }
         }
-        updateCheckHighlight();
       }
 
-      function updateCheckHighlight() {
-        const k = findKing(board, turn);
-        if (k && isInCheck(board, turn)) {
-          const w = gridToWorld(k.r, k.c);
-          checkPulse.position.set(w.x, 0.298, w.z);
-          checkPulse.visible = true;
-        } else {
-          checkPulse.visible = false;
-        }
+      function clearMoveDots() {
+        while (dotsGroup.children.length > 0) dotsGroup.remove(dotsGroup.children[0]);
       }
 
-      function updateChessHUD() {
-        const wCaps = capturedByWhite.map((t) => PIECE_GLYPHS['b' + t]).join('') || '—';
-        const bCaps = capturedByBlack.map((t) => PIECE_GLYPHS['w' + t]).join('') || '—';
+      function showMoveDots() {
+        clearMoveDots();
+        legalMoves.forEach((m) => {
+          const cap = Boolean(bd[m.tr][m.tc]) || Boolean(m.epCapture);
+          const dot = new THREE.Mesh(
+            new THREE.CylinderGeometry(cap ? 0.42 : 0.2, cap ? 0.42 : 0.2, 0.08, 16),
+            new THREE.MeshBasicMaterial({ color: cap ? 0xf43f5e : 0x34d399 })
+          );
+          const pos = toWorld(m.tr, m.tc);
+          dot.position.set(pos.x, 0.24, pos.z);
+          dot.userData = { move: m };
+          dotsGroup.add(dot);
+        });
+      }
+
+      function updateHUD() {
+        const chk = isChessCheck(bd, turn);
         setHUD([
-          {
-            label: currentLang === 'vi' ? 'LƯỢT' : 'TURN',
-            value: turn === 'w'
-              ? (currentLang === 'vi' ? '♔ TRẮNG' : '♔ WHITE')
-              : (vsAI ? `♚ AI (${aiDifficulty.toUpperCase()})` : (currentLang === 'vi' ? '♚ ĐEN' : '♚ BLACK')),
-            color: turn === 'w' ? 'text-amber-200' : 'text-sky-300'
-          },
-          { label: '♔', value: wCaps, color: 'text-slate-200' },
-          { label: '♚', value: bCaps, color: 'text-amber-300' },
-          { label: 'WINS', value: getBestScore('chess-3d'), color: 'text-emerald-300' }
+          { label: 'TURN', value: turn === 'w' ? 'WHITE' : 'BLACK', color: turn === 'w' ? 'text-amber-200' : 'text-sky-300' },
+          { label: 'MODE', value: vsAI ? `AI ${aiDiff.toUpperCase()}` : '2P', color: 'text-emerald-300' },
+          { label: 'STATUS', value: chk ? '⚠️ CHECK!' : 'ACTIVE', color: chk ? 'text-rose-400' : 'text-sky-300' },
+          { label: 'BEST', value: getBestScore('chess-3d'), color: 'text-amber-300' }
         ]);
       }
 
-      function showPromotionModal(move) {
-        pendingPromo = move;
-        const side = turn;
-        const opts = [
-          { type: 'Q', label: currentLang === 'vi' ? 'Hậu (Q)' : 'Queen (Q)', glyph: PIECE_GLYPHS[side + 'Q'] },
-          { type: 'R', label: currentLang === 'vi' ? 'Xe (R)' : 'Rook (R)', glyph: PIECE_GLYPHS[side + 'R'] },
-          { type: 'B', label: currentLang === 'vi' ? 'Tượng (B)' : 'Bishop (B)', glyph: PIECE_GLYPHS[side + 'B'] },
-          { type: 'N', label: currentLang === 'vi' ? 'Mã (N)' : 'Knight (N)', glyph: PIECE_GLYPHS[side + 'N'] }
-        ];
-        showModal(`
-          <div class="space-y-4">
-            <h3 class="text-xl font-black text-amber-300">👑 ${currentLang === 'vi' ? 'PHONG CẤP TỐT (PHÍM 1–4)' : 'PAWN PROMOTION (KEYS 1–4)'}</h3>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              ${opts.map((o, idx) => `
-                <button data-promo="${o.type}" class="p-4 rounded-2xl bg-slate-900 hover:bg-amber-500/20 border border-amber-400/40 flex flex-col items-center gap-1 transition">
-                  <span class="text-4xl">${o.glyph}</span>
-                  <span class="text-xs font-extrabold text-amber-200">${idx + 1}. ${o.label}</span>
-                </button>
-              `).join('')}
-            </div>
-          </div>
-        `);
-        document.querySelectorAll('[data-promo]').forEach((btn) => {
-          btn.addEventListener('click', () => {
-            const choice = btn.getAttribute('data-promo');
-            const m = pendingPromo;
-            pendingPromo = null;
-            hideModal();
-            executeChessMove(m, choice);
-          });
-        });
-      }
+      function executeMoveChess(m) {
+        history.push({ ...cloneStateChess(bd, castling, enPassant), turn });
+        const wasCap = Boolean(bd[m.tr][m.tc]) || Boolean(m.epCapture);
+        const sim = applyChessMoveSim(bd, castling, enPassant, m);
+        bd = sim.b;
+        castling = sim.cast;
+        enPassant = sim.ep;
 
-      function executeChessMove(move, promoChoice = 'Q') {
-        const movingPiece = { ...board[move.fr][move.fc] };
-        history.push({
-          board: cloneBoard(board),
-          turn,
-          castling: { ...castling },
-          enPassant: enPassant ? { ...enPassant } : null,
-          moveLog: [...moveLog],
-          capturedByWhite: [...capturedByWhite],
-          capturedByBlack: [...capturedByBlack]
-        });
+        sfx.play(wasCap ? 'grab' : 'flip');
+        selected = null; legalMoves = [];
+        selRing.visible = false; clearMoveDots();
+        turn = turn === 'w' ? 'b' : 'w';
+        positionCounts.set(boardSignatureChess(bd, turn, castling, enPassant), (positionCounts.get(boardSignatureChess(bd, turn, castling, enPassant)) || 0) + 1);
+        rebuildChessMeshes();
 
-        const sim = applyMoveSim(board, move, castling, enPassant, promoChoice);
-        board = sim.board;
-        castling = sim.castling;
-        enPassant = sim.enPassant;
-        if (sim.captured) {
-          if (movingPiece.side === 'w') capturedByWhite.push(sim.captured.type);
-          else capturedByBlack.push(sim.captured.type);
-          sfx.play('explosion');
-        } else {
-          sfx.play('flip');
-        }
-
-        const pFrom = gridToWorld(move.fr, move.fc);
-        const pTo = gridToWorld(move.tr, move.tc);
-        lastFromSq.position.set(pFrom.x, 0.286, pFrom.z);
-        lastFromSq.visible = true;
-        lastToSq.position.set(pTo.x, 0.286, pTo.z);
-        lastToSq.visible = true;
-
-        selected = null;
-        legalMoves = [];
-        selRing.visible = false;
-        clearLegalDots();
-
-        syncChessMeshes();
-        const movedMesh = pieceMeshes.find((m) => m.userData.r === move.tr && m.userData.c === move.tc);
-        if (movedMesh) {
-          movedMesh.position.copy(pFrom);
-          animations.push({ mesh: movedMesh, from: pFrom.clone(), to: pTo.clone(), t: 0, dur: 0.22 });
-        }
-
-        const nextTurn = turn === 'w' ? 'b' : 'w';
-        const nextMoves = getAllLegalMoves(board, nextTurn, castling, enPassant);
-        const inChk = isInCheck(board, nextTurn);
-        const isMate = nextMoves.length === 0 && inChk;
-        move.promoChoice = promoChoice;
-        moveLog.push(formatAlgebraic(movingPiece, move, sim.captured, inChk, isMate));
-
-        turn = nextTurn;
-        if (!vsAI && autoFlip2P) {
-          targetYaw = turn === 'w' ? 0 : Math.PI;
-        }
-        updateCheckHighlight();
-        updateChessHUD();
-
+        const nextMoves = getAllLegalChess(bd, turn, castling, enPassant);
         if (nextMoves.length === 0) {
           gameOver = true;
-          const whiteWon = isMate && turn === 'b';
-          if (whiteWon) setBestScore('chess-3d', getBestScore('chess-3d') + 1);
-          sfx.play(isMate ? 'win' : 'gameover');
-          const title = isMate
-            ? (turn === 'b'
-              ? (currentLang === 'vi' ? '♔ CHIẾU BÍ! QUÂN TRẮNG THẮNG!' : '♔ CHECKMATE! WHITE WINS!')
-              : (currentLang === 'vi' ? '♚ CHIẾU BÍ! QUÂN ĐEN THẮNG!' : '♚ CHECKMATE! BLACK WINS!'))
-            : (currentLang === 'vi' ? '🤝 HÒA CỜ (PAT / STALEMATE)!' : '🤝 DRAW BY STALEMATE!');
+          const whiteWon = turn === 'b' && isChessCheck(bd, 'b');
+          if (whiteWon) { sfx.play('win'); setBestScore('chess-3d', getBestScore('chess-3d') + 1); }
+          else sfx.play('gameover');
+          const titleText = !isChessCheck(bd, turn)
+            ? (currentLang === 'vi' ? 'HÒA CỜ (STALEMATE)!' : 'STALEMATE DRAW!')
+            : (whiteWon ? (currentLang === 'vi' ? 'TRẮNG CHIẾN THẮNG!' : 'WHITE WINS!') : (currentLang === 'vi' ? 'ĐEN CHIẾN THẮNG!' : 'BLACK WINS!'));
           showModal(`
             <div class="space-y-4">
-              <div class="text-5xl">${isMate ? '🏆' : '🤝'}</div>
-              <h3 class="text-2xl font-black text-amber-300">${title}</h3>
-              <div class="max-h-28 overflow-y-auto p-3 rounded-2xl bg-slate-900/90 text-xs text-slate-300 text-left font-mono">
-                ${moveLog.map((mv, idx) => (idx % 2 === 0 ? `${idx / 2 + 1}. ${mv}` : ` ${mv} `)).join('')}
-              </div>
-              <button id="ch-again" class="w-full py-3 rounded-2xl bg-amber-500 text-slate-950 font-black text-sm">
-                ↻ ${currentLang === 'vi' ? 'CHƠI VÁN MỚI' : 'NEW CHESS MATCH'}
-              </button>
+              <div class="text-5xl">♚</div>
+              <h3 class="text-2xl font-black text-amber-300">${titleText}</h3>
+              <button id="ch-again" class="w-full py-3 rounded-2xl bg-amber-500 text-slate-950 font-black text-sm">↻ NEW GAME</button>
             </div>
           `);
-          document.getElementById('ch-again').addEventListener('click', showChessSetup);
+          document.getElementById('ch-again').addEventListener('click', showModeModal);
           return;
         }
-
-        if (isInsufficientMaterial(board)) {
-          gameOver = true;
-          showModal(`
-            <div class="space-y-4">
-              <div class="text-5xl">🤝</div>
-              <h3 class="text-xl font-black text-amber-300">${currentLang === 'vi' ? 'HÒA DO KHÔNG ĐỦ LỰC CHIẾU BÍ' : 'DRAW — INSUFFICIENT MATERIAL'}</h3>
-              <button id="ch-again2" class="w-full py-3 rounded-2xl bg-amber-500 text-slate-950 font-black text-sm">↻ ${currentLang === 'vi' ? 'VÁN MỚI' : 'NEW GAME'}</button>
-            </div>
-          `);
-          document.getElementById('ch-again2').addEventListener('click', showChessSetup);
-          return;
-        }
-
-        if (inChk) {
-          showToast(currentLang === 'vi' ? '⚠️ CHIẾU VUA (CHECK)!' : '⚠️ CHECK!');
-        }
+        updateHUD();
 
         if (vsAI && turn === 'b' && !gameOver) {
-          aiThinking = true;
+          aiBusy = true;
           eng.setTimeout(() => {
-            if (eng.destroyed) return;
-            const aiMove = chooseChessAIMove();
-            aiThinking = false;
-            if (aiMove) executeChessMove(aiMove, 'Q');
-          }, 340);
+            if (!gameOver && turn === 'b') {
+              const aiM = chooseAIMoveChess();
+              if (aiM) executeMoveChess(aiM);
+            }
+            aiBusy = false;
+          }, 90);
         }
       }
 
-      function undoChessMove() {
-        if (aiThinking || pendingPromo || history.length === 0) return;
-        const steps = vsAI && turn === 'w' && history.length >= 2 ? 2 : 1;
-        let snap = null;
-        for (let i = 0; i < steps && history.length > 0; i++) snap = history.pop();
-        if (!snap) return;
-        board = snap.board;
-        turn = snap.turn;
-        castling = snap.castling;
-        enPassant = snap.enPassant;
-        moveLog = snap.moveLog;
-        capturedByWhite = snap.capturedByWhite;
-        capturedByBlack = snap.capturedByBlack;
-        gameOver = false;
-        selected = null;
-        legalMoves = [];
-        selRing.visible = false;
-        clearLegalDots();
-        syncChessMeshes();
-        updateChessHUD();
-        showToast(currentLang === 'vi' ? '↩️ Đã đi lại nước trước' : '↩️ Move undone');
+      function undoChess() {
+        if (history.length === 0 || aiBusy) return;
+        const prev = history.pop();
+        bd = prev.b; castling = prev.cast; enPassant = prev.ep; turn = prev.turn;
+        selected = null; legalMoves = [];
+        selRing.visible = false; clearMoveDots();
+        rebuildChessMeshes();
+        updateHUD();
       }
 
-      function showChessHint() {
-        if (gameOver || aiThinking || pendingPromo) return;
-        const all = getAllLegalMoves(board, turn, castling, enPassant);
-        if (all.length === 0) return;
-        all.sort((a, b) => (board[b.tr][b.tc] ? 10 : 0) - (board[a.tr][a.tc] ? 10 : 0));
-        const pick = all[0];
-        selected = { r: pick.fr, c: pick.fc };
-        legalMoves = getLegalMovesForSquare(board, pick.fr, pick.fc, castling, enPassant);
-        const w = gridToWorld(pick.fr, pick.fc);
-        selRing.position.set(w.x, 0.295, w.z);
-        selRing.visible = true;
-        showLegalDots(legalMoves);
-        showToast(currentLang === 'vi' ? '💡 Gợi ý nước đi tốt nhất!' : '💡 Suggested tactical move!');
+      function showHintChess() {
+        const moves = getAllLegalChess(bd, turn, castling, enPassant);
+        if (moves.length === 0) return;
+        const pick = moves[0];
+        const pos = toWorld(pick.tr, pick.tc);
+        showToast(`💡 Hint: (${pick.fr},${pick.fc}) → (${pick.tr},${pick.tc}) @ (${pos.x.toFixed(1)}, ${pos.z.toFixed(1)})`);
       }
 
-      function startChessMatch(aiMode, diff, flip2p) {
-        vsAI = aiMode;
-        aiDifficulty = diff;
-        autoFlip2P = flip2p;
-        boardYaw = 0;
-        targetYaw = 0;
-        boardGroup.rotation.y = 0;
-        turn = 'w';
+      function startChess(aiMode, diff) {
+        vsAI = aiMode; aiDiff = diff;
+        for (let r = 0; r < 8; r++) for (let c = 0; c < 8; c++) {
+          const code = INIT_CHESS[r][c];
+          bd[r][c] = code ? { side: code[0], type: code[1].toLowerCase() } : null;
+        }
         castling = { wK: true, wQ: true, bK: true, bQ: true };
-        enPassant = null;
-        selected = null;
-        legalMoves = [];
-        history = [];
-        moveLog = [];
-        capturedByWhite = [];
-        capturedByBlack = [];
-        gameOver = false;
-        aiThinking = false;
-        pendingPromo = null;
-        selRing.visible = false;
-        lastFromSq.visible = false;
-        lastToSq.visible = false;
-        clearLegalDots();
-        board = INIT_CHESS.map((row) => row.map((code) => (code ? { side: code[0], type: code[1] } : null)));
-        syncChessMeshes();
-        updateChessHUD();
+        enPassant = null; turn = 'w';
+        selected = null; legalMoves = []; history = [];
+        positionCounts = new Map();
+        positionCounts.set(boardSignatureChess(bd, turn, castling, enPassant), 1);
+        gameOver = false; aiBusy = false;
+        selRing.visible = false; clearMoveDots();
+        rebuildChessMeshes();
+        updateHUD();
         hideModal();
       }
 
-      function showChessSetup() {
+      function showModeModal() {
         showModal(`
           <div class="space-y-4">
             <div class="text-5xl">♚</div>
             <h3 class="text-2xl font-black text-amber-300">${meta.title[currentLang]}</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">${meta.desc[currentLang]}</p>
-            <div class="space-y-2 text-left">
-              <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                ${currentLang === 'vi' ? '1. Đấu Với Máy AI (Cầm Quân Trắng Ngà)' : '1. Play vs AI (Command Ivory White)'}
-              </div>
-              <div class="grid grid-cols-3 gap-2">
-                <button id="ch-ai-easy" class="py-2.5 rounded-xl bg-emerald-500/90 hover:bg-emerald-400 text-slate-950 font-black text-xs">
-                  🌱 ${currentLang === 'vi' ? 'DỄ' : 'EASY'}
-                </button>
-                <button id="ch-ai-med" class="py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs">
-                  ⚔️ ${currentLang === 'vi' ? 'TRUNG BÌNH' : 'MEDIUM'}
-                </button>
-                <button id="ch-ai-hard" class="py-2.5 rounded-xl bg-rose-500 hover:bg-rose-400 text-white font-black text-xs">
-                  🔥 ${currentLang === 'vi' ? 'KHÓ' : 'HARD'}
-                </button>
-              </div>
-            </div>
-            <div class="space-y-2 text-left pt-1">
-              <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                ${currentLang === 'vi' ? '2. Đấu 2 Người Cùng Máy' : '2. 2-Player Local Mode'}
-              </div>
-              <div class="grid grid-cols-2 gap-2">
-                <button id="ch-2p-fix" class="py-2.5 rounded-xl bg-sky-500/90 hover:bg-sky-400 text-slate-950 font-black text-xs">
-                  👥 ${currentLang === 'vi' ? '2P Cố Định' : '2P Fixed Board'}
-                </button>
-                <button id="ch-2p-flip" class="py-2.5 rounded-xl bg-indigo-500/90 hover:bg-indigo-400 text-white font-black text-xs">
-                  🔄 ${currentLang === 'vi' ? '2P Tự Xoay Bàn' : '2P Auto-Flip'}
-                </button>
-              </div>
+            <p class="text-xs text-slate-300">${meta.controls[currentLang]}</p>
+            <div class="grid grid-cols-2 gap-2.5 text-xs font-black">
+              <button id="ch-easy" class="py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200">🤖 AI Easy</button>
+              <button id="ch-med" class="py-3 rounded-2xl bg-sky-600 hover:bg-sky-500 text-white">🤖 AI Medium</button>
+              <button id="ch-hard" class="py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950">🔥 AI Hard (GM Max)</button>
+              <button id="ch-2p" class="py-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950">👥 2 Players</button>
             </div>
           </div>
         `);
-        document.getElementById('ch-ai-easy').addEventListener('click', () => startChessMatch(true, 'easy', false));
-        document.getElementById('ch-ai-med').addEventListener('click', () => startChessMatch(true, 'medium', false));
-        document.getElementById('ch-ai-hard').addEventListener('click', () => startChessMatch(true, 'hard', false));
-        document.getElementById('ch-2p-fix').addEventListener('click', () => startChessMatch(false, 'medium', false));
-        document.getElementById('ch-2p-flip').addEventListener('click', () => startChessMatch(false, 'medium', true));
+        document.getElementById('ch-easy').addEventListener('click', () => startChess(true, 'easy'));
+        document.getElementById('ch-med').addEventListener('click', () => startChess(true, 'medium'));
+        document.getElementById('ch-hard').addEventListener('click', () => startChess(true, 'hard'));
+        document.getElementById('ch-2p').addEventListener('click', () => startChess(false, 'hard'));
       }
 
       const raycaster = new THREE.Raycaster();
-      const boardPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -0.28);
-      const pointerNDC = new THREE.Vector2();
-
+      const ptr = new THREE.Vector2();
       eng.on(eng.renderer.domElement, 'pointerdown', (e) => {
-        if (gameOver || aiThinking || pendingPromo) return;
-        if (vsAI && turn === 'b') return;
-
+        if (gameOver || aiBusy || (vsAI && turn === 'b')) return;
         const rect = eng.renderer.domElement.getBoundingClientRect();
-        pointerNDC.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-        pointerNDC.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-        raycaster.setFromCamera(pointerNDC, camera);
+        ptr.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        ptr.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+        raycaster.setFromCamera(ptr, camera);
 
-        const hitPt = new THREE.Vector3();
-        if (!raycaster.ray.intersectPlane(boardPlane, hitPt)) return;
-
-        const localPt = boardGroup.worldToLocal(hitPt.clone());
-        const col = Math.round(localPt.x / SQ + 3.5);
-        const row = Math.round(localPt.z / SQ + 3.5);
-        if (!inBounds(row, col)) return;
-
-        const chosenMove = legalMoves.find((m) => m.tr === row && m.tc === col);
-        if (chosenMove) {
-          if (chosenMove.promo) {
-            showPromotionModal(chosenMove);
-          } else {
-            executeChessMove(chosenMove, 'Q');
-          }
+        const dotHits = raycaster.intersectObjects(dotsGroup.children);
+        if (dotHits.length > 0 && dotHits[0].object.userData.move) {
+          executeMoveChess(dotHits[0].object.userData.move);
           return;
         }
 
-        const clickedPiece = board[row][col];
-        if (clickedPiece && clickedPiece.side === turn) {
-          selected = { r: row, c: col };
-          legalMoves = getLegalMovesForSquare(board, row, col, castling, enPassant);
-          const wPos = gridToWorld(row, col);
-          selRing.position.set(wPos.x, 0.295, wPos.z);
-          selRing.visible = true;
-          showLegalDots(legalMoves);
-          sfx.play('coin');
-        } else {
-          selected = null;
-          legalMoves = [];
-          selRing.visible = false;
-          clearLegalDots();
+        const pHits = raycaster.intersectObjects(pieceGroups, true);
+        if (pHits.length > 0) {
+          let obj = pHits[0].object;
+          while (obj && (!obj.userData || typeof obj.userData.r !== 'number')) obj = obj.parent;
+          if (!obj) return;
+          const { r, c } = obj.userData;
+          const clicked = bd[r][c];
+          if (clicked && clicked.side === turn) {
+            selected = { r, c };
+            legalMoves = getLegalChess(bd, r, c, castling, enPassant);
+            const pos = toWorld(r, c);
+            selRing.position.set(pos.x, 0.16, pos.z);
+            selRing.visible = true;
+            showMoveDots();
+            sfx.play('flip');
+          } else if (selected) {
+            const mv = legalMoves.find((m) => m.tr === r && m.tc === c);
+            if (mv) executeMoveChess(mv);
+          }
         }
-      });
-
-      setTouchControls(`
-        <div class="pointer-events-auto flex flex-wrap items-center justify-center gap-2 mx-auto">
-          <button id="ch-undo-btn" class="px-4 py-2.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-amber-300 font-bold text-xs shadow-lg">
-            ↩️ ${currentLang === 'vi' ? 'Đi lại (Z)' : 'Undo (Z)'}
-          </button>
-          <button id="ch-hint-btn" class="px-4 py-2.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-purple-300 font-bold text-xs shadow-lg">
-            💡 ${currentLang === 'vi' ? 'Gợi ý (H)' : 'Hint (H)'}
-          </button>
-          <button id="ch-log-btn" class="px-4 py-2.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-sky-300 font-bold text-xs shadow-lg">
-            📜 ${currentLang === 'vi' ? 'Biên bản' : 'Move Log'}
-          </button>
-        </div>
-      `);
-
-      document.getElementById('ch-undo-btn').addEventListener('click', undoChessMove);
-      document.getElementById('ch-hint-btn').addEventListener('click', showChessHint);
-      document.getElementById('ch-log-btn').addEventListener('click', () => {
-        const formatted = moveLog.length === 0
-          ? (currentLang === 'vi' ? 'Chưa có nước đi nào.' : 'No moves yet.')
-          : moveLog.map((m, i) => (i % 2 === 0 ? `<span class="text-amber-300 font-bold">${i / 2 + 1}.</span> ${m}` : ` <span class="text-sky-300">${m}</span> &nbsp;`)).join('');
-        showModal(`
-          <div class="space-y-4">
-            <h3 class="text-lg font-black text-amber-300">📜 ${currentLang === 'vi' ? 'BIÊN BẢN VÁN CỜ VUA (PGN)' : 'CHESS ALGEBRAIC LOG'}</h3>
-            <div class="max-h-52 overflow-y-auto p-4 rounded-2xl bg-slate-900/90 border border-slate-700 text-xs text-left leading-relaxed font-mono">
-              ${formatted}
-            </div>
-            <button id="ch-close-log" class="w-full py-2.5 rounded-xl bg-sky-500 text-slate-950 font-black text-xs">
-              ${currentLang === 'vi' ? 'ĐÓNG' : 'CLOSE'}
-            </button>
-          </div>
-        `);
-        document.getElementById('ch-close-log').addEventListener('click', hideModal);
       });
 
       eng.on(window, 'keydown', (e) => {
-        if (pendingPromo) {
-          const map = { Digit1: 'Q', Digit2: 'R', Digit3: 'B', Digit4: 'N' };
-          if (map[e.code]) {
-            const m = pendingPromo;
-            pendingPromo = null;
-            hideModal();
-            executeChessMove(m, map[e.code]);
-          }
-          return;
-        }
-        if (e.code === 'KeyZ') undoChessMove();
-        if (e.code === 'KeyH') showChessHint();
-        if (e.code === 'KeyC') {
-          camMode = (camMode + 1) % 3;
-          applyCam();
-          showToast(`🎥 ${camNames[currentLang][camMode]}`);
-        }
+        if (e.code === 'KeyZ') undoChess();
+        if (e.code === 'KeyH') showHintChess();
+        if (e.code === 'KeyC') { camMode = (camMode + 1) % 3; applyCam(); }
       });
 
-      board = INIT_CHESS.map((row) => row.map((code) => (code ? { side: code[0], type: code[1] } : null)));
-      syncChessMeshes();
-      showChessSetup();
+      setTouchControls(`
+        <div class="pointer-events-auto flex gap-2 mx-auto">
+          <button id="ch-u" class="px-4 py-2 rounded-xl bg-slate-900/90 border border-slate-700 text-xs font-bold text-slate-200">↩ Undo (Z)</button>
+          <button id="ch-h" class="px-4 py-2 rounded-xl bg-slate-900/90 border border-slate-700 text-xs font-bold text-amber-300">💡 Hint (H)</button>
+        </div>
+      `);
+      document.getElementById('ch-u').addEventListener('click', undoChess);
+      document.getElementById('ch-h').addEventListener('click', showHintChess);
+
+      showModeModal();
 
       eng.startLoop((dt, now) => {
-        if (Math.abs(targetYaw - boardYaw) > 0.001) {
-          boardYaw += (targetYaw - boardYaw) * Math.min(1, dt * 8);
-          boardGroup.rotation.y = boardYaw;
-        }
-
-        if (selRing.visible) selRing.rotation.z += dt * 1.8;
-        if (checkPulse.visible) {
-          const pulse = 1 + Math.sin(now * 0.009) * 0.14;
-          checkPulse.scale.set(pulse, pulse, 1);
-        }
-
-        for (let i = animations.length - 1; i >= 0; i--) {
-          const a = animations[i];
-          a.t += dt;
-          const p = Math.min(1, a.t / a.dur);
-          const ease = 1 - Math.pow(1 - p, 3);
-          a.mesh.position.lerpVectors(a.from, a.to, ease);
-          a.mesh.position.y = 0.28 + Math.sin(p * Math.PI) * 0.65;
-          if (p >= 1) {
-            a.mesh.position.copy(a.to);
-            animations.splice(i, 1);
-          }
-        }
+        if (selRing.visible) selRing.rotation.z = now * 0.003;
       });
 
       return {
-        toggleCamera() {
-          camMode = (camMode + 1) % 3;
-          applyCam();
-          showToast(`🎥 ${camNames[currentLang][camMode]}`);
-        },
+        toggleCamera() { camMode = (camMode + 1) % 3; applyCam(); showToast(`🎥 Cam ${camMode + 1}/3`); },
         destroy() { eng.destroy(); }
       };
     }
 
     // =========================================================================
-    // 4. GAME FACTORY REGISTRY & BOOTSTRAP
+    // 4. FACTORY REGISTRY & BOOTSTRAP
     // =========================================================================
     const GAME_FACTORIES = {
       'neon-snake': createNeonSnake3D,
@@ -5377,9 +5521,7 @@
       'chess-3d': createChess3D
     };
 
-    window.onload = function () {
-      renderPortal();
-    };
+    renderPortal();
   </script>
 </body>
 </html>
